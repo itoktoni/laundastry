@@ -24,21 +24,22 @@ class Alert
 
     public static function create($data = null)
     {
-        flash()->success($data ?? 'Data berhasil di '.self::create.' !');
+        // flash()->use('theme.crystal')->success($data ?? 'Data berhasil di '.self::create.' !');
+        session()->put(self::success, $data ?? 'Data berhasil di '.self::create.' !');
     }
 
     public static function update($data = null)
     {
-        flash()->success($data ?? 'Data berhasil di '.self::update.' !');
+        session()->put(self::success, $data ?? 'Data berhasil di '.self::update.' !');
     }
 
     public static function delete($data = null)
     {
-        flash()->success($data ?? 'Data berhasil di '.self::delete.' !');
+        session()->put(self::success, $data ?? 'Data berhasil di '.self::delete.' !');
     }
 
     public static function error($data = null)
     {
-        flash()->error(env('APP_ENV', 'local') == 'production' ? 'Data Error !' : $data.' !');
+        session()->put(self::error, env('APP_ENV', 'local') == 'production' ? 'Data Error !' : $data.' !');
     }
 }

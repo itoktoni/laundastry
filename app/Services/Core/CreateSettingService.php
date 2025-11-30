@@ -66,7 +66,6 @@ class CreateSettingService
 
         } catch (\Throwable $th) {
             Alert::error($th->getMessage());
-
             return $th->getMessage();
         }
 

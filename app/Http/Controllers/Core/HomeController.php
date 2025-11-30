@@ -1,13 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Core;
 
-use Alkhachatryan\LaravelWebConsole\LaravelWebConsole;
 use App\Charts\Dashboard;
 use App\Dao\Traits\RedirectAuth;
 use App\Http\Controllers\Controller;
-use Native\Mobile\Facades\Camera;
-use Native\Mobile\Facades\Browser;
 
 class HomeController extends Controller
 {
@@ -25,6 +21,24 @@ class HomeController extends Controller
         }
     }
 
+    public function cms()
+    {
+        $secret = env('APP_KEY');
+
+        $payload = [
+            'email' => auth()->user()->email,
+            'time'  => time()
+        ];
+
+        $b64 = base64_encode(json_encode($payload));
+
+        $sig = hash_hmac('sha256', $b64, $secret);
+
+        $token = $b64 . '.' . $sig;
+
+        return redirect(env('WP_URL')."/wordpress-auto-login?token={$token}");
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -33,7 +47,7 @@ class HomeController extends Controller
     public function index(Dashboard $chart)
     {
         if (empty(auth()->user())) {
-            header('Location: '.route('public'));
+            header('Location: ' . route('public'));
         }
 
         return view('core.home.dashboard', [

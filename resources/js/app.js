@@ -50,7 +50,7 @@ window.TomSelect = TomSelect;
     }
 
     // toastr.options = {
-    //     timeOut: 2000,
+    //     timeOut: shared('timer'),
     //     progressBar: true,
     //     showDuration: 200,
     //     hideDuration: 200

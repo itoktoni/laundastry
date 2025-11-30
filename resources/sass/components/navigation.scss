@@ -20,6 +20,7 @@
 		display: flex;
 		flex-direction: column;
 		padding-bottom: 10px;
+		overflow-y: scroll;
 
 		.navigation-menu-tab-header {
 			height: $header-height;
@@ -44,13 +45,13 @@
 					flex-direction: column;
 					align-items: center;
 
-					i{
+					i {
 						margin-top: -10px;
 						font-size: 1.9rem;
 						margin-bottom: .5rem;
 					}
 
-					h5{
+					h5 {
 						font-size: 0.8rem;
 						margin: 0;
 					}
@@ -92,7 +93,7 @@
 			display: flex;
 			flex-direction: column;
 
-			& > div {
+			&>div {
 				display: none;
 
 				&.open {
@@ -107,7 +108,7 @@
 			align-items: center;
 			justify-content: center;
 
-			img{
+			img {
 				max-height: 100px;
 			}
 		}
@@ -131,7 +132,7 @@
 					}
 				}
 
-				& > a {
+				&>a {
 					display: flex;
 					align-items: center;
 					transition: background .3s;
@@ -192,7 +193,7 @@
 						padding: 3px 7px;
 					}
 
-					& + ul {
+					&+ul {
 						display: none;
 
 						li {
@@ -216,7 +217,7 @@
 				}
 
 				&.open {
-					& > a {
+					&>a {
 						color: $color-primary;
 						font-weight: 600;
 

@@ -201,6 +201,8 @@ return [
         FacadeServiceProviders::class,
         CrudServiceProvider::class,
         MegaphoneServiceProvider::class,
+        Corcel\Laravel\CorcelServiceProvider::class,
+
     ],
 
     /*

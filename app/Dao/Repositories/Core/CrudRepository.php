@@ -7,6 +7,7 @@ use Plugins\Notes;
 
 trait CrudRepository
 {
+
     public function dataRepository($selected = [], $relation = [])
     {
         $query = $this->select($this->getTable().'.*');

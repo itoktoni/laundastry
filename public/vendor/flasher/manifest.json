@@ -34,5 +34,7 @@
     "/vendor/flasher/themes/sapphire/sapphire.min.css": "/vendor/flasher/themes/sapphire/sapphire.min.css?id=f7b4efc7b645ee792dacd4438fdc4ea3",
     "/vendor/flasher/themes/sapphire/sapphire.min.js": "/vendor/flasher/themes/sapphire/sapphire.min.js?id=aeaeda5a1eadd052f0c466fdf6c6f7b3",
     "/vendor/flasher/themes/slack/slack.min.css": "/vendor/flasher/themes/slack/slack.min.css?id=4fa1fe1bdca7c256f225e9f4c2e6d779",
-    "/vendor/flasher/themes/slack/slack.min.js": "/vendor/flasher/themes/slack/slack.min.js?id=6b1ade06f3eb351e9eaef76d402918fb"
+    "/vendor/flasher/themes/slack/slack.min.js": "/vendor/flasher/themes/slack/slack.min.js?id=6b1ade06f3eb351e9eaef76d402918fb",
+    "/vendor/flasher/flasher-notyf.min.css": "/vendor/flasher/flasher-notyf.min.css?id=a68d410be6df5aaa1dd8ed3a2798d390",
+    "/vendor/flasher/flasher-notyf.min.js": "/vendor/flasher/flasher-notyf.min.js?id=d6c390269f18e78bc9c74a98fc6c3c29"
 }

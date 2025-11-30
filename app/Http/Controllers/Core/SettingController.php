@@ -29,7 +29,6 @@ class SettingController extends Controller
     public function postCreate(SettingRequest $request, CreateSettingService $service)
     {
         $data = $service->save($request);
-
         return Response::redirectBack($data);
     }
 }

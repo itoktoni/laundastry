@@ -24,7 +24,7 @@
                                     <th class="text-center column-action">{{ __('Action') }}</th>
                                     @foreach ($fields as $value)
                                         <th {{ Template::extractColumn($value) }}>
-                                            {{ __($value->name) }}
+                                           {{ __($value->name) }}
                                         </th>
                                     @endforeach
                                 </tr>
