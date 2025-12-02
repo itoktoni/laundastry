@@ -27,15 +27,20 @@ class Category extends SystemModel
      *
      * @var array<int, string>
      */
-    protected $fillable = ['category_id', 'category_name'];
+    protected $fillable = ['category_id', 'category_nama', 'category_keterangan'];
 
     public static function field_name()
     {
-        return 'category_name';
+        return 'category_nama';
     }
 
     public function getFieldNameAttribute()
     {
         return $this->{$this->field_name()};
+    }
+
+    public function fieldSearching()
+    {
+        return 'category_nama';
     }
 }

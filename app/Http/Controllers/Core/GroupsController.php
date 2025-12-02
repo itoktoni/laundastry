@@ -35,7 +35,6 @@ class GroupsController extends MasterController
 
     protected function beforeForm()
     {
-
         $menu = SystemMenu::getOptions();
 
         self::$share = [

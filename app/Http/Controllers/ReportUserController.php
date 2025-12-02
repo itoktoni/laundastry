@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\Model\UserModel;
+use App\Dao\Models\Core\User;
 use App\Http\Controllers\Core\ReportController;
-use App\Jobs\JobExportCsvUser;
 use Illuminate\Http\Request;
 
 class ReportUserController extends ReportController
 {
     public $data;
 
-    public function __construct(UserModel $model)
+    public function __construct(User $model)
     {
         $this->model = $model::getModel();
     }

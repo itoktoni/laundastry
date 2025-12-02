@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Core;
 
+use App\Dao\Models\Core\User;
 use App\Facades\Model\RoleModel;
 use App\Facades\Model\UserModel;
 use App\Http\Requests\Core\LoginRequest;
@@ -10,13 +11,12 @@ use App\Services\Master\CreateService;
 use App\Services\Master\SingleService;
 use App\Services\Master\UpdateService;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Plugins\Notes;
 use Plugins\Response;
 
 class UserController extends MasterController
 {
-    public function __construct(UserModel $model, SingleService $service)
+    public function __construct(User $model, SingleService $service)
     {
         $this->model = $model::getModel();
         self::$service = self::$service ?? $service;

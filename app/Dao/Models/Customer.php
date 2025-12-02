@@ -44,4 +44,14 @@ class Customer extends SystemModel
 
         parent::boot();
     }
+
+    public static function field_name()
+    {
+        return 'customer_nama';
+    }
+
+    public function fieldSearching()
+    {
+        return 'customer_nama';
+    }
 }

@@ -36,4 +36,14 @@ class Jenis extends SystemModel
     {
         return $this->hasOne(Customer::class, 'customer_code', 'jenis_code_customer');
     }
+
+    public static function field_name()
+    {
+        return 'jenis_nama';
+    }
+
+    public function fieldSearching()
+    {
+        return 'jenis_nama';
+    }
 }
