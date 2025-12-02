@@ -7,7 +7,7 @@
 
                 <x-form-select col="4" name="customer_code" label="Customer" :options="$customer" />
                 <x-form-select col="2" name="kotor_category" label="Category" :options="$category" />
-                <x-form-input col="6" name="filter" label="Filter Jenis Linen" type="text" />
+                <x-form-input col="6" name="filter" class="search" label="Filter Jenis Linen" type="text" />
 
                 <div class="container mt-3">
 
@@ -27,7 +27,7 @@
                                     <td data-label="No." class="text-center">{{ $loop->iteration }}</td>
                                     <td data-label="Linen">{{ $value }}</td>
                                     <td data-label="Qty">
-                                        <input class="form-control" type="number" min="0" value="{{ null ?? null }}"
+                                        <input class="form-control text-right" type="number" min="0" value="{{ null ?? null }}"
                                             name="qty[{{ $key }}][qty]" />
                                     </td>
                                 </tr>
@@ -41,4 +41,29 @@
 
         </x-card>
     </x-form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('.search');
+            const tableRows = document.querySelectorAll('.table tbody tr');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+
+                    tableRows.forEach(function(row) {
+                        const linenCell = row.querySelector('td[data-label="Linen"]');
+                        if (linenCell) {
+                            const linenText = linenCell.textContent.toLowerCase().trim();
+                            if (searchTerm === '' || linenText.includes(searchTerm)) {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 </x-layout>
