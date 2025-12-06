@@ -7,7 +7,7 @@ use App\Dao\Models\Core\SystemModel;
 /**
  * Class Category
  *
- * @property $category_id
+ * @property $category_code
  * @property $category_name
  * @property $category_user_id
  * @property User $user
@@ -20,14 +20,14 @@ class Category extends SystemModel
 
     protected $table = 'category';
 
-    protected $primaryKey = 'category_id';
+    protected $primaryKey = 'category_code';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = ['category_id', 'category_nama', 'category_keterangan'];
+    protected $fillable = ['category_code', 'category_nama', 'category_keterangan'];
 
     public static function field_name()
     {

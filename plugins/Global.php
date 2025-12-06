@@ -82,7 +82,7 @@ function modulePathTable($name = null, $core = false)
 function modulePathPrint($name = null)
 {
     if ($name) {
-        return 'report.'.moduleController().'.'.$name;
+        return 'pages.'.moduleController().'.'.$name;
     }
 
     return 'report.master.print';
@@ -333,7 +333,7 @@ function unic($length)
         $str .= $chars[$rand];
     }
 
-    return $str;
+    return strtoupper($str);
 }
 
 function getClass($class)

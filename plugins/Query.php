@@ -2,6 +2,7 @@
 
 namespace Plugins;
 
+use App\Dao\Models\Jenis;
 use App\Facades\Model\FilterModel;
 use App\Facades\Model\GroupModel;
 use App\Facades\Model\LinkModel;
@@ -188,6 +189,20 @@ class Query
 
         if ($user) {
             $data = $user->pluck(UserModel::field_name(), UserModel::field_primary());
+        }
+
+        return $data;
+    }
+
+    public static function getJenisByCustomerCode($code)
+    {
+        $data = [];
+        $jenis = Jenis::select('jenis_id', 'jenis_nama')
+            ->where('jenis_code_customer', $code)
+            ->get();
+
+        if ($jenis) {
+            $data = $jenis->pluck('jenis_nama', 'jenis_id');
         }
 
         return $data;

@@ -36,8 +36,13 @@
                                             <input type="checkbox" class="checkbox" name="code[]"
                                                 value="{{ $table->field_primary }}">
                                         </td>
-                                        <td class="col-md-2 text-center column-action">
-                                            <x-crud :model="$table" />
+                                        <td data-label="Action" class="col-md-2 text-center column-action">
+                                            <x-crud :model="$table">
+                                                <x-button module="getPrint" key="{{ $table->field_primary }}" color="dark" icon="printer"/>
+                                                <x-button module="getQc" key="{{ $table->field_primary }}" color="warning" label="QC" icon="list"/>
+                                                <x-button module="getPacking" key="{{ $table->field_primary }}" color="info" label="Packing"/>
+                                                <x-button module="getPrintBersih" key="{{ $table->field_primary }}" color="success" label="Print Bersih"/>
+                                            </x-crud>
                                         </td>
 
 										<td data-label="ID">{{ $table->field_primary }}</td>

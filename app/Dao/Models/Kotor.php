@@ -18,11 +18,6 @@ class Kotor extends SystemModel
      */
     protected $fillable = ['kotor_code', 'kotor_tanggal', 'customer_code', 'customer_nama', 'kotor_status', 'kotor_qty'];
 
-    public function has_customer()
-    {
-        return $this->hasOne(Customer::class, 'customer_code', 'customer_code');
-    }
-
     public static function field_name()
     {
         return 'kotor_tanggal';
@@ -37,4 +32,10 @@ class Kotor extends SystemModel
     {
         return $this->{self::field_tanggal()};
     }
+
+    public function has_customer()
+    {
+        return $this->hasOne(Customer::class, 'customer_code', 'customer_code');
+    }
+
 }

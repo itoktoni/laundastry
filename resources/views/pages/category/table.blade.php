@@ -24,11 +24,7 @@
                                     <th class="text-center column-action">{{ __('Action') }}</th>
                                     @foreach ($fields as $value)
                                         <th {{ Template::extractColumn($value) }}>
-                                            @if ($value->sort)
-                                                lang($value->code, __($value->name))
-                                            @else
-                                                {{ __($value->name) }}
-                                            @endif
+                                            {{ __($value->name) }}
                                         </th>
                                     @endforeach
                                 </tr>
@@ -45,7 +41,7 @@
                                         </td>
 
 										<td >{{ $table->category_id }}</td>
-										<td >{{ $table->category_name }}</td>
+										<td >{{ $table->category_nama }}</td>
 
                                     </tr>
                                 @empty

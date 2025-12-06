@@ -150,7 +150,7 @@ thead, tbody, tfoot, tr, td, th {
 
     .table td {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
         border-bottom: 1.5px solid #ced4da;
 
@@ -164,7 +164,7 @@ thead, tbody, tfoot, tr, td, th {
     }
 
     .checkbox{
-        margin-left: -1rem;
+        margin-left: -7.5rem;
     }
 
     .table td:last-child {
@@ -208,7 +208,7 @@ thead, tbody, tfoot, tr, td, th {
 // Table column width utilities
 .column-action,
 .table-action {
-    width: 120px !important;
+    width: 150px !important;
 }
 
 .column-active {

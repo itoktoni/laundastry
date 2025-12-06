@@ -11,11 +11,13 @@
                 <x-form-input col="6" name="customer_alamat" />
 
                 <x-form-upload col="3" name="image" />
+                @if($model)
                 <div class="col-md-3">
                     <img class="mt-4 img-thumbnail img-fluid"
                         src="{{ imageUrl($model->customer_logo, 'customer') }}"
                         alt="background">
                 </div>
+                @endif
 
                 @endbind
             </div>

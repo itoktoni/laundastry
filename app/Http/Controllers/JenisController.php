@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Dao\Models\Customer;
 use App\Http\Controllers\Core\MasterController;
 use App\Http\Function\CreateFunction;
 use App\Http\Function\UpdateFunction;
@@ -16,6 +17,16 @@ class JenisController extends MasterController
     {
         self::$service = self::$service ?? $service;
         $this->model = $model::getModel();
+    }
+
+    protected function beforeForm()
+    {
+        $customer = Customer::getOptions();
+        $jenis = [];
+
+        self::$share = [
+            'customer' => $customer,
+        ];
     }
 
     public function getData()

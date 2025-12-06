@@ -17,39 +17,40 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th style="width: 4%" class="checkbox-column">No.</th>
+                                <th style="width: 5%" class="checkbox-column">No.</th>
                                 <th style="width: 60%">Jenis Linen</th>
-                                <th style="width: 10%" class="text-center">Qty</th>
+                                <th style="width: 10%" class="text-center">Kotor</th>
+                                <th style="width: 10%" class="text-center">QC</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($jenis as $key => $value)
                             @php
-
-                            $qty = 0;
-                            $kotor_id = null;
-
-                            if(isset($detail)){
-                                $kotor = $detail->firstWhere('kotor_id_jenis', $key);
-                                $qty = $kotor ? $kotor->kotor_scan : 0;
-                                $kotor_id = $kotor ? $kotor->kotor_id : null;
-                            }
+                            $kotor = $detail->firstWhere('kotor_id_jenis', $key);
+                            $qty_scan = $kotor ? $kotor->kotor_scan : 0;
+                            $qty_qc = $kotor ? $kotor->kotor_qc : 0;
+                            $kotor_id = $kotor ? $kotor->kotor_id : null;
 
                             @endphp
 
                                 <tr>
-
                                     <input type="hidden" name="qty[{{ $key }}][jenis_id]"
                                         value="{{ $key ?? null }}" />
 
                                     <td data-label="No." class="text-center">{{ $loop->iteration }}</td>
                                     <td data-label="Linen">{{ $value }}</td>
+                                    <td class="text-center" data-label="Kotor">
+                                        <input type="hidden" name="qty[{{ $key }}][scan]"
+                                        value="{{ $qty_scan ?? null }}" />
+
+                                        {{ $qty_scan }}
+                                    </td>
+
                                     <td data-label="Qty">
-                                        <input class="form-control text-right" type="number" min="0" value="{{ $qty ?? null }}"
-                                            name="qty[{{ $key }}][scan]" />
+                                        <input class="form-control text-center" type="number" min="0" value="{{ $qty_qc ?? null }}"
+                                            name="qty[{{ $key }}][qc]" />
                                     </td>
                                 </tr>
-
                             @endforeach
                         </tbody>
                     </table>

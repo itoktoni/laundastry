@@ -2,7 +2,13 @@
 <html lang="en" moznomarginboxes mozdisallowselectionprint>
 
 <head>
-<link rel="stylesheet" href="{{ url('assets/css/print.css') }}" type="text/css">
+
+@if(isset($print))
+<link rel="stylesheet" href="{{ asset('assets/css/print.css') }}" type="text/css">
+@else
+<link rel="stylesheet" href="{{ asset('assets/css/report.css') }}" type="text/css">
+@endif
+
 </head>
 
 <body>
