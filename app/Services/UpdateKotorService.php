@@ -15,12 +15,12 @@ class UpdateKotorService
         $bersih = collect($data->data)->sum('kotor_bersih') > 0 ? true : false;
         $code_packing = null;
         $insert = [];
+        $now = date('Y-m-d H:i:s');
+        $user = auth()->user()->id;
 
         if($bersih)
         {
             $code_packing = $code.'_PACK_';
-            $user = auth()->user()->id;
-            $now = date('Y-m-d H:i:s');
         }
 
         foreach ($data->data as $key => $quantity) {

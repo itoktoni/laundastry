@@ -37,7 +37,7 @@ class KotorRequest extends FormRequest
                 'kotor_id' => $value['kotor_id'] ?? null,
                 'kotor_code_customer' => $customer_code,
                 'kotor_id_jenis' => $key,
-                'kotor_id_category' => $this->kotor_status,
+                'kotor_code_category' => $this->kotor_status ?? 'NORMAL',
                 'kotor_code_scan' => $code,
                 'kotor_scan' => $value['scan'] ?? 0,
                 'kotor_qc' => $value['qc'] ?? 0,

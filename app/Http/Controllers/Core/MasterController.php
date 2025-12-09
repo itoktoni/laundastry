@@ -70,11 +70,18 @@ class MasterController extends Controller
         ]);
     }
 
+    public function deleteData($code)
+    {
+        $code = array_unique(request()->get('code'));
+        $data = self::$service->delete($this->model, $code);
+        return $data;
+    }
+
     public function postTable()
     {
-        if (request()->exists('delete')) {
-            $code = array_unique(request()->get('code'));
-            $data = self::$service->delete($this->model, $code);
+        if (request()->exists('delete'))
+        {
+            $data = $this->deleteData(request()->get('code'));
         }
 
         if (request()->exists('sort')) {

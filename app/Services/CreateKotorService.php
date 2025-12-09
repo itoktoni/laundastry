@@ -12,9 +12,7 @@ class CreateKotorService
         $check = false;
         try {
             // $check = $model->saveRepository($data->all());
-
             $check = DetailKotor::insert($data->data);
-
             if ($check) {
 
                 Alert::create();

@@ -39,13 +39,13 @@
                                         <td class="col-md-2 text-center column-action">
                                             <x-crud :model="$table" />
                                         </td>
-                                        
+
 										<td >{{ $table->kotor_id }}</td>
 										<td >{{ $table->kotor_code_scan }}</td>
 										<td >{{ $table->kotor_code_packing }}</td>
 										<td >{{ $table->kotor_code_bersih }}</td>
 										<td >{{ $table->kotor_code_customer }}</td>
-										<td >{{ $table->kotor_id_category }}</td>
+										<td >{{ $table->kotor_code_category }}</td>
 										<td >{{ $table->kotor_id_jenis }}</td>
 										<td >{{ $table->kotor_scan }}</td>
 										<td >{{ $table->kotor_qc }}</td>

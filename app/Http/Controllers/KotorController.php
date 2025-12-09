@@ -9,10 +9,14 @@ use App\Dao\Models\Kotor;
 use App\Http\Controllers\Core\MasterController;
 use App\Http\Function\CreateFunction;
 use App\Http\Function\UpdateFunction;
+use App\Http\Requests\Core\DeleteRequest;
 use App\Http\Requests\KotorRequest;
 use App\Services\CreateKotorService;
+use App\Services\Master\DeleteService;
 use App\Services\Master\SingleService;
 use App\Services\UpdateKotorService;
+use Plugins\Alert;
+use Plugins\Notes;
 use Plugins\Query;
 use Plugins\Response;
 
@@ -210,4 +214,36 @@ class KotorController extends MasterController
             'print' => true,
         ]));
     }
+
+    public function getDelete()
+    {
+        $code = request()->get('code');
+        $check = DetailKotor::where('kotor_code_scan', $code)->delete();
+        $data = ["Gagal"];
+        if($check)
+        {
+            $data = Notes::delete($data);
+            Alert::delete("success");
+        }
+
+        return Response::redirectBack($check);
+    }
+
+    public function deleteData($code)
+    {
+        $code = array_unique(request()->get('code'));
+
+        $check = DetailKotor::where('kotor_code_scan', $code)->delete();
+        $data = ["Gagal"];
+
+        if($check)
+        {
+            $data = Notes::delete($data);
+            Alert::delete("success");
+        }
+
+
+        return $data;
+    }
+
 }

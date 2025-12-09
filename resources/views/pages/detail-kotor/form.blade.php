@@ -5,13 +5,13 @@
 
             <div class="row">
                 @bind($model)
-                    
+
                 <x-form-input col="6" name="kotor_id" />
                 <x-form-input col="6" name="kotor_code_scan" />
                 <x-form-input col="6" name="kotor_code_packing" />
                 <x-form-input col="6" name="kotor_code_bersih" />
                 <x-form-input col="6" name="kotor_code_customer" />
-                <x-form-input col="6" name="kotor_id_category" />
+                <x-form-input col="6" name="kotor_code_category" />
                 <x-form-input col="6" name="kotor_id_jenis" />
                 <x-form-input col="6" name="kotor_scan" />
                 <x-form-input col="6" name="kotor_qc" />
