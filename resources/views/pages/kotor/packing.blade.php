@@ -7,10 +7,15 @@
 
                 @bind($model)
 
-                <x-form-select col="3" id="customer" default="{{ request()->get('customer') ?? $model->customer_code ?? null }}" name="customer_code" label="Customer" :options="$customer" />
+                 <div class=" form-group col-md-3 ">
+                    <label for="auto_id_filter">Customer</label>
+                    <input type="hidden" name="customer_code" value="{{ $model->customer_code }}">
+                    <input class="form-control" type="text" readonly value="{{ $model->customer_nama ?? '' }}">
+                </div>
+
                 <div class=" form-group col-md-3 ">
                     <label for="auto_id_filter">Tanggal</label>
-                    <input class="form-control" type="text" value="{{ $model->kotor_tanggal }}">
+                    <input class="form-control" type="text" readonly value="{{ $model->kotor_tanggal }}">
                 </div>
                 <div class=" form-group col-md-6 ">
                     <label for="auto_id_filter">Filter Jenis Linen</label>

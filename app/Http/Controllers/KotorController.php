@@ -207,6 +207,8 @@ class KotorController extends MasterController
                 'kotor_report' => date('Y-m-d')
             ]);
 
+        $model = DetailKotor::where('kotor_code_scan', $code)->first();
+
         return moduleView(modulePathPrint('print_bersih'), $this->share([
             'customer' => $customer,
             'data' => $data,
