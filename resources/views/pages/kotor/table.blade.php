@@ -26,7 +26,10 @@
                                     <th>Status</th>
                                     <th>Tanggal</th>
                                     <th>Customer</th>
-                                    <th>Qty</th>
+                                    <th class="col-qty" style="width:10%;">Kotor</th>
+                                    <th class="col-qty" style="width:10%;">QC</th>
+                                    <th class="col-qty" style="width:10%;">Packing</th>
+                                    <th class="col-qty" style="width:10%;">Pending</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,7 +52,10 @@
 										<td data-label="Status">{{ $table->kotor_status }}</td>
 										<td data-label="Tanggal">{{ $table->field_tanggal }}</td>
 										<td data-label="Customer">{{ $table->customer_nama }}</td>
-										<td data-label="Qty">{{ $table->kotor_qty }}</td>
+										<td data-label="Kotor">{{ $table->kotor_qty }}</td>
+                                        <td data-label="QC" class="col-qty">{{ $table->kotor_qc }}</td>
+						                <td data-label="Packing" class="col-qty">{{ $table->kotor_bersih }}</td>
+						                <td data-label="Pending" class="col-qty">{{ $table->kotor_pending }}</td>
 
                                     </tr>
                                 @empty
