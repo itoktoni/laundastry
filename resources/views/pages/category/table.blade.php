@@ -40,7 +40,7 @@
                                             <x-crud :model="$table" />
                                         </td>
 
-										<td >{{ $table->category_id }}</td>
+										<td >{{ $table->category_code }}</td>
 										<td >{{ $table->category_nama }}</td>
 
                                     </tr>

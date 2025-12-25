@@ -15,6 +15,8 @@ class Transaksi extends SystemModel
 
     protected $filters = [
         'filter',
+        'start_date',
+        'end_date',
     ];
 
      protected $dates = [

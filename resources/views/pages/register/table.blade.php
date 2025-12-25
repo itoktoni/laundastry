@@ -25,10 +25,7 @@
                                     <th>Code</th>
                                     <th>Tanggal</th>
                                     <th>Customer</th>
-                                    <th class="col-qty" style="width:10%;">Kotor</th>
-                                    <th class="col-qty" style="width:10%;">QC</th>
-                                    <th class="col-qty" style="width:10%;">Packing</th>
-                                    <th class="col-qty" style="width:10%;">Pending</th>
+                                    <th class="col-qty" style="width:10%;">Qty</th>
                                 </tr>
                             </thead>
                             <tbody>

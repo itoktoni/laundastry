@@ -43,7 +43,7 @@
         ]) !!}>
 
         @if(!isset($placeholder) || $placeholder === false || $placeholder === '')
-            <option value="" disabled selected>{{ __('- Select ' . ($label ?? 'Option') . ' -') }}</option>
+            <option value="" selected>{{ __('- Select ' . ($label ?? 'Option') . ' -') }}</option>
         @endif
 
         @forelse($options as $key => $option)

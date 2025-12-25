@@ -13,6 +13,34 @@ class Kotor extends SystemModel
     protected $table = 'kotor';
     protected $primaryKey = 'transaksi_code';
 
+    protected $filters = [
+        'filter',
+        'start_date',
+        'end_date',
+        'customer_code',
+    ];
+
+    public function start_date($query)
+    {
+        $date = request()->get('start_date');
+        if ($date) {
+            $query = $query->whereDate($this->field_tanggal(), '>=', $date);
+        }
+
+        return $query;
+    }
+
+    public function end_date($query)
+    {
+        $date = request()->get('end_date');
+
+        if ($date) {
+            $query = $query->whereDate($this->field_tanggal(), '<=', $date);
+        }
+
+        return $query;
+    }
+
     /**
      * The attributes that are mass assignable.
      *
