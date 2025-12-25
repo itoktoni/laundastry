@@ -19,14 +19,16 @@ class JenisController extends MasterController
         $this->model = $model::getModel();
     }
 
-    protected function beforeForm()
+    protected function share($data = [])
     {
         $customer = Customer::getOptions();
-        $jenis = [];
 
-        self::$share = [
+        $view = [
+            'model' => false,
             'customer' => $customer,
         ];
+
+        return self::$share = array_merge($view, self::$share, $data);
     }
 
     public function getData()

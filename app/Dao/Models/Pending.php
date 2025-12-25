@@ -5,26 +5,26 @@ namespace App\Dao\Models;
 use App\Dao\Entities\TransaksiEntity;
 use App\Dao\Models\Core\SystemModel;
 
-class Kotor extends SystemModel
+class Pending extends SystemModel
 {
     use TransaksiEntity;
 
     protected $perPage = 20;
-    protected $table = 'view_transaksi';
-    protected $primaryKey = 'transaksi_code';
+    protected $table = 'view_pending';
+    protected $primaryKey = 'transaksi_id';
 
     protected $filters = [
         'filter',
         'start_date',
         'end_date',
-        'customer_code',
+        'customer',
     ];
 
     public function start_date($query)
     {
         $date = request()->get('start_date');
         if ($date) {
-            $query = $query->whereDate($this->field_tanggal(), '>=', $date);
+            $query = $query->whereDate($this->field_report(), '>=', $date);
         }
 
         return $query;
@@ -35,11 +35,23 @@ class Kotor extends SystemModel
         $date = request()->get('end_date');
 
         if ($date) {
-            $query = $query->whereDate($this->field_tanggal(), '<=', $date);
+            $query = $query->whereDate($this->field_report(), '<=', $date);
         }
 
         return $query;
     }
+
+    public function customer($query)
+    {
+        $customer = request()->get('customer');
+
+        if ($customer) {
+            $query = $query->where($this->field_customer_code(), $customer);
+        }
+
+        return $query;
+    }
+
 
     /**
      * The attributes that are mass assignable.

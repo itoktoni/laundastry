@@ -17,7 +17,7 @@ class SystemMenu extends SystemModel
 
     protected $primaryKey = 'system_menu_code';
 
-    protected $with = ['has_link'];
+    // protected $with = ['has_link'];
 
     protected $keyType = 'string';
 

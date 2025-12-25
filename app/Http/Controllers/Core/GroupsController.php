@@ -33,20 +33,19 @@ class GroupsController extends MasterController
         return Response::redirectBack($data);
     }
 
-    protected function beforeForm()
+    protected function share($data = [])
     {
         $menu = SystemMenu::getOptions();
 
-        self::$share = [
+        $view = [
             'menu' => $menu,
         ];
+
+        return self::$share = array_merge($view, self::$share, $data);
     }
 
     public function getUpdate($code)
     {
-        $this->beforeForm();
-        $this->beforeUpdate($code);
-
         $data = $this->get($code, ['has_menu', 'has_menu.has_link']);
         $selected = $data->has_menu->pluck('system_menu_code') ?? [];
 

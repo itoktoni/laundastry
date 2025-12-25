@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Plugins\Query;
+use Illuminate\Database\Eloquent\Model;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
+        // Model::automaticallyEagerLoadRelationships();
+
         $roles = Query::role();
         if ($roles) {
             foreach ($roles as $role) {

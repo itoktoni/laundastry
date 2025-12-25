@@ -18,6 +18,16 @@ trait TransaksiEntity
         return $this->{$this->field_code()};
     }
 
+     public static function field_code_pending()
+    {
+        return 'transaksi_code_pending';
+    }
+
+    public function getFieldCodePendingAttribute()
+    {
+        return $this->{$this->field_code_pending()};
+    }
+
     public static function field_code_scan()
     {
         return 'transaksi_code_scan';
@@ -81,6 +91,16 @@ trait TransaksiEntity
     public function getFieldTanggalAttribute()
     {
         return $this->{$this->field_tanggal()};
+    }
+
+    public static function field_report()
+    {
+        return 'transaksi_report';
+    }
+
+    public function getFieldReportAttribute()
+    {
+        return $this->{$this->field_report()};
     }
 
     public static function field_status()

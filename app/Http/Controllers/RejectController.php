@@ -6,9 +6,9 @@ use App\Dao\Enums\Core\TransactionType;
 use App\Dao\Models\Kotor;
 use App\Dao\Models\Transaksi;
 
-class KotorController extends TransaksiController
+class RejectController extends TransaksiController
 {
-    public $type = TransactionType::KOTOR;
+    public $type = TransactionType::REJECT;
 
     public function getData()
     {

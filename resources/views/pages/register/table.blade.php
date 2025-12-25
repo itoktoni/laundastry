@@ -6,6 +6,17 @@
 
             <x-form method="GET" x-init="" x-target="table" role="search" aria-label="Contacts"
                 autocomplete="off" action="{{ moduleRoute('getTable') }}">
+
+                <div class="container-fluid filter-container mb-2">
+                    <div class="row">
+
+                        <x-form-input type="date" col="3" label="Start Date" name="start_date" />
+                        <x-form-input type="date" col="3" label="End Date" name="end_date" />
+                        <x-form-select col="6" name="customer" label="Customer" :options="$customer" />
+
+                    </div>
+                </div>
+
                 <x-filter toggle="Filter" :fields="$fields" />
             </x-form>
 

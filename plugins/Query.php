@@ -4,6 +4,8 @@ namespace Plugins;
 
 use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
+use App\Dao\Models\Pending;
+use App\Dao\Models\Transaksi;
 use App\Facades\Model\FilterModel;
 use App\Facades\Model\GroupModel;
 use App\Facades\Model\LinkModel;
@@ -205,6 +207,18 @@ class Query
         if ($jenis) {
             $data = $jenis->pluck('jenis_nama', 'jenis_id');
         }
+
+        return $data;
+    }
+
+    public static function getJenisPending($customer, $tanggal)
+    {
+        $data = [];
+        $jenis = Pending::query()
+            ->where('transaksi_code_customer', $customer)
+            ->where('transaksi_report', $tanggal);
+
+        $data = $jenis->pluck('jenis_nama', 'jenis_id');
 
         return $data;
     }

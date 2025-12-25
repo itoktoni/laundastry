@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Dao\Models\Customer;
-use App\Dao\Models\Register;
+use App\Dao\Models\Jenis;
+use App\Dao\Models\Pending;
+use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\MasterController;
 use App\Http\Function\CreateFunction;
 use App\Http\Function\UpdateFunction;
@@ -15,11 +17,11 @@ use Illuminate\Support\Facades\DB;
 use Plugins\Query;
 use Plugins\Response;
 
-class RegisterController extends MasterController
+class PendingController extends MasterController
 {
     use CreateFunction, UpdateFunction;
 
-    public function __construct(Register $model, SingleService $service)
+    public function __construct(Transaksi $model, SingleService $service)
     {
         self::$service = self::$service ?? $service;
         $this->model = $model::getModel();
@@ -32,13 +34,10 @@ class RegisterController extends MasterController
 
         if(request()->has('customer'))
         {
-            $jenis = Query::getJenisByCustomerCode(request()->get('customer'));
+            $jenis = Query::getJenisPending(request()->get('customer'), request()->get('tanggal'));
         }
 
-        $category = ['REGISTER' => 'REGISTER'];
-
         $view = [
-            'category' => $category,
             'jenis' => $jenis,
             'model' => $this->model,
             'customer' => $customer,
@@ -49,12 +48,9 @@ class RegisterController extends MasterController
 
     public function getData()
     {
-        $query = $this->model
-            ->addSelect(['register_code', 'register_tanggal', 'customer_nama', 'jenis_nama', DB::raw('SUM(register_qty) as total_qty')])
-            ->leftJoinRelationship('has_customer')
-            ->leftJoinRelationship('has_jenis')
-            ->groupBy('register_code')
-            ->active()
+        $query = Pending::query()
+            ->where($this->model->field_pending(),'>=', 1)
+            ->whereColumn('transaksi_pending', '>', 'transaksi_bayar')
             ->filter();
 
         $per_page = env('PAGINATION_NUMBER', 10);
@@ -68,28 +64,16 @@ class RegisterController extends MasterController
         return $query;
     }
 
-    public function getUpdate($code)
-    {
-        $model = $this->model::where('register_code', $code)->first();
-        $detail = $this->model::where('register_code', $code)->get();
-
-        $jenis = Query::getJenisByCustomerCode($model->register_code_customer);
-
-        if(request()->has('customer'))
-        {
-            $jenis = Query::getJenisByCustomerCode(request()->get('customer'));
-        }
-
-        return $this->views($this->template(), $this->share([
-            'model' => $model,
-            'jenis' => $jenis,
-            'detail' => $detail,
-        ]));
-    }
-
     public function getCreate()
     {
-        return $this->views($this->template(core : self::$is_core), $this->share());
+        $detail = Pending::query()
+            ->where('transaksi_code_customer', request()->get('customer'))
+            ->where('transaksi_report', request()->get('tanggal'))
+            ->get();
+
+        return $this->views($this->template(self::$is_core), $this->share([
+            'detail' => $detail,
+        ]));
     }
 
     public function postCreate(RegisterRequest $request, CreateRegisterService $service)
@@ -97,6 +81,25 @@ class RegisterController extends MasterController
         $data = $service->save($this->model, $request);
 
         return Response::redirectBack($data);
+    }
+
+    public function getUpdate($code)
+    {
+        $model = $this->model::where('transaksi_id', $code)->first();
+        $detail = $this->model::where('transaksi_id', $code)->get();
+
+        $jenis = Query::getJenisPending($model->transaksi_code_customer, $model->transaksi_report);
+
+        if(request()->has('customer'))
+        {
+            $jenis = Query::getJenisPending(request()->get('customer'), request()->get('tanggal'));
+        }
+
+        return $this->views($this->template(), $this->share([
+            'model' => $model,
+            'jenis' => $jenis,
+            'detail' => $detail,
+        ]));
     }
 
     public function postUpdate($code, RegisterRequest $request, UpdateRegisterService $service)
@@ -131,7 +134,7 @@ class RegisterController extends MasterController
 
     public function getPrint($code)
     {
-        $model = $this->model::with(['has_customer', 'has_jenis'])->where('register_code', $code)->first();
+        $model = $this->model::with(['has_customer', 'has_jenis'])->where('transaksi_id', $code)->first();
         $customer = $model->has_customer ?? false;
         $jenis = $model->has_jenis ?? false;
 

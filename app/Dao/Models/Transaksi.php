@@ -54,7 +54,7 @@ class Transaksi extends SystemModel
      *
      * @var array<int, string>
      */
-    protected $fillable = ['transaksi_id', 'transaksi_status', 'transaksi_code_scan', 'transaksi_transaksi', 'transaksi_code_packing', 'transaksi_code_bersih', 'transaksi_code_customer', 'transaksi_code_category', 'transaksi_id_jenis', 'transaksi_scan', 'transaksi_qc', 'transaksi_bersih', 'transaksi_pending', 'transaksi_tanggal', 'transaksi_report', 'transaksi_created_at', 'transaksi_created_by', 'transaksi_updated_at', 'transaksi_updated_by', 'transaksi_deleted_at', 'transaksi_deleted_by', 'transaksi_qc_at', 'transaksi_qc_by', 'transaksi_bersih_at', 'transaksi_bersih_by'];
+    protected $fillable = ['transaksi_id', 'transaksi_status', 'transaksi_code_scan', 'transaksi_code_pending', 'transaksi_bayar', 'transaksi_transaksi', 'transaksi_code_packing', 'transaksi_code_bersih', 'transaksi_code_customer', 'transaksi_code_category', 'transaksi_id_jenis', 'transaksi_scan', 'transaksi_qc', 'transaksi_bersih', 'transaksi_pending', 'transaksi_tanggal', 'transaksi_report', 'transaksi_created_at', 'transaksi_created_by', 'transaksi_updated_at', 'transaksi_updated_by', 'transaksi_deleted_at', 'transaksi_deleted_by', 'transaksi_qc_at', 'transaksi_qc_by', 'transaksi_bersih_at', 'transaksi_bersih_by', 'transaksi_pending_at', 'transaksi_pending_by'];
 
     public function has_customer()
     {

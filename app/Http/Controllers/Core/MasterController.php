@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Core;
 
 use App\Dao\Enums\Core\BooleanType;
 use App\Http\Controllers\Controller;
+use App\Http\Function\ControllerHelper;
 use App\Http\Requests\Core\DeleteRequest;
 use App\Services\Master\DeleteService;
 use Plugins\Response;
 
 class MasterController extends Controller
 {
+    use ControllerHelper;
+
     public static $service;
 
     public $model;
@@ -19,12 +22,6 @@ class MasterController extends Controller
     public static $is_core = false;
 
     public static $share = [];
-
-    protected function beforeForm() {}
-
-    protected function beforeCreate() {}
-
-    protected function beforeUpdate($code) {}
 
     protected function share($data = [])
     {
@@ -64,10 +61,10 @@ class MasterController extends Controller
     {
         $data = $this->getData();
 
-        return moduleView(modulePathTable(core: self::$is_core), [
+        return $this->views($this->template(core : self::$is_core), $this->share([
             'data' => $data,
             'fields' => $this->model::getModel()->getShowField(),
-        ]);
+        ]));
     }
 
     public function deleteData($code)
@@ -94,18 +91,12 @@ class MasterController extends Controller
 
     public function getCreate()
     {
-        $this->beforeForm();
-        $this->beforeCreate();
-
-        return moduleView(modulePathForm(path: self::$is_core), $this->share());
+        return $this->views($this->template(core : self::$is_core), $this->share());
     }
 
     public function getUpdate($code)
     {
-        $this->beforeForm();
-        $this->beforeUpdate($code);
-
-        return moduleView(modulePathForm(path: self::$is_core), $this->share([
+        return $this->views($this->template(core : self::$is_core), $this->share([
             'model' => $this->get($code),
         ]));
     }

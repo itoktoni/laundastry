@@ -23,7 +23,7 @@ class MenuController extends MasterController
         self::$is_core = true;
     }
 
-    protected function beforeForm()
+    protected function share($data = [])
     {
         $status = BooleanType::getOptions();
         $type = MenuType::getOptions();
@@ -31,7 +31,7 @@ class MenuController extends MasterController
 
         $files = Helper::getControllerFile();
 
-        self::$share = [
+        $view = [
             'status' => $status,
             'type' => $type,
             'model' => false,
@@ -41,6 +41,8 @@ class MenuController extends MasterController
 
             ],
         ];
+
+        return self::$share = array_merge($view, self::$share, $data);
     }
 
     public function postCreate(MenuRequest $request, CreateService $service)
@@ -70,9 +72,6 @@ class MenuController extends MasterController
 
     public function getUpdate($code)
     {
-        $this->beforeForm();
-        $this->beforeUpdate($code);
-
         $data = $this->get($code, ['has_link']);
         $selected = $data->has_link->pluck('system_link_code') ?? [];
 

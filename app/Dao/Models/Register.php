@@ -4,31 +4,70 @@ namespace App\Dao\Models;
 
 use App\Dao\Models\Core\SystemModel;
 
-
-/**
- * Class Register
- *
- * @property $register_id
- * @property $register_code
- * @property $register_id_jenis
- * @property $register_qty
- * @property $register_tanggal
- * @property $register_created_at
- * @property $register_created_by
- * @property $register_updated_at
- * @property $register_updated_by
- * @property $register_deleted_at
- * @property $register_deleted_by
- *
- * @package App
- * @mixin \Illuminate\Database\Eloquent\Builder
- */
-
 class Register extends SystemModel
 {
     protected $perPage = 20;
-    protected $table = 'detail_register';
+    protected $table = 'register';
     protected $primaryKey = 'register_id';
+
+    protected $filters = [
+        'filter',
+        'start_date',
+        'end_date',
+        'customer',
+    ];
+
+    public function getFieldNameAttribute()
+    {
+        return $this->{$this->field_name()};
+    }
+
+    public function field_tanggal()
+    {
+        return 'register_tanggal';
+    }
+
+    public function field_customer()
+    {
+        return 'register_code_customer';
+    }
+
+    public function getFieldTanggalAttribute()
+    {
+        return $this->{$this->field_tanggal()};
+    }
+
+    public function start_date($query)
+    {
+        $date = request()->get('start_date');
+        if ($date) {
+            $query = $query->whereDate($this->field_tanggal(), '>=', $date);
+        }
+
+        return $query;
+    }
+
+    public function end_date($query)
+    {
+        $date = request()->get('end_date');
+
+        if ($date) {
+            $query = $query->whereDate($this->field_tanggal(), '<=', $date);
+        }
+
+        return $query;
+    }
+
+    public function customer($query)
+    {
+        $customer = request()->get('customer');
+
+        if ($customer) {
+            $query = $query->where($this->field_customer(), $customer);
+        }
+
+        return $query;
+    }
 
     /**
      * The attributes that are mass assignable.

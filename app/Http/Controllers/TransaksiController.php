@@ -164,9 +164,6 @@ class TransaksiController extends MasterController
 
     public function getPacking($code)
     {
-        $this->beforeForm();
-        $this->beforeUpdate($code);
-
         $data = Kotor::find($code);
         $detail = Transaksi::where('transaksi_code_scan', $code)->get();
 
