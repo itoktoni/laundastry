@@ -2,6 +2,7 @@
 
 namespace Plugins;
 
+use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
 use App\Facades\Model\FilterModel;
 use App\Facades\Model\GroupModel;
@@ -203,6 +204,20 @@ class Query
 
         if ($jenis) {
             $data = $jenis->pluck('jenis_nama', 'jenis_id');
+        }
+
+        return $data;
+    }
+
+    public static function getCustomerByUser()
+    {
+        $data = [];
+        $jenis = Customer::select(Customer::field_primary(), Customer::field_name())
+            // ->where('customer_code_user', auth()->user()->user_code)
+            ->get();
+
+        if ($jenis) {
+            $data = $jenis->pluck(Customer::field_name(), Customer::field_primary());
         }
 
         return $data;

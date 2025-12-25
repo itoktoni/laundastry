@@ -7,6 +7,7 @@
 @endsection
 
 @section('content')
+
 <div class="invoice">
 
     <!-- HEADER -->
@@ -16,14 +17,14 @@
             <img src="{{ imageUrl($customer->customer_logo, 'customer') }}" alt="">
         </h1>
 		@endif
-        <h1>PACKING SLIP</h1>
+        <h1> DELIVERY BERSIH</h1>
     </div>
 
     <!-- CUSTOMER INFO -->
     <div class="invoice-info">
         <h2>Customer: {{ strtoupper($customer->customer_nama ?? '') }}</h2>
-        <p>Tanggal: {{ formatDate($model->kotor_tanggal) }}</p>
-        <p>Code: {{ $model->kotor_code_packing ?? null }}</p>
+        <p>Tanggal: {{ formatDate($model->transaksi_report) }}</p>
+        <p>Code: {{ $model->transaksi_code_bersih ?? null }}</p>
     </div>
 
     <!-- TABLE -->
@@ -37,16 +38,22 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="item">
-                    <td class="col-no">{{ 1 }}</td>
-                    <td class="col-name text-left">{{ $jenis->jenis_nama }}</td>
-                    <td class="col-qty">{{ $model->kotor_bersih }}</td>
-                </tr>
+                @forelse($data as $table)
+					<tr class="item {{ $loop->last ? 'last' : '' }}">
+						<td class="col-no">{{ $loop->iteration }}</td>
+						<td class="col-name text-left">{{ $table->jenis_nama }}</td>
+						<td class="col-qty">{{ $table->transaksi_bersih }}</td>
+					</tr>
+				@empty
+					<tr class="item last">
+						<td colspan="3">No data available</td>
+					</tr>
+				@endforelse
             </tbody>
 			<tfoot>
 				<tr>
 					<td colspan="2" style="text-align: right">Total</td>
-					<td class="col-qty">{{ $model->kotor_bersih }}</td>
+					<td class="col-qty">{{ $data->sum('transaksi_bersih') }}</td>
 				</tr>
 			</tfoot>
         </table>
@@ -66,4 +73,5 @@
     </div>
 
 </div>
+
 @endsection

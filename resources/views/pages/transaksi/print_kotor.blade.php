@@ -1,3 +1,12 @@
+@extends('layouts.print')
+
+@section('header')
+
+<x-action_print/>
+
+@endsection
+
+@section('content')
 
 <div class="invoice">
 
@@ -8,14 +17,14 @@
             <img src="{{ imageUrl($customer->customer_logo, 'customer') }}" alt="">
         </h1>
 		@endif
-        <h1> DETAIL TRANSAKSI KOTOR</h1>
+        <h1> DETAIL TRANSAKSI {{ $type }}</h1>
     </div>
 
     <!-- CUSTOMER INFO -->
     <div class="invoice-info">
-        <h2>Customer: {{ strtoupper($customer->customer_nama ?? '') }}</h2>
-        <p>Tanggal: {{ formatDate($model->kotor_tanggal) }}</p>
-        <p>Code: {{ $model->kotor_code ?? null }}</p>
+        <h2>Customer: {{ strtoupper($customer->field_name ?? '') }}</h2>
+        <p>Tanggal: {{ formatDate($model->field_tanggal) }}</p>
+        <p>Code: {{ $model->field_code ?? null }}</p>
     </div>
 
     <!-- TABLE -->
@@ -65,3 +74,4 @@
 
 </div>
 
+@endsection

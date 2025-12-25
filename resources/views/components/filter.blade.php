@@ -24,7 +24,7 @@
     @endphp
 
     <div {{ $attributes }}>
-        @if(!$hide)
+        @if(false)
         <div class="{{ $show_toggle }}" id="{{ $toggle }}">
 
         @if($total > 4)

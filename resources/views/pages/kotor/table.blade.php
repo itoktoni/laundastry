@@ -3,10 +3,20 @@
     <x-card class="table-container">
 
         <div class="col-md-12">
-
             <x-form method="GET" x-init="" x-target="table" role="search" aria-label="Contacts"
                 autocomplete="off" action="{{ moduleRoute('getTable') }}">
+
+                <div class="row">
+
+                    <x-form-input type="date" value="{{ date('Y-m-d') }}" col="3" label="Start Date" name="start_date" />
+                    <x-form-input type="date" value="{{ date('Y-m-d') }}" col="3" label="End Date" name="end_date" />
+                    <x-form-select col="6" name="customer_code" :options="$customer" />
+
+                </div>
+
                 <x-filter toggle="Filter" :fields="$fields" />
+
+
             </x-form>
 
             <x-form method="POST" action="{{ moduleRoute('getTable') }}">
@@ -22,14 +32,13 @@
                                         <input class="btn-check-d" type="checkbox">
                                     </th>
                                     <th class="text-center column-action">{{ __('Action') }}</th>
-                                    <th>Kode</th>
-                                    <th>Status</th>
-                                    <th>Tanggal</th>
+                                    <th style="width:12%;">Kode</th>
+                                    <th style="width:10%;">Tanggal</th>
                                     <th>Customer</th>
-                                    <th class="col-qty" style="width:10%;">Kotor</th>
-                                    <th class="col-qty" style="width:10%;">QC</th>
-                                    <th class="col-qty" style="width:10%;">Packing</th>
-                                    <th class="col-qty" style="width:10%;">Pending</th>
+                                    <th class="col-qty" style="width:8%;">Kotor</th>
+                                    <th class="col-qty" style="width:8%;">QC</th>
+                                    <th class="col-qty" style="width:8%;">Packing</th>
+                                    <th class="col-qty" style="width:8%;">Pending</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,22 +49,37 @@
                                                 value="{{ $table->field_primary }}">
                                         </td>
                                         <td data-label="Action" class="col-md-2 text-center column-action">
-                                            <x-crud :model="$table">
-                                                <x-button module="getPrint" key="{{ $table->field_primary }}" color="dark" icon="printer"/>
-                                                <x-button module="getQc" key="{{ $table->field_primary }}" color="warning" label="QC" icon="list"/>
-                                                <x-button module="getPacking" key="{{ $table->field_primary }}" color="info" label="Packing"/>
-                                                <x-button module="getPrintBersih" key="{{ $table->field_primary }}" color="success" label="Print Bersih"/>
-                                            </x-crud>
+                                            <div class="action-table">
+                                                @if ($table->field_qc == 0)
+                                                    <x-button module="getUpdate" key="{{ $table->field_primary }}"
+                                                        color="primary" icon="pencil-square" />
+                                                    <x-button module="getDelete" key="{{ $table->field_primary }}"
+                                                        color="danger" icon="trash3"
+                                                        onclick="return confirm('Apakah anda yakin ingin menghapus ?')"
+                                                        class="button-delete" />
+                                                @endif
+                                                <x-button module="getPrintKotor" key="{{ $table->field_primary }}"
+                                                    color="dark" icon="printer" />
+
+                                                @if ($table->field_qc == 0)
+                                                    <x-button module="getQc" key="{{ $table->field_primary }}"
+                                                        color="warning" label="QC" icon="list" />
+                                                @endif
+
+                                                <x-button module="getPacking" key="{{ $table->field_primary }}"
+                                                    color="info" label="Packing" />
+                                                <x-button module="getPrintBersih" key="{{ $table->field_primary }}"
+                                                    color="success" label="Print DO" />
+                                            </div>
                                         </td>
 
-										<td data-label="ID">{{ $table->field_primary }}</td>
-										<td data-label="Status">{{ $table->kotor_status }}</td>
-										<td data-label="Tanggal">{{ $table->field_tanggal }}</td>
-										<td data-label="Customer">{{ $table->customer_nama }}</td>
-										<td data-label="Kotor">{{ $table->kotor_qty }}</td>
-                                        <td data-label="QC" class="col-qty">{{ $table->kotor_qc }}</td>
-						                <td data-label="Packing" class="col-qty">{{ $table->kotor_bersih }}</td>
-						                <td data-label="Pending" class="col-qty">{{ $table->kotor_pending }}</td>
+                                        <td data-label="ID">{{ $table->field_primary }}</td>
+                                        <td data-label="Tanggal">{{ formatDate($table->field_tanggal) }}</td>
+                                        <td data-label="Customer">{{ $table->customer_nama }}</td>
+                                        <td data-label="Kotor">{{ $table->field_scan }}</td>
+                                        <td data-label="QC" class="col-qty">{{ $table->field_qc }}</td>
+                                        <td data-label="Packing" class="col-qty">{{ $table->field_bersih }}</td>
+                                        <td data-label="Pending" class="col-qty">{{ $table->field_pending }}</td>
 
                                     </tr>
                                 @empty

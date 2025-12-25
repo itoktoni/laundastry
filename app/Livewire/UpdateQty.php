@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Dao\Models\DetailKotor;
+use App\Dao\Models\Transaksi;
 use Livewire\Component;
 
 class UpdateQty extends Component
@@ -22,14 +22,14 @@ class UpdateQty extends Component
     public function mount($kotorId = null, $id = null)
     {
         $this->prefilledKotorId = $kotorId;
-        $kotor =  DetailKotor::where('kotor_id', $kotorId)->first();
+        $kotor =  Transaksi::where('transaksi_id', $kotorId)->first();
         $this->kotorId = $kotorId;
-        $this->kotorCode = $kotor->kotor_code_scan;
+        $this->kotorCode = $kotor->transaksi_code_scan;
 
         $this->status = null;
-        $this->qtyKotor = $kotor->kotor_kotor;
-        $this->qtyQc = $kotor->kotor_qc;
-        $this->qty = $kotor->kotor_bersih;
+        $this->qtyKotor = intval($kotor->transaksi_scan);
+        $this->qtyQc = intval($kotor->transaksi_qc);
+        $this->qty = intval($kotor->transaksi_bersih);
         $this->message = null;
 
         $this->id = $id;
@@ -43,12 +43,19 @@ class UpdateQty extends Component
         ]);
 
         try {
-            $result = DetailKotor::where('kotor_id', $this->kotorId)->update([
-                'kotor_code_packing' => $this->kotorCode.'_PACK_'.$this->id,
-                'kotor_bersih' => $this->qty,
-                'kotor_pending' => $this->qty - $this->qtyQc,
-                'kotor_bersih_at' => now(),
-                'kotor_bersih_by' => auth()->user()->id,
+
+            if(intval($this->qty) > $this->qtyQc){
+                $this->status = 'error';
+                $this->message = 'Qty tidak boleh lebih besar dari Kotor Qty!';
+                return;
+            }
+
+            $result = Transaksi::where('transaksi_id', $this->kotorId)->update([
+                'transaksi_code_packing' => $this->kotorCode.'_PACK_'.$this->id,
+                'transaksi_bersih' => $this->qty,
+                'transaksi_pending' => $this->qtyQc - $this->qty,
+                'transaksi_bersih_at' => now(),
+                'transaksi_bersih_by' => auth()->user()->id,
             ]);
 
             if ($result) {

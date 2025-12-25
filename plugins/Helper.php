@@ -147,7 +147,7 @@ class Helper
         $files = File::allFiles($path);
 
         foreach ($files as $file) {
-            if (! in_array($file->getFilenameWithoutExtension(), ['ForgotPasswordController', 'LoginController', 'RegisterController', 'ResetPasswordController', 'VerificationController', 'ReportController'])) {
+            if (! in_array($file->getFilenameWithoutExtension(), ['ForgotPasswordController', 'LoginController', 'ResetPasswordController', 'VerificationController', 'ReportController'])) {
                 $code = 'App\\Http\\Controllers\\'.$file->getFilenameWithoutExtension();
                 $fileNames[$code] = $code;
             }

@@ -1,22 +1,14 @@
 <x-layout>
     <x-form :model="$model">
-        <x-card :label="'Packing '. $model->kotor_code">
-            <x-action form="form">
-                    <x-button :href="moduleRoute('getPrintBersih', ['code' => $model->kotor_code])" color="danger" label="Print Delivery" />
-            </x-action>
+        <x-card>
+            <x-action form="form" />
 
                 @bind($model)
 
-                 <div class=" form-group col-md-3 ">
-                    <label for="auto_id_filter">Customer</label>
-                    <input type="hidden" name="customer_code" value="{{ $model->customer_code }}">
-                    <input class="form-control" type="text" readonly value="{{ $model->customer_nama ?? '' }}">
-                </div>
+                <input type="hidden" name="register_code" value="{{ $model->register_code ?? null }}" />
 
-                <div class=" form-group col-md-3 ">
-                    <label for="auto_id_filter">Tanggal</label>
-                    <input class="form-control" type="text" readonly value="{{ $model->kotor_tanggal }}">
-                </div>
+                <x-form-select col="4" id="customer" default="{{ request()->get('customer') ?? $model->register_code_customer ?? null }}" name="customer_code" label="Customer" :options="$customer" />
+                <x-form-select col="2" name="kotor_status" default="{{ $model->kotor_code_category ?? 'REGISTER' }}" label="Category" :options="$category" />
                 <div class=" form-group col-md-6 ">
                     <label for="auto_id_filter">Filter Jenis Linen</label>
                     <input class="form-control search" type="text" value="" name="filter" id="auto_id_filter">
@@ -27,44 +19,39 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th style="width: 5%" class="checkbox-column">No.</th>
+                                <th style="width: 4%" class="checkbox-column">No.</th>
                                 <th style="width: 60%">Jenis Linen</th>
-                                <th style="width: 10%" class="text-center">Kotor</th>
-                                <th style="width: 15%" class="text-center">Packing</th>
+                                <th style="width: 10%" class="text-center">Qty</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($jenis as $key => $value)
                             @php
-                            $kotor = $detail->firstWhere('kotor_id_jenis', $key);
-                            $qty_scan = $kotor ? $kotor->kotor_scan : 0;
-                            $qty_qc = $kotor ? $kotor->kotor_qc : 0;
-                            $qty_bersih = $kotor ? $kotor->qty_bersih : 0;
 
-                            $kotor_id = $kotor ? $kotor->kotor_id : null;
+                            $qty = 0;
+                            $register_id = null;
+
+                            if(isset($detail)){
+                                $register = $detail->firstWhere('register_id_jenis', $key);
+                                $qty = $register ? $register->register_qty : 0;
+                                $register_id = $register ? $register->register_id : null;
+                            }
 
                             @endphp
 
                                 <tr>
+
                                     <input type="hidden" name="qty[{{ $key }}][jenis_id]"
                                         value="{{ $key ?? null }}" />
 
                                     <td data-label="No." class="text-center">{{ $loop->iteration }}</td>
                                     <td data-label="Linen">{{ $value }}</td>
-
-                                    <td class="text-center" data-label="Kotor">
-                                        <input type="hidden" name="qty[{{ $key }}][scan]"
-                                        value="{{ $qty_scan ?? null }}" />
-
-                                         <input type="hidden" name="qty[{{ $key }}][qc]"
-                                        value="{{ $qty_qc ?? null }}" />
-
-                                        {{ $qty_qc }}
+                                    <td data-label="Qty">
+                                        <input class="form-control text-right" type="number" min="0" value="{{ $qty ?? null }}"
+                                            name="qty[{{ $key }}][qty]" />
                                     </td>
-
-                                    <livewire:update-qty :kotorId="$kotor_id" :id="$key"/>
-
                                 </tr>
+
                             @endforeach
                         </tbody>
                     </table>

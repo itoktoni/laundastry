@@ -4,6 +4,7 @@ use Alkhachatryan\LaravelWebConsole\LaravelWebConsoleServiceProvider;
 use App\Dao\Enums\Core\BooleanType;
 use App\Dao\Enums\Core\LevelType;
 use App\Dao\Enums\Core\MenuType;
+use App\Dao\Enums\Core\TransactionType;
 use App\Dao\Models\Core\SystemGroup;
 use App\Providers\CacheableAuthUserServiceProvider;
 use App\Providers\FacadeServiceProviders;
@@ -259,6 +260,7 @@ return [
         'BooleanType' => BooleanType::class,
         'MenuType' => MenuType::class,
         'LevelType' => LevelType::class,
+        'TransactionType' => TransactionType::class,
         'SharedData' => SharedData::class,
         'Query' => Query::class,
         'Str' => Str::class,

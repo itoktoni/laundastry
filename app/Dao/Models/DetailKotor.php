@@ -46,7 +46,7 @@ class DetailKotor extends SystemModel
      *
      * @var array<int, string>
      */
-    protected $fillable = ['kotor_id', 'kotor_code_scan', 'kotor_code_packing', 'kotor_code_bersih', 'kotor_code_customer', 'kotor_code_category', 'kotor_id_jenis', 'kotor_scan', 'kotor_qc', 'kotor_bersih', 'kotor_pending', 'kotor_tanggal', 'kotor_report', 'kotor_created_at', 'kotor_created_by', 'kotor_updated_at', 'kotor_updated_by', 'kotor_deleted_at', 'kotor_deleted_by', 'kotor_qc_at', 'kotor_qc_by', 'kotor_bersih_at', 'kotor_bersih_by'];
+    protected $fillable = ['kotor_id', 'kotor_status', 'kotor_code_scan', 'kotor_transaksi', 'kotor_code_packing', 'kotor_code_bersih', 'kotor_code_customer', 'kotor_code_category', 'kotor_id_jenis', 'kotor_scan', 'kotor_qc', 'kotor_bersih', 'kotor_pending', 'kotor_tanggal', 'kotor_report', 'kotor_created_at', 'kotor_created_by', 'kotor_updated_at', 'kotor_updated_by', 'kotor_deleted_at', 'kotor_deleted_by', 'kotor_qc_at', 'kotor_qc_by', 'kotor_bersih_at', 'kotor_bersih_by'];
 
     public function has_customer()
     {
