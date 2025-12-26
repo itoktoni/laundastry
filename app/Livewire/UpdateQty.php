@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Dao\Enums\TransactionType;
 use App\Dao\Models\Transaksi;
 use Livewire\Component;
 
@@ -24,7 +25,23 @@ class UpdateQty extends Component
         $this->prefilledKotorId = $kotorId;
         $kotor =  Transaksi::where('transaksi_id', $kotorId)->first();
         $this->kotorId = $kotorId;
-        $this->kotorCode = $kotor->transaksi_code_scan;
+
+        if($kotor->transaksi_status == TransactionType::KOTOR)
+        {
+            $code = env('CODE_KOTOR', 'KTR');
+        }
+        else if($kotor->transaksi_status == TransactionType::REJECT)
+        {
+            $code = env('CODE_REJECT', 'RJT');
+        }
+        else if($kotor->transaksi_status == TransactionType::REWASH)
+        {
+            $code = env('CODE_REWASH', 'RWS');
+        }
+
+        $code = 'PACK-'.$code.'-'.$kotor->transaksi_code_customer.'-'.unic(5).'-';
+
+        $this->kotorCode = $code;
 
         $this->status = null;
         $this->qtyKotor = intval($kotor->transaksi_scan);
@@ -51,7 +68,7 @@ class UpdateQty extends Component
             }
 
             $result = Transaksi::where('transaksi_id', $this->kotorId)->update([
-                'transaksi_code_packing' => $this->kotorCode.'_PACK_'.$this->id,
+                'transaksi_code_packing' => $this->kotorCode.$this->id,
                 'transaksi_bersih' => $this->qty,
                 'transaksi_pending' => $this->qtyQc - $this->qty,
                 'transaksi_bersih_at' => now(),

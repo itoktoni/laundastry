@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Dao\Enums\TransactionType;
 use App\Dao\Models\Category;
 use App\Dao\Models\Customer;
 use App\Dao\Models\DetailKotor;
@@ -31,7 +32,7 @@ class TransaksiController extends MasterController
         $this->model = $model::getModel();
     }
 
-    protected function beforeForm()
+    protected function share($data = [])
     {
         $customer = Query::getCustomerByUser();
         $jenis = [];
@@ -43,17 +44,19 @@ class TransaksiController extends MasterController
 
         $category = Category::getOptions();
 
-        self::$share = [
+        $view = [
             'category' => $category,
             'jenis' => $jenis,
+            'model' => $this->model,
             'customer' => $customer,
         ];
+
+        return self::$share = array_merge($view, self::$share, $data);
+
     }
 
     public function getTable()
     {
-        $this->beforeForm();
-
         $data = $this->getData();
         return moduleView(modulePathTable(core: self::$is_core), $this->share([
             'data' => $data,
@@ -64,9 +67,6 @@ class TransaksiController extends MasterController
 
     public function getCreate()
     {
-        $this->beforeForm();
-        $this->beforeCreate();
-
         return moduleView(modulePathForm('form', 'transaksi'), $this->share([
             'type' => $this->type
         ]));
@@ -80,9 +80,6 @@ class TransaksiController extends MasterController
 
     public function getUpdate($code)
     {
-        $this->beforeForm();
-        $this->beforeUpdate($code);
-
         $data = Kotor::find($code);
         $detail = Transaksi::where(Transaksi::field_code_scan(), $code)->get();
 
@@ -110,9 +107,6 @@ class TransaksiController extends MasterController
 
     public function getQc($code)
     {
-        $this->beforeForm();
-        $this->beforeUpdate($code);
-
         $data = Kotor::find($code);
         $detail = Transaksi::where('transaksi_code_scan', $code)->get();
 
@@ -201,6 +195,7 @@ class TransaksiController extends MasterController
         $data = Transaksi::select([
             'jenis_nama',
             'transaksi_code_customer',
+            'transaksi_status',
             'transaksi_report',
             'transaksi_bersih',
             'jenis_nama',
@@ -214,14 +209,29 @@ class TransaksiController extends MasterController
 
         $customer = Customer::find($model->transaksi_code_customer) ?? false;
 
-        $bersih = 'DLV'.$customer->customer_code.date('Ymd').unic(5);
+        $unic = '';
+
+        if($model->transaksi_status == TransactionType::KOTOR)
+        {
+            $unic = env('CODE_KOTOR', 'KTR');
+        }
+        else if($model->transaksi_status == TransactionType::REJECT)
+        {
+            $unic = env('CODE_REJECT', 'RJT');
+        }
+        else if($model->transaksi_status == TransactionType::REWASH)
+        {
+            $unic = env('CODE_REWASH', 'RWS');
+        }
+
+        $unic = 'DLV-'.$unic.'-'.$model->transaksi_code_customer.'-'.date('Ymd').unic(5);
 
         $update =  Transaksi::query()
             ->where('transaksi_code_scan', $code)
             ->whereNull('transaksi_code_bersih')
 
             ->update([
-                'transaksi_code_bersih' => $bersih,
+                'transaksi_code_bersih' => $unic,
                 'transaksi_report' => date('Y-m-d')
             ]);
 

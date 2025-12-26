@@ -4,6 +4,7 @@ namespace Plugins;
 
 use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
+use App\Dao\Models\Opname;
 use App\Dao\Models\Pending;
 use App\Dao\Models\Transaksi;
 use App\Facades\Model\FilterModel;
@@ -235,5 +236,23 @@ class Query
         }
 
         return $data;
+    }
+
+    public static function getOpnameByUser()
+    {
+        $opname = Opname::with(['has_customer'])
+            ->where('opname_mulai', '>=', now()->addMonth(-6))
+            ->get()->mapWithKeys(function ($item) {
+                $customer = $item->has_customer->field_name ?? '';
+
+                return [
+                    $item->opname_id => $item->opname_id.' | '.
+                    $customer.' = '.
+                    $item->opname_mulai.'-'.
+                    $item->opname_selesai,
+                ];
+            });
+
+        return $opname;
     }
 }

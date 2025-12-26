@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Dao\Enums\Core\TransactionType;
+use App\Dao\Enums\TransactionType;
 use App\Dao\Traits\ValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -34,7 +34,7 @@ class TransaksiRequest extends FormRequest
             $code = env('CODE_REWASH', 'RWS');
         }
 
-        $code = $code.$customer_code.unic(5);
+        $code = $code.'-'.$customer_code.'-'.date('Ymd').unic(5);
 
         if (request()->segment(5) == 'update')
         {

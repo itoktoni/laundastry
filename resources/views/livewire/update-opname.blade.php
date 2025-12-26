@@ -1,9 +1,9 @@
-<td data-label="Packing" class="border rounded bg-light">
+<td data-label="Opname" class="border rounded bg-light">
 
 <div class="form-group input-group {{ $errors->has('qty') ? 'has-error' : '' }}">
   <input type="text" wire:model="qty"  name="qty[{{ $id }}][bersih]" value="{{ $qty }}" class="form-control" placeholder="Qty">
   <div class="input-group-append">
-    <button class="btn btn-dark" wire:click="updateQty" type="button">Bayar</button>
+    <button class="btn btn-dark" wire:click="updateQty" type="button">Print</button>
   </div>
 </div>
 

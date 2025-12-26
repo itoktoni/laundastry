@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Dao\Enums\Core\TransactionType;
+use App\Dao\Enums\TransactionType;
 use App\Dao\Models\Kotor;
 use App\Dao\Models\Transaksi;
 
@@ -13,7 +13,6 @@ class KotorController extends TransaksiController
     public function getData()
     {
         $query = Kotor::where(Transaksi::field_status(), $this->type)
-            ->active()
             ->filter();
 
         $per_page = env('PAGINATION_NUMBER', 10);

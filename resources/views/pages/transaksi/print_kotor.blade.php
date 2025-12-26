@@ -42,7 +42,7 @@
 					<tr class="item {{ $loop->last ? 'last' : '' }}">
 						<td class="col-no">{{ $loop->iteration }}</td>
 						<td class="col-name text-left">{{ $table->jenis_nama }}</td>
-						<td class="col-qty">{{ $table->kotor_scan }}</td>
+						<td class="col-qty">{{ $table->transaksi_scan }}</td>
 					</tr>
 				@empty
 					<tr class="item last">
@@ -53,7 +53,7 @@
 			<tfoot>
 				<tr>
 					<td colspan="2" style="text-align: right">Total</td>
-					<td class="col-qty">{{ $data->sum('kotor_scan') }}</td>
+					<td class="col-qty">{{ $data->sum('transaksi_scan') }}</td>
 				</tr>
 			</tfoot>
         </table>

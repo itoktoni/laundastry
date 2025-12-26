@@ -53,8 +53,8 @@
                                         <td class="col-md-2 text-center column-action">
 
                                             <div class="action-table">
-                                                <x-button module="getUpdate" key="{{ $table->field_primary }}" color="primary" icon="pencil-square" />
-                                                <x-button module="getPrint" key="{{ $table->field_primary }}" color="dark" icon="printer"/>
+                                                <x-button module="getUpdate" key="{{ $table->field_primary }}" color="warning" label="Pending" />
+                                                <x-button module="getPrint" key="{{ $table->field_primary }}" color="dark" label="Cetak"/>
                                             </div>
 
                                         </td>

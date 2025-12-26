@@ -16,6 +16,20 @@ class RegisterRequest extends FormRequest
         ];
     }
 
+    public function withValidator($validator)
+    {
+        $data = collect(request('qty'));
+
+        $validator->after(function ($validator) use ($data) {
+
+            if($data->sum('qty') == 0)
+            {
+                $validator->errors()->add('customer_code', 'Harus ada minimal 1 Linen yang dikirim !');
+            }
+        });
+    }
+
+
     public function prepareForValidation()
     {
         $customer_code = $this->customer_code;

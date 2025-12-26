@@ -2,17 +2,18 @@
 
 namespace App\Livewire;
 
+use App\Dao\Models\OpnameDetail;
 use App\Dao\Models\Transaksi;
 use Livewire\Component;
 
-class UpdatePending extends Component
+class UpdateOpname extends Component
 {
     public $prefilledtransaksiID;
     public $transaksiID;
-    public $pendingCode;
+    public $opnameCode;
 
     public $qty;
-    public $qtyPending;
+    public $qtyRegister;
     public $status;
     public $message;
 
@@ -21,15 +22,15 @@ class UpdatePending extends Component
     public function mount($transaksiID = null, $id = null)
     {
         $this->prefilledtransaksiID = $transaksiID;
-        $kotor =  Transaksi::where('transaksi_id', $transaksiID)->first();
-        $this->transaksiID = $transaksiID;
+        $opname = OpnameDetail::where('odetail_id', $transaksiID)->first();
 
-        $code = env('CODE_PENDING', 'PND').'-'.$kotor->transaksi_code_customer.'-'.date('Ymd').unic(5).'_';
-        $this->pendingCode = $code;
+        $this->transaksiID = $transaksiID;
+        $code = env('CODE_OPNAME', 'OPM').'-'.$opname->odetail_code_customer.'-'.date('Ymd').unic(5).'_';
+        $this->opnameCode = $code;
 
         $this->status = null;
-        $this->qtyPending = intval($kotor->transaksi_pending);
-        $this->qty = intval($kotor->transaksi_bayar);
+        $this->qtyRegister = intval($opname->odetail_register);
+        $this->qty = intval($opname->odetail_ketemu);
         $this->message = null;
 
         $this->id = $id;
@@ -44,17 +45,15 @@ class UpdatePending extends Component
 
         try {
 
-            if(intval($this->qty) > $this->qtyPending){
+            if(intval($this->qty) == 0){
                 $this->status = 'error';
-                $this->message = 'Qty tidak boleh lebih besar dari Pending!';
+                $this->message = 'Qty tidak boleh 0 !';
                 return;
             }
 
-            $result = Transaksi::where('transaksi_id', $this->transaksiID)->update([
-                'transaksi_code_pending' => $this->pendingCode.$this->id,
-                'transaksi_bayar' => $this->qty,
-                'transaksi_pending_at' => now(),
-                'transaksi_pending_by' => auth()->user()->id,
+            $result = OpnameDetail::where('odetail_id', $this->transaksiID)->update([
+                'odetail_code' => $this->opnameCode.$this->id,
+                'odetail_ketemu' => $this->qty,
             ]);
 
             if ($result) {
@@ -73,7 +72,7 @@ class UpdatePending extends Component
         }
 
 
-        return redirect()->route('pending.getPrint', ['code' => $this->transaksiID]);
+        return redirect()->route('opname.getPrint', ['code' => $this->transaksiID]);
     }
 
     public function settransaksiID($transaksiID)
@@ -85,6 +84,6 @@ class UpdatePending extends Component
 
     public function render()
     {
-        return view('livewire.update-pending');
+        return view('livewire.update-opname');
     }
 }

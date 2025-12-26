@@ -34,8 +34,8 @@
                                         <input class="btn-check-d" type="checkbox">
                                     </th>
                                     <th class="text-center column-action">{{ __('Action') }}</th>
-                                    <th style="width:12%;">Kode</th>
-                                    <th style="width:10%;">Tanggal</th>
+                                    <th>Kode</th>
+                                    <th>Tanggal</th>
                                     <th>Customer</th>
                                     <th class="col-qty" style="width:7%;">Kotor</th>
                                     <th class="col-qty" style="width:7%;">QC</th>

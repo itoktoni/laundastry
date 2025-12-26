@@ -8,6 +8,7 @@ use App\Http\Function\CreateFunction;
 use App\Http\Function\UpdateFunction;
 use App\Services\Master\SingleService;
 use App\Facades\Model\JenisModel;
+use Plugins\Query;
 
 class JenisController extends MasterController
 {
@@ -21,7 +22,7 @@ class JenisController extends MasterController
 
     protected function share($data = [])
     {
-        $customer = Customer::getOptions();
+        $customer = Query::getCustomerByUser();
 
         $view = [
             'model' => false,

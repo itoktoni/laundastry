@@ -22,8 +22,8 @@
     <!-- CUSTOMER INFO -->
     <div class="invoice-info">
         <h2>Customer: {{ strtoupper($customer->customer_nama ?? '') }}</h2>
-        <p>Tanggal: {{ formatDate($model->transaksi_pending_at) }}</p>
-        <p>Code: {{ $model->transaksi_code_pending ?? null }}</p>
+        <p>Tanggal: {{ formatDate($model->odetail_updated_at) }}</p>
+        <p>Code: {{ $model->odetail_code ?? null }}</p>
     </div>
 
     <!-- TABLE -->
@@ -33,23 +33,20 @@
                 <tr>
                     <th class="col-no">No.</th>
                     <th class="col-name text-left" style="width:70%;">Nama Jenis Linen</th>
-                    <th class="col-qty" style="width:10%;">Pending</th>
-                    <th class="col-qty" style="width:10%;">Bayar</th>
+                    <th class="col-qty" style="width:10%;">Qty</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="item">
                     <td class="col-no">{{ 1 }}</td>
                     <td class="col-name text-left">{{ $jenis->jenis_nama }}</td>
-                    <td class="col-qty">{{ $model->transaksi_pending }}</td>
-                    <td class="col-qty">{{ $model->transaksi_bayar }}</td>
+                    <td class="col-qty">{{ $model->odetail_register }}</td>
                 </tr>
             </tbody>
 			<tfoot>
 				<tr>
-                    <td>*</td>
-					<td class="text-left" colspan="2">Sisa Pending</td>
-					<td class="col-qty">{{ $model->transaksi_pending - $model->transaksi_bayar }}</td>
+					<td colspan="2" style="text-align: right">Total</td>
+					<td class="col-qty">{{ $model->odetail_register }}</td>
 				</tr>
 			</tfoot>
         </table>

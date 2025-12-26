@@ -1,15 +1,15 @@
 <x-layout>
     <x-form :model="$model">
-        <x-card label="Pending">
+        <x-card label="Opname">
             <x-action form="blank">
             </x-action>
 
                 @bind($model)
 
-                <x-form-select col="4" id="customer" default="{{ request()->get('customer') ?? $model->register_code_customer ?? null }}" name="customer_code" label="Customer" :options="$customer" />
-                <x-form-input col="3" id="tanggal" default="{{ request()->get('tanggal') ?? date('Y-m-d') }}" name="tanggal" label="Tanggal Pending" type="date"/>
+                <x-form-select col="4" id="customer" default="{{ request()->get('customer') ?? $model->opname_code_customer ?? null }}" name="customer_code" label="Customer" :options="$customer" />
+                <x-form-input col="4" id="tanggal" name="tanggal" value="{{ formatDate($model->opname_mulai).' - '.formatDate($model->opname_selesai) }}" label="Tanggal Opname"/>
 
-                <div class=" form-group col-md-5 ">
+                <div class=" form-group col-md-4 ">
                     <label for="auto_id_filter">Filter Jenis Linen</label>
                     <input class="form-control search" type="text" value="" name="filter" id="auto_id_filter">
                 </div>
@@ -21,18 +21,17 @@
                             <tr>
                                 <th style="width: 5%" class="checkbox-column">No.</th>
                                 <th style="width: 60%">Jenis Linen</th>
-                                <th style="width: 10%" class="text-center">Pending</th>
-                                <th style="width: 15%" class="text-center">Pembayaran</th>
+                                <th style="width: 10%" class="text-center">Register</th>
+                                <th style="width: 15%" class="text-center">Opname</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($jenis as $key => $value)
                             @php
-                            $transaksi = $detail->firstWhere('transaksi_id_jenis', $key);
-                            $qty_pending = $transaksi ? $transaksi->transaksi_pending : 0;
-                            $qty_bayar = $transaksi ? $transaksi->transaksi_bayar : 0;
+                            $transaksi = $detail->firstWhere('odetail_id_jenis', $key);
+                            $qty_register = $transaksi ? $transaksi->odetail_register : 0;
 
-                            $transaksi_id = $transaksi ? $transaksi->transaksi_id : null;
+                            $transaksi_id = $transaksi ? $transaksi->odetail_id : null;
 
                             @endphp
 
@@ -45,15 +44,23 @@
 
                                     <td class="text-center" data-label="Kotor">
                                         <input type="hidden" name="qty[{{ $key }}][qc]"
-                                        value="{{ $qty_pending ?? null }}" />
+                                        value="{{ $qty_register ?? null }}" />
 
-                                        {{ $qty_pending }}
+                                        {{ $qty_register }}
                                     </td>
 
-                                    <livewire:update-pending :transaksiID="$transaksi_id" :id="$key"/>
+                                    <livewire:update-opname :transaksiID="$transaksi_id" :id="$key"/>
 
                                 </tr>
                             @endforeach
+                            <tr>
+                                <td class="text-center">*</td>
+                                <td>Total Summary Opname</td>
+                                <td class="text-center">{{ $transaksi->sum('odetail_register') }}</td>
+                                <td>
+                                    <input type="text" value="{{ $transaksi->sum('odetail_ketemu') }}" class="form-control">
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
 

@@ -29,7 +29,7 @@ class PendingController extends MasterController
 
     protected function share($data = [])
     {
-        $customer = Customer::getOptions();
+        $customer = Query::getCustomerByUser();
         $jenis = [];
 
         if(request()->has('customer'))

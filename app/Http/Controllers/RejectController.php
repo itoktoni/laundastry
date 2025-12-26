@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Dao\Enums\Core\TransactionType;
+use App\Dao\Enums\TransactionType;
 use App\Dao\Models\Kotor;
 use App\Dao\Models\Transaksi;
 

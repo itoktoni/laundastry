@@ -4,10 +4,11 @@ namespace App\Dao\Models;
 
 use App\Dao\Entities\TransaksiEntity;
 use App\Dao\Models\Core\SystemModel;
+use Wildside\Userstamps\Userstamps;
 
 class Transaksi extends SystemModel
 {
-    use TransaksiEntity;
+    use TransaksiEntity, Userstamps;
 
     protected $perPage = 20;
     protected $table = 'transaksi';
@@ -19,7 +20,7 @@ class Transaksi extends SystemModel
         'end_date',
     ];
 
-     protected $dates = [
+    protected $dates = [
         self::CREATED_AT,
         self::UPDATED_AT,
         self::DELETED_AT,
