@@ -14,7 +14,7 @@ class Register extends SystemModel
         'filter',
         'start_date',
         'end_date',
-        'customer',
+        'customer_code',
     ];
 
     public function getFieldNameAttribute()
@@ -58,9 +58,9 @@ class Register extends SystemModel
         return $query;
     }
 
-    public function customer($query)
+    public function customer_code($query)
     {
-        $customer = request()->get('customer');
+        $customer = request()->get('customer_code');
 
         if ($customer) {
             $query = $query->where($this->field_customer(), $customer);

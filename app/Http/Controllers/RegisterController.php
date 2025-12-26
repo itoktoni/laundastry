@@ -54,7 +54,6 @@ class RegisterController extends MasterController
             ->leftJoinRelationship('has_customer')
             ->leftJoinRelationship('has_jenis')
             ->groupBy('register_code')
-            ->active()
             ->filter();
 
         $per_page = env('PAGINATION_NUMBER', 10);
@@ -135,7 +134,7 @@ class RegisterController extends MasterController
         $customer = $model->has_customer ?? false;
         $jenis = $model->has_jenis ?? false;
 
-        return moduleView(modulePathPrint('print'), $this->share([
+       return $this->views($this->template(), $this->share([
             'jenis' => $jenis,
             'customer' => $customer,
             'model' => $model,

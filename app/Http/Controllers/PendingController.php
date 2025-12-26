@@ -138,7 +138,7 @@ class PendingController extends MasterController
         $customer = $model->has_customer ?? false;
         $jenis = $model->has_jenis ?? false;
 
-        return moduleView(modulePathPrint('print'), $this->share([
+        return $this->views($this->template(), $this->share([
             'jenis' => $jenis,
             'customer' => $customer,
             'model' => $model,

@@ -41,6 +41,11 @@ abstract class ReportController extends Controller
         return $query;
     }
 
+    public function getTable()
+    {
+        return $this->getCreate();
+    }
+
     public function getCreate()
     {
         $this->beforeForm();

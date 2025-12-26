@@ -86,7 +86,10 @@
                         currentUrl.searchParams.set('tanggal', tanggal.value);
                     }
 
-                    window.location.href = currentUrl.toString();
+                    history.pushState(null, '', currentUrl.toString());
+
+                    // Reload the page to update jenis options
+                    window.location.reload();
                 });
             }
 
@@ -101,7 +104,11 @@
                         currentUrl.searchParams.delete('tanggal');
                     }
 
-                    window.location.href = currentUrl.toString();
+                    history.pushState(null, '', currentUrl.toString());
+
+                    // Reload the page to update jenis options
+                    window.location.reload();
+
                 });
             }
 

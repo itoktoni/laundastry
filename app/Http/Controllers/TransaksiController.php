@@ -181,6 +181,7 @@ class TransaksiController extends MasterController
         $model = Transaksi::with(['has_customer', 'has_jenis'])->find($code);
         $customer = $model->has_customer ?? false;
         $jenis = $model->has_jenis ?? false;
+
         return moduleView(modulePathForm('print_packing', 'transaksi'), $this->share([
             'jenis' => $jenis,
             'customer' => $customer,
@@ -271,7 +272,6 @@ class TransaksiController extends MasterController
             $data = Notes::delete($data);
             Alert::delete("success");
         }
-
 
         return $data;
     }

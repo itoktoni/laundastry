@@ -14,6 +14,7 @@ class ReportRequest extends FormRequest
         return [
             'start_date' => 'required',
             'end_date' => 'required',
+            'customer_code' => 'required',
         ];
     }
 }

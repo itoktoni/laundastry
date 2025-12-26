@@ -53,7 +53,7 @@
 	<div class="navigation-header">
 		<div id="navigation-logo">
 			<a href="{{ url('/') }}">
-				<img class="logo" src="{{ logoUrl() }}" alt="logo">
+				<img style="width: 90%;margin-left:10px" class="logo" src="{{ logoUrl() }}" alt="logo">
 			</a>
 		</div>
 	</div>

@@ -12,7 +12,7 @@
 
                         <x-form-input type="date" col="3" label="Start Date" name="start_date" />
                         <x-form-input type="date" col="3" label="End Date" name="end_date" />
-                        <x-form-select col="6" name="customer" label="Customer" :options="$customer" />
+                        <x-form-select col="6" name="customer_code" label="Customer" :options="$customer" />
 
                     </div>
                 </div>

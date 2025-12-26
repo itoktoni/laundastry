@@ -71,68 +71,6 @@
         </x-card>
     </x-form>
 
-     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    <x-scriptcustomertable />
 
-            const customerSelect = document.getElementById('customer');
-            const tanggal = document.getElementById('tanggal');
-
-            if (customerSelect) {
-                customerSelect.addEventListener('change', function() {
-                    const selectedValue = this.value;
-                    const currentUrl = new URL(window.location);
-
-                    if (selectedValue) {
-                        currentUrl.searchParams.set('customer', selectedValue);
-                    } else {
-                        currentUrl.searchParams.delete('customer');
-                    }
-
-                    // Add tanggal parameter if it exists
-                    if (tanggal && tanggal.value) {
-                        currentUrl.searchParams.set('tanggal', tanggal.value);
-                    }
-
-                    window.location.href = currentUrl.toString();
-                });
-            }
-
-            if (tanggal) {
-                tanggal.addEventListener('change', function() {
-                    const selectedValue = this.value;
-                    const currentUrl = new URL(window.location);
-
-                    if (selectedValue) {
-                        currentUrl.searchParams.set('tanggal', selectedValue);
-                    } else {
-                        currentUrl.searchParams.delete('tanggal');
-                    }
-
-                    window.location.href = currentUrl.toString();
-                });
-            }
-
-
-            const searchInput = document.querySelector('.search');
-            const tableRows = document.querySelectorAll('.table tbody tr');
-
-            if (searchInput) {
-                searchInput.addEventListener('input', function() {
-                    const searchTerm = this.value.toLowerCase().trim();
-
-                    tableRows.forEach(function(row) {
-                        const linenCell = row.querySelector('td[data-label="Linen"]');
-                        if (linenCell) {
-                            const linenText = linenCell.textContent.toLowerCase().trim();
-                            if (searchTerm === '' || linenText.includes(searchTerm)) {
-                                row.style.display = '';
-                            } else {
-                                row.style.display = 'none';
-                            }
-                        }
-                    });
-                });
-            }
-        });
-    </script>
 </x-layout>

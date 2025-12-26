@@ -198,6 +198,20 @@ class Query
         return $data;
     }
 
+    public static function getJenisByUser()
+    {
+        $data = [];
+        $jenis = Jenis::select('jenis_id', 'jenis_nama')
+            // ->where('jenis_code_customer', $code)
+            ->get();
+
+        if ($jenis) {
+            $data = $jenis->pluck('jenis_nama', 'jenis_id');
+        }
+
+        return $data;
+    }
+
     public static function getJenisByCustomerCode($code)
     {
         $data = [];
