@@ -29,7 +29,7 @@
                     <x-form-upload col="3" name="background" />
                     <div class="col-md-3">
                         <img class="mt-4 img-thumbnail img-fluid"
-                            src="{{ logoUrl(false) }}"
+                            src="{{ backgroundUrl(false) }}"
                             alt="background">
                     </div>
 
