@@ -28,6 +28,7 @@ class RolesController extends MasterController
         $view = [
             'group' => $group,
             'level' => $level,
+            'model' => $this->model
         ];
 
         return self::$share = array_merge($view, self::$share, $data);
@@ -42,6 +43,7 @@ class RolesController extends MasterController
 
     public function postUpdate($code, RoleRequest $request, UpdateRoleService $service)
     {
+        dd($request);
         $data = $service->update($this->model, $request, $code);
 
         return Response::redirectBack($data);

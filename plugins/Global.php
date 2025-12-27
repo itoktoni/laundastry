@@ -285,16 +285,16 @@ function formatDateMySql($value, $datetime = false)
 
 function formatDate($value, $datetime = false)
 {
+    if (empty($value)) {
+        return null;
+    }
+
     if ($datetime === false) {
         $format = 'd/m/Y';
     } elseif ($datetime === true) {
         $format = 'd/m/Y H:i:s';
     } else {
         $format = $datetime;
-    }
-
-    if (empty($value)) {
-        return null;
     }
 
     if ($value instanceof Carbon) {
@@ -349,6 +349,17 @@ function getLowerClass($class)
 function setString($value)
 {
     return '"'.$value.'"';
+}
+
+function convertSingleKeys($data)
+{
+    if(is_array($data))
+    {
+        $data = collect($data);
+    }
+
+    $single = $data->keys()->first();
+    return $single;
 }
 
 /*

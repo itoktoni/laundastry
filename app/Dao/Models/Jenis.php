@@ -30,7 +30,7 @@ class Jenis extends SystemModel
      *
      * @var array<int, string>
      */
-    protected $fillable = ['jenis_id', 'jenis_nama', 'jenis_code_customer', 'jenis_harga', 'jenis_fee', 'jenis_total'];
+    protected $fillable = ['jenis_id', 'jenis_nama', 'jenis_type', 'jenis_code_customer', 'jenis_harga', 'jenis_fee', 'jenis_total'];
 
     public function has_customer()
     {

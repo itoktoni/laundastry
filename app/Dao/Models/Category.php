@@ -27,7 +27,7 @@ class Category extends SystemModel
      *
      * @var array<int, string>
      */
-    protected $fillable = ['category_code', 'category_nama', 'category_keterangan'];
+    protected $fillable = ['category_code', 'category_nama', 'category_keterangan', 'category_warna'];
 
     public static function field_name()
     {

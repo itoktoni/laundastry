@@ -7,8 +7,8 @@
 
                 <input type="hidden" name="register_code" value="{{ $model->register_code ?? null }}" />
 
-                <x-form-select col="4" id="customer" default="{{ request()->get('customer') ?? $model->register_code_customer ?? null }}" name="customer_code" label="Customer" :options="$customer" />
-                <x-form-select col="2" name="kotor_status" default="{{ $model->kotor_code_category ?? 'REGISTER' }}" label="Category" :options="$category" />
+                <x-form-select col="6" id="customer" default="{{ request()->get('customer') ?? $model->register_code_customer ?? null }}" name="customer_code" label="Customer" :options="$customer" />
+
                 <div class=" form-group col-md-6 ">
                     <label for="auto_id_filter">Filter Jenis Linen</label>
                     <input class="form-control search" type="text" value="" name="filter" id="auto_id_filter">

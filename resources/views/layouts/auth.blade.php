@@ -9,7 +9,8 @@
 
 		<style>
 			.wrapper {
-				background: url({{ backgroundUrl() ?? null }}) no-repeat right center;
+				background: url({{ backgroundUrl() ?? null }}) no-repeat center center;
+				background-size: cover;
 			}
 		</style>
 	</head>
@@ -26,4 +27,5 @@
 
 
 	</body>
+
 </html>

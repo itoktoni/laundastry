@@ -30,9 +30,9 @@ class RegisterController extends MasterController
         $customer = Query::getCustomerByUser();
         $jenis = [];
 
-        if(request()->has('customer'))
+        if(request()->has('customer') || count($customer) == 1)
         {
-            $jenis = Query::getJenisByCustomerCode(request()->get('customer'));
+            $jenis = Query::getJenisByCustomerCode(request()->get('customer', convertSingleKeys($customer)));
         }
 
         $category = ['REGISTER' => 'REGISTER'];

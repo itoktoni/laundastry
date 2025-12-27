@@ -238,25 +238,54 @@ class Query
         return $data;
     }
 
+    public static function getCustomerByRole()
+    {
+        $userId = auth()->id();
+
+        if (!$userId) {
+            return [];
+        }
+
+        $key = "user_customer:customer_ids:user:{$userId}";
+
+        return Cache::remember($key, now()->addMinutes(10), function () use ($userId) {
+            return DB::table('user_customer')
+                ->where('id', $userId)
+                ->pluck(Customer::field_primary())
+                ->toArray();
+        });
+    }
+
     public static function getCustomerByUser()
     {
         $data = [];
-        $jenis = Customer::select(Customer::field_primary(), Customer::field_name())
-            // ->where('customer_code_user', auth()->user()->user_code)
-            ->get();
+        $query = Customer::select(Customer::field_primary(), Customer::field_name());
 
-        if ($jenis) {
-            $data = $jenis->pluck(Customer::field_name(), Customer::field_primary());
+        $filter = self::getCustomerByRole();
+
+        if($filter)
+        {
+            $query = $query->whereIn(Customer::field_primary(), $filter);
         }
+
+        $data = $query->pluck(Customer::field_name(), Customer::field_primary());
 
         return $data;
     }
 
     public static function getOpnameByUser()
     {
-        $opname = Opname::with(['has_customer'])
-            ->where('opname_mulai', '>=', now()->addMonth(-6))
-            ->get()->mapWithKeys(function ($item) {
+        $query = Opname::with(['has_customer'])
+            ->where('opname_mulai', '>=', now()->addMonth(-6));
+
+        $filter = self::getCustomerByRole();
+
+        if($filter)
+        {
+            $query = $query->whereIn('opname_code_customer', $filter);
+        }
+
+        $query = $query->get()->mapWithKeys(function ($item) {
                 $customer = $item->has_customer->field_name ?? '';
 
                 return [
@@ -267,6 +296,6 @@ class Query
                 ];
             });
 
-        return $opname;
+        return $query;
     }
 }

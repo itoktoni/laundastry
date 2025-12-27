@@ -53,7 +53,7 @@
                                         <td class="col-md-2 text-center column-action">
 
                                             <div class="action-table">
-                                                <x-button module="getUpdate" key="{{ $table->field_primary }}" color="warning" label="Pending" />
+                                                <x-button module="getUpdate" key="{{ $table->field_primary }}" color="success" label="Bayar" />
                                                 <x-button module="getPrint" key="{{ $table->field_primary }}" color="dark" label="Cetak"/>
                                             </div>
 
@@ -69,7 +69,7 @@
 
 										<td class="text-right" data-label="Pending">
                                             <div class="col-md-12">
-                                                {{ formatDate($table->transaksi_report) }}
+                                                {{ formatDate($table->transaksi_bersih_at) }}
                                                 <br>
                                                 Qty : <b>{{ $table->field_pending }}</b>
                                             </div>

@@ -4,8 +4,11 @@ namespace App\Dao\Models;
 
 use App\Dao\Entities\TransaksiEntity;
 use App\Dao\Models\Core\SystemModel;
+use App\Models\Scopes\TransaksiScope;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Wildside\Userstamps\Userstamps;
 
+#[ScopedBy(TransaksiScope::class)]
 class Transaksi extends SystemModel
 {
     use TransaksiEntity, Userstamps;
@@ -25,6 +28,19 @@ class Transaksi extends SystemModel
         self::UPDATED_AT,
         self::DELETED_AT,
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'transaksi_tanggal' => 'date',
+            'transaksi_report' => 'date',
+            'transaksi_update_at' => 'datetime',
+            'transaksi_created_at' => 'datetime',
+            'transaksi_qc_at' => 'datetime',
+            'transaksi_bersih_at' => 'datetime',
+            'transaksi_pending_at' => 'datetime',
+        ];
+    }
 
     const CREATED_AT = 'transaksi_created_at';
     const UPDATED_AT = 'transaksi_updated_at';

@@ -16,7 +16,7 @@
 					{{ empty($group_data->field_url) ? 'data-nav-target=#'.$group_data->field_primary : '' }}>
 					<i class="bi bi-{{ $group_data->field_icon }}"></i>
 					<h5 class="text-center text-white">
-						{{ __($group_data->field_name) }}
+						{{ $group_data->field_name }}
 					</h5>
 				</a>
 			</li>

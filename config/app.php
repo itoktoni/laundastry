@@ -4,6 +4,7 @@ use Alkhachatryan\LaravelWebConsole\LaravelWebConsoleServiceProvider;
 use App\Dao\Enums\Core\BooleanType;
 use App\Dao\Enums\Core\LevelType;
 use App\Dao\Enums\Core\MenuType;
+use App\Dao\Enums\Core\RoleType;
 use App\Dao\Enums\OpnameType;
 use App\Dao\Enums\TransactionType;
 use App\Dao\Models\Core\SystemGroup;
@@ -262,6 +263,7 @@ return [
         'MenuType' => MenuType::class,
         'LevelType' => LevelType::class,
         'TransactionType' => TransactionType::class,
+        'RoleType' => RoleType::class,
         'OpnameType' => OpnameType::class,
         'SharedData' => SharedData::class,
         'Query' => Query::class,

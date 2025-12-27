@@ -37,9 +37,9 @@ class TransaksiController extends MasterController
         $customer = Query::getCustomerByUser();
         $jenis = [];
 
-        if(request()->has('customer'))
+        if(request()->has('customer') || count($customer) == 1)
         {
-            $jenis = Query::getJenisByCustomerCode(request()->get('customer'));
+            $jenis = Query::getJenisByCustomerCode(request()->get('customer', convertSingleKeys($customer)));
         }
 
         $category = Category::getOptions();
@@ -218,14 +218,14 @@ class TransaksiController extends MasterController
         }
         else if($model->transaksi_status == TransactionType::REJECT)
         {
-            $unic = env('CODE_REJECT', 'RJT');
+            $unic = env('CODE_REJECT', 'RJK');
         }
         else if($model->transaksi_status == TransactionType::REWASH)
         {
             $unic = env('CODE_REWASH', 'RWS');
         }
 
-        $unic = 'DLV-'.$unic.'-'.$model->transaksi_code_customer.'-'.date('Ymd').unic(5);
+        $unic = env('CODE_BERSIH', 'BSH').'-'.$unic.'-'.$model->transaksi_code_customer.'-'.date('Ymd').unic(5);
 
         $update =  Transaksi::query()
             ->where('transaksi_code_scan', $code)
@@ -249,7 +249,7 @@ class TransaksiController extends MasterController
     public function getDelete()
     {
         $code = request()->get('code');
-        $check = DetailKotor::where('kotor_code_scan', $code)->delete();
+        $check = Transaksi::where('transaksi_code_scan', $code)->delete();
         $data = ["Gagal"];
         if($check)
         {
@@ -264,7 +264,7 @@ class TransaksiController extends MasterController
     {
         $code = array_unique(request()->get('code'));
 
-        $check = DetailKotor::where('kotor_code_scan', $code)->delete();
+        $check = Transaksi::where('transaksi_code_scan', $code)->delete();
         $data = ["Gagal"];
 
         if($check)

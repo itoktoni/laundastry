@@ -3,7 +3,10 @@
 namespace App\Dao\Models;
 
 use App\Dao\Models\Core\SystemModel;
+use App\Models\Scopes\RegisterScope;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 
+#[ScopedBy(RegisterScope::class)]
 class Register extends SystemModel
 {
     protected $perPage = 20;

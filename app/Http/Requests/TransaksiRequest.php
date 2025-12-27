@@ -27,14 +27,14 @@ class TransaksiRequest extends FormRequest
         }
         else if($this->type == TransactionType::REJECT)
         {
-            $code = env('CODE_REJECT', 'RJT');
+            $code = env('CODE_REJECT', 'RJK');
         }
         else if($this->type == TransactionType::REWASH)
         {
             $code = env('CODE_REWASH', 'RWS');
         }
 
-        $code = $code.'-'.$customer_code.'-'.date('Ymd').unic(5);
+        $code = $code.'-'.$customer_code.'-'.date('Ymd').'-'.unic(5);
 
         if (request()->segment(5) == 'update')
         {
@@ -52,7 +52,7 @@ class TransaksiRequest extends FormRequest
                 'transaksi_id' => $value['kotor_id'] ?? null,
                 'transaksi_code_customer' => $customer_code,
                 'transaksi_id_jenis' => $key,
-                'transaksi_code_category' => $this->kotor_status ?? 'NORMAL',
+                'transaksi_code_category' => $this->transaksi_code_category ?? 'NORMAL',
                 'transaksi_code_scan' => $code,
                 'transaksi_scan' => $value['scan'] ?? 0,
                 'transaksi_qc' => $value['qc'] ?? 0,

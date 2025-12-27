@@ -16,7 +16,7 @@ trait ValidationTrait
         if (request()->segment(5) == 'update') {
 
             $collection = collect($this->validation())->map(function ($item, $key) {
-                if (strpos($item, 'unique') !== false) {
+                if (is_string($item) && strpos($item, 'unique') !== false) {
                     $string = explode('|', $item);
                     $builder = '';
                     foreach ($string as $value) {

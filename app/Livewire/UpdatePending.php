@@ -24,12 +24,20 @@ class UpdatePending extends Component
         $kotor =  Transaksi::where('transaksi_id', $transaksiID)->first();
         $this->transaksiID = $transaksiID;
 
-        $code = env('CODE_PENDING', 'PND').'-'.$kotor->transaksi_code_customer.'-'.date('Ymd').unic(5).'_';
+        if($kotor)
+        {
+            $code = env('CODE_PENDING', 'PND').'-'.$kotor->transaksi_code_customer.'-'.date('Ymd').unic(5).'_';
+        }
+        else
+        {
+            $code = env('CODE_PENDING', 'PND').'-'.date('Ymd').unic(5).'_';
+        }
+
         $this->pendingCode = $code;
 
         $this->status = null;
-        $this->qtyPending = intval($kotor->transaksi_pending);
-        $this->qty = intval($kotor->transaksi_bayar);
+        $this->qtyPending = $kotor ? intval($kotor->transaksi_pending) : 0;
+        $this->qty = $kotor ? intval($kotor->transaksi_bayar) : 0;
         $this->message = null;
 
         $this->id = $id;

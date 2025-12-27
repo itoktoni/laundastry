@@ -10,6 +10,10 @@
                     <x-form-input col="6" name="email" />
                     <x-form-select col="6" class="search" name="role" :options="$roles" />
                     <x-form-input col="6" name="password" type="password" />
+
+                     <x-form-select col="12" class="search" multiple name="customer[]" :default="$selected ?? []"
+                        :options="$customer" />
+
                 @endbind
 
         </x-card>

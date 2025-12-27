@@ -3,8 +3,11 @@
 namespace App\Dao\Models;
 
 use App\Dao\Models\Core\SystemModel;
+use App\Models\Scopes\OpnameDetailScope;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Wildside\Userstamps\Userstamps;
 
+#[ScopedBy(OpnameDetailScope::class)]
 class OpnameDetail extends SystemModel
 {
     use Userstamps;

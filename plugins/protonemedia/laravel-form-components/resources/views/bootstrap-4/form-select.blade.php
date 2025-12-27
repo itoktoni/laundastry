@@ -42,8 +42,10 @@
             'class' => $class,
         ]) !!}>
 
+        @if(!$multiple && count($options) > 1)
         @if(!isset($placeholder) || $placeholder === false || $placeholder === '')
             <option value="" selected>{{ __('- Select ' . ($label ?? 'Option') . ' -') }}</option>
+        @endif
         @endif
 
         @forelse($options as $key => $option)

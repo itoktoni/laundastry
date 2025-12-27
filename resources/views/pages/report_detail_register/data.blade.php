@@ -58,7 +58,7 @@
 			<tr>
 				<td>*</td>
 				<td colspan="2">Total Register</td>
-				<td>{{ $table->sum('register_qty') }}</td>
+				<td>{{ $data->sum('register_qty') }}</td>
 			</tr>
 
 		</tbody>

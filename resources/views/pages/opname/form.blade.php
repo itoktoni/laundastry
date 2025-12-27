@@ -7,7 +7,7 @@
                 @bind($model)
 
                 <x-form-select col="6" id="customer" name="opname_code_customer" label="Customer" :options="$customer" />
-                <x-form-input col="3" type="date" name="opname_mulai" />
+                <x-form-input col="3" type="date" value="{{ date('Y-m-d') }}" name="opname_mulai" />
                 <x-form-input col="3" type="date" name="opname_selesai" />
 
                 <x-form-select col="6" name="opname_status" label="Status" :options="$status" />

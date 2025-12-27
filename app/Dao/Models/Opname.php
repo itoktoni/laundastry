@@ -3,8 +3,11 @@
 namespace App\Dao\Models;
 
 use App\Dao\Models\Core\SystemModel;
+use App\Models\Scopes\OpnameScope;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Wildside\Userstamps\Userstamps;
 
+#[ScopedBy(OpnameScope::class)]
 class Opname extends SystemModel
 {
     use Userstamps;
@@ -58,7 +61,7 @@ class Opname extends SystemModel
 
     public static function field_name()
     {
-        return 'opname_nama';
+        return 'opname_selesai';
     }
 
     public function getFieldNameAttribute()

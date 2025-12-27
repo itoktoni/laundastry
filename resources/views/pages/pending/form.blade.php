@@ -6,8 +6,8 @@
 
                 @bind($model)
 
-                <x-form-select col="4" id="customer" default="{{ request()->get('customer') ?? $model->register_code_customer ?? null }}" name="customer_code" label="Customer" :options="$customer" />
-                <x-form-input col="3" id="tanggal" default="{{ request()->get('tanggal') ?? date('Y-m-d') }}" name="tanggal" label="Tanggal Pending" type="date"/>
+                <x-form-select col="4" id="customer" default="{{ request()->get('customer') ?? $model->transaksi_code_customer ?? null }}" name="customer_code" label="Customer" :options="$customer" />
+                <x-form-input col="3" id="tanggal" default="{{ request()->get('tanggal') ?? $model->transaksi_bersih_at->format('Y-m-d') ??  date('Y-m-d') }}" name="tanggal" label="Tanggal Pending" type="date"/>
 
                 <div class=" form-group col-md-5 ">
                     <label for="auto_id_filter">Filter Jenis Linen</label>
@@ -36,6 +36,8 @@
 
                             @endphp
 
+                                @if ($qty_pending > 0)
+
                                 <tr>
                                     <input type="hidden" name="qty[{{ $key }}][jenis_id]"
                                         value="{{ $key ?? null }}" />
@@ -53,6 +55,9 @@
                                     <livewire:update-pending :transaksiID="$transaksi_id" :id="$key"/>
 
                                 </tr>
+
+                                @endif
+
                             @endforeach
                         </tbody>
                     </table>

@@ -29,6 +29,9 @@
                                     @endforeach
                                     <th>Customer</th>
                                     <th>Harga</th>
+                                    @if (auth()->user()->role == RoleType::Developer)
+                                    <th>Fee</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,7 +49,9 @@
 										<td data-label="Nama">{{ $table->jenis_nama }}</td>
 										<td data-label="Customer">{{ $table->customer_nama }}</td>
 										<td data-label="Harga">{{ $table->jenis_harga }}</td>
-
+                                        @if (auth()->user()->role == RoleType::Developer)
+                                        <td data-label="Fee">{{ $table->jenis_fee }}</td>
+                                        @endif
                                     </tr>
                                 @empty
                                 @endforelse

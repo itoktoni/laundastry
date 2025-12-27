@@ -40,8 +40,10 @@
 
                     <div class="page-action">
                         <h5 class="action-container">
+
                             <div class="button">
                                 <div class="button button-action">
+                                    <a class="btn btn-warning" href="{{ route('home') }}">Back Menu</a>
                                     <button type="submit" class="btn btn-primary">
                                         Simpan
                                     </button>

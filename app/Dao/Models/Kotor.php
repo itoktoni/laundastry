@@ -4,7 +4,10 @@ namespace App\Dao\Models;
 
 use App\Dao\Entities\TransaksiEntity;
 use App\Dao\Models\Core\SystemModel;
+use App\Models\Scopes\TransaksiScope;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 
+#[ScopedBy(TransaksiScope::class)]
 class Kotor extends SystemModel
 {
     use TransaksiEntity;

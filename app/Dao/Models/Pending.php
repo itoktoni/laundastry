@@ -20,6 +20,14 @@ class Pending extends SystemModel
         'customer',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'transaksi_bersih_at' => 'datetime',
+            'transaksi_pending_at' => 'datetime',
+        ];
+    }
+
     public function start_date($query)
     {
         $date = request()->get('start_date');

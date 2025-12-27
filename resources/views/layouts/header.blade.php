@@ -35,7 +35,7 @@
 				<a onclick="showDropdown()" class="nav-link dropdown-toggle" data-toggle="dropdown">[ {{ Auth::user()->name }} ]</a>
 				<div class="dropdown-content">
 					<a data-turbo-prefetch="false" href="{{ route('getProfile') }}" class="dropdown-item">My Profile</a>
-					<a data-turbo-prefetch="false" target="_blank" href="{{ route('cms') }}" class="dropdown-item">Login CMS</a>
+					{{-- <a data-turbo-prefetch="false" target="_blank" href="{{ route('cms') }}" class="dropdown-item">Login CMS</a> --}}
 					<a data-turbo-prefetch="false" href="{{ route('signout') }}" class="dropdown-item">Logout</a>
 				</div>
 			</li>

@@ -36,7 +36,7 @@
                                     <th>Code</th>
                                     <th>Tanggal</th>
                                     <th>Customer</th>
-                                    <th class="col-qty" style="width:10%;">Qty</th>
+                                    <th class="col-qty text-center" style="width:10%;">Qty</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,7 +59,7 @@
 										<td >{{ $table->register_code }}</td>
 										<td >{{ formatDate($table->register_tanggal) }}</td>
 										<td >{{ $table->customer_nama }}</td>
-										<td >{{ $table->total_qty }}</td>
+										<td class="text-center">{{ $table->total_qty }}</td>
 
                                     </tr>
                                 @empty

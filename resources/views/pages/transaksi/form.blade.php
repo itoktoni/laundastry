@@ -6,7 +6,8 @@
                 @bind($model)
 
                 <x-form-select col="4" id="customer" default="{{ request()->get('customer') ?? $model->customer_code ?? null }}" name="customer_code" label="Customer" :options="$customer" />
-                <x-form-select col="2" name="transaksi_status" default="{{ $model->transaksi_code_category ?? 'NORMAL' }}" label="Category" :options="$category" />
+                <x-form-select col="2" name="transaksi_code_category" default="{{ $model->transaksi_code_category ?? 'NORMAL' }}" label="Category" :options="$category" />
+
                 <div class=" form-group col-md-6 ">
                     <label for="auto_id_filter">Filter Jenis Linen</label>
                     <input class="form-control search" type="text" value="" name="filter" id="auto_id_filter">

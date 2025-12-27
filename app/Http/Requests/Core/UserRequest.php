@@ -15,7 +15,15 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required|min:2',
             'email' => 'required|email',
-            'password' => ['required', 'string', 'min:4'],
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $merge = [
+            'active' => 1
+        ];
+
+        $this->merge($merge);
     }
 }

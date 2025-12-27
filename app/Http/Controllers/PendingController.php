@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Dao\Models\Customer;
-use App\Dao\Models\Jenis;
 use App\Dao\Models\Pending;
 use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\MasterController;
@@ -13,13 +11,13 @@ use App\Services\Master\SingleService;
 use App\Http\Requests\RegisterRequest;
 use App\Services\CreateRegisterService;
 use App\Services\UpdateRegisterService;
-use Illuminate\Support\Facades\DB;
 use Plugins\Query;
 use Plugins\Response;
 
 class PendingController extends MasterController
 {
     use CreateFunction, UpdateFunction;
+    public $type;
 
     public function __construct(Transaksi $model, SingleService $service)
     {
@@ -32,9 +30,9 @@ class PendingController extends MasterController
         $customer = Query::getCustomerByUser();
         $jenis = [];
 
-        if(request()->has('customer'))
+        if(request()->has('customer') || count($customer) == 1)
         {
-            $jenis = Query::getJenisPending(request()->get('customer'), request()->get('tanggal'));
+            $jenis = Query::getJenisByCustomerCode(request()->get('customer', convertSingleKeys($customer)));
         }
 
         $view = [
@@ -46,22 +44,14 @@ class PendingController extends MasterController
         return self::$share = array_merge($view, self::$share, $data);
     }
 
-    public function getData()
+    public function getTable()
     {
-        $query = Pending::query()
-            ->where($this->model->field_pending(),'>=', 1)
-            ->whereColumn('transaksi_pending', '>', 'transaksi_bayar')
-            ->filter();
+        $data = $this->getData();
 
-        $per_page = env('PAGINATION_NUMBER', 10);
-        if(request()->get('per_page'))
-        {
-            $per_page = request()->get('per_page');
-        }
-
-        $query = env('PAGINATION_SIMPLE') ? $query->simplePaginate($per_page) : $query->fastPaginate($per_page);
-
-        return $query;
+        return $this->views($this->template('table', 'pending'), $this->share([
+            'data' => $data,
+            'fields' => $this->model::getModel()->getShowField(),
+        ]));
     }
 
     public function getCreate()
@@ -71,7 +61,7 @@ class PendingController extends MasterController
             ->where('transaksi_report', request()->get('tanggal'))
             ->get();
 
-        return $this->views($this->template(self::$is_core), $this->share([
+        return $this->views($this->template('form', 'pending'), $this->share([
             'detail' => $detail,
         ]));
     }
@@ -95,7 +85,7 @@ class PendingController extends MasterController
             $jenis = Query::getJenisPending(request()->get('customer'), request()->get('tanggal'));
         }
 
-        return $this->views($this->template(), $this->share([
+        return $this->views($this->template('form', 'pending'), $this->share([
             'model' => $model,
             'jenis' => $jenis,
             'detail' => $detail,
@@ -138,7 +128,7 @@ class PendingController extends MasterController
         $customer = $model->has_customer ?? false;
         $jenis = $model->has_jenis ?? false;
 
-        return $this->views($this->template(), $this->share([
+        return $this->views($this->template('form', 'table'), $this->share([
             'jenis' => $jenis,
             'customer' => $customer,
             'model' => $model,

@@ -5,6 +5,7 @@ namespace App\Dao\Models\Core;
 use App\Dao\Builder\DataBuilder;
 use App\Dao\Entities\Core\DefaultEntity;
 use App\Dao\Entities\Core\UserEntity;
+use App\Dao\Models\Customer;
 use App\Dao\Repositories\Core\CrudRepository;
 use App\Dao\Traits\ActiveTrait;
 use App\Dao\Traits\DataTableTrait;
@@ -18,6 +19,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail as AuthMustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 use MBarlow\Megaphone\HasMegaphone;
 use Mehradsadeghi\FilterQueryString\FilterQueryString as FilterQueryString;
@@ -113,6 +115,11 @@ class User extends Authenticatable implements AuthMustVerifyEmail
         return $this->hasOne(RoleModel::getModel(), RoleModel::field_key(), UserModel::field_role());
     }
 
+    public function has_customer()
+    {
+        return $this->belongsToMany(Customer::class, 'user_customer', 'id', 'customer_code');
+    }
+
     public function roleNameSortable($query, $direction)
     {
         $query = $this->queryFilter($query);
@@ -148,5 +155,17 @@ class User extends Authenticatable implements AuthMustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyUserQueue);
+    }
+
+    public static function boot()
+    {
+        parent::saving(function ($model) {
+
+            if(!empty(request()->get('password')))
+            {
+                $model->password = Hash::make(request()->get('password'));
+            }
+        });
+        parent::boot();
     }
 }

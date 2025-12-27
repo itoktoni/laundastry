@@ -27,6 +27,8 @@ class UpdateTransaksiService
         foreach ($data->data as $key => $quantity) {
             // Update the specific quantity for this linen type
             $update = ['transaksi_scan' => $quantity['transaksi_scan']];
+            $update = ['transaksi_code_category' => $quantity['transaksi_code_category']];
+
             if($quantity['transaksi_qc'] >= 0)
             {
                 $update['transaksi_qc'] = $quantity['transaksi_qc'];
