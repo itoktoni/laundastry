@@ -50,7 +50,7 @@
                                             <input type="checkbox" class="checkbox" name="code[]"
                                                 value="{{ $table->field_primary }}">
                                         </td>
-                                        <td class="col-md-2 text-center column-action">
+                                        <td data-label="Action" class="col-md-2 text-center column-action">
 
                                             <div class="action-table">
                                                 <x-button module="getUpdate" key="{{ $table->field_primary }}" color="success" label="Bayar" />

@@ -46,7 +46,7 @@
                                             <input type="checkbox" class="checkbox" name="code[]"
                                                 value="{{ $table->register_code }}">
                                         </td>
-                                        <td class="col-md-2 text-center column-action">
+                                        <td data-label="Action" class="col-md-2 text-center column-action">
 
                                             <div class="action-table">
                                                 <x-button module="getUpdate" key="{{ $table->register_code }}" color="primary" icon="pencil-square" />
@@ -56,10 +56,10 @@
 
                                         </td>
 
-										<td >{{ $table->register_code }}</td>
-										<td >{{ formatDate($table->register_tanggal) }}</td>
-										<td >{{ $table->customer_nama }}</td>
-										<td class="text-center">{{ $table->total_qty }}</td>
+										<td data-label="Kode">{{ $table->register_code }}</td>
+										<td data-label="Tanggal">{{ formatDate($table->register_tanggal) }}</td>
+										<td data-label="Nama">{{ $table->customer_nama }}</td>
+										<td data-label="Qty" class="text-center">{{ $table->total_qty }}</td>
 
                                     </tr>
                                 @empty

@@ -5,9 +5,9 @@
     <div class="row mb-2">
         <div class="col-lg-4 col-md-3 col-sm-12">
             <div class="card">
-                <div class="card-body" style="padding:20px">
+                <div class="card-body" style="padding:19px">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div class="col-md-12">
+                        <div class="row">
                             <div class="small">PILIHAN CUSTOMER</div>
                             <x-form-select id="customer" col="12" :label="false" name="customer" :options="$customer" />
 
@@ -74,7 +74,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h2 class="font-weight-bold mb-2">{{ $register }}</h2>
-                            <div id="detail">TOTAL REGISTER LINEN</div>
+                            <div class="small">TOTAL REGISTER LINEN</div>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h2 class="font-weight-bold mb-2">{{ $available }}</h2>
-                            <div id="detail">STOCK LINEN TERSEDIA</div>
+                            <div class="small">STOCK LINEN TERSEDIA</div>
                         </div>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
 
     <style>
         .small{
-            font-size: 0.7rem;
+            font-size: 0.8rem;
         }
     </style>
 
