@@ -54,6 +54,7 @@ class RegisterController extends MasterController
             ->leftJoinRelationship('has_customer')
             ->leftJoinRelationship('has_jenis')
             ->groupBy('register_code')
+            ->orderBy('register_tanggal', 'DESC')
             ->filter();
 
         $per_page = env('PAGINATION_NUMBER', 10);

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Dao\Enums\TransactionType;
 use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
-use App\Dao\Models\Register;
+use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\ReportController;
-use App\Http\Requests\Core\ReportRequest;
+use Illuminate\Http\Request;
 use Plugins\Query;
-use Carbon\CarbonPeriod;
 
-class ReportRekapRegisterController extends ReportController
+class ReportDetailPenerimaanKotorController extends ReportController
 {
     public $data;
 
@@ -35,14 +35,14 @@ class ReportRekapRegisterController extends ReportController
 
     public function getData()
     {
-        $query = Register::select([
-            Register::getTableName().'.*',
+        $query = Transaksi::select([
+            Transaksi::getTableName().'.*',
             Customer::field_name(),
-            Jenis::field_primary(),
             Jenis::field_name()
         ])
         ->leftJoinRelationship('has_customer')
         ->leftJoinRelationship('has_jenis')
+        ->where(Transaksi::field_status(), TransactionType::KOTOR)
         ->orderBy(Customer::field_name(), 'ASC')
         ->orderBy(Jenis::field_name(), 'ASC')
         ->filter()
@@ -51,21 +51,15 @@ class ReportRekapRegisterController extends ReportController
         return $query;
     }
 
-    public function getPrint(ReportRequest $request)
+    public function getPrint(Request $request)
     {
         set_time_limit(0);
         $this->data = $this->getData($request);
         $model = $this->data->first();
 
-        $tanggal = CarbonPeriod::create(request('start_date'), request('end_date'));
-
-        $jenis = $this->data->sortBy('jenis_nama')->pluck(Jenis::field_name(), Jenis::field_primary());
-
         return moduleView(modulePathPrint(), $this->share([
             'data' => $this->data,
-            'jenis' => $jenis,
-            'model' => $model,
-            'tanggal' => $tanggal,
+            'model' => $model
         ]));
     }
 }

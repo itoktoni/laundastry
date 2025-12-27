@@ -24,7 +24,7 @@
 		<td></td>
 		<td colspan="10">
 			<h3>
-				Tanggal Register : {{ formatDate(request()->get('start_date')) }} - {{ formatDate(request()->get('end_date')) }}
+				Tanggal : {{ formatDate(request()->get('start_date')) }} - {{ formatDate(request()->get('end_date')) }}
 			</h3>
 		</td>
 	</tr>
@@ -37,7 +37,7 @@
 			<tr>
 				<th width="1">No. </th>
 				<th>JENIS LINEN</th>
-				<th>TANGGAL REGISTER</th>
+				<th>TANGGAL KOTOR</th>
 				<th>QTY</th>
 			</tr>
 		</thead>
@@ -50,16 +50,11 @@
 			<tr>
 				<td>{{ $loop->iteration }}</td>
 				<td>{{ $table->jenis_nama }}</td>
-				<td>{{ formatDate($table->register_tanggal) }}</td>
-				<td>{{ $table->register_qty }}</td>
+				<td>{{ formatDate($table->field_tanggal) }}</td>
+				<td class="text-center">{{ $table->field_scan }}</td>
 			</tr>
 			@empty
 			@endforelse
-			<tr>
-				<td>*</td>
-				<td colspan="2">Total Register</td>
-				<td>{{ $table->sum('register_qty') }}</td>
-			</tr>
 
 		</tbody>
 	</table>

@@ -24,7 +24,7 @@
 		<td></td>
 		<td colspan="10">
 			<h3>
-				Tanggal Register : {{ formatDate(request()->get('start_date')) }} - {{ formatDate(request()->get('end_date')) }}
+				Tanggal : {{ formatDate(request()->get('start_date')) }} - {{ formatDate(request()->get('end_date')) }}
 			</h3>
 		</td>
 	</tr>
@@ -35,44 +35,55 @@
 		class="table table-bordered table-striped table-responsive-stack">
 		<thead>
 			<tr>
-				<th width="1">No. </th>
-				<th>JENIS LINEN</th>
+				<th rowspan="2" width="1">No. </th>
+				<th rowspan="2">JENIS LINEN</th>
 				@foreach ($tanggal as $tgl)
-				<th>{{ $tgl->format('d') }}</th>
+				<th class="text-center" colspan="2">{{ $tgl->format('d') }}</th>
 				@endforeach
-				<th>QTY</th>
+				<th rowspan="2">OUTSTANDING</th>
+			</tr>
+			<tr>
+				@foreach ($tanggal as $tgl)
+				<th>Pending</th>
+				<th>Bayar</th>
+				@endforeach
 			</tr>
 		</thead>
 		<tbody>
 			@php
-			$total_berat = 0;
+			$total = 0;
 			@endphp
 
 			@forelse($jenis as $id => $name)
+
 			<tr>
 				<td>{{ $loop->iteration }}</td>
 				<td>{{ $name }}</td>
 				@foreach ($tanggal as $tgl)
+
+				@php
+				$pending = $data->where('jenis_id', $id)->where('transaksi_report', $tgl->format('Y-m-d'))->sum('transaksi_pending');
+				$bayar = $data->where('jenis_id', $id)->where('transaksi_report', $tgl->format('Y-m-d'))->sum('transaksi_bayar');
+				$sub = $pending - $bayar;
+				$total = $total + $sub;
+				@endphp
+
 				<td class="text-center">
-					{{ $data->where('jenis_id', $id)->where('register_tanggal', $tgl->format('Y-m-d'))->sum('register_qty') }}
+					{{ $pending }}
+				</td>
+				<td class="text-center">
+					{{ $bayar }}
 				</td>
 				@endforeach
-				<td class="text-center">{{ $data->where('jenis_id', $id)->sum('register_qty') }}</td>
+				<td class="text-center">{{ $sub }}</td>
 			</tr>
 			@empty
 			@endforelse
 
 			<tr>
 				<td>*</td>
-				<td>Total Semua Linen</td>
-				@foreach ($tanggal as $tgl)
-				@php
-				$jumlah_tgl = $data->where('register_tanggal', $tgl->format('Y-m-d'))->sum('register_qty');
-				@endphp
-
-				<td class="text-center">{{ $jumlah_tgl }}</td>
-				@endforeach
-				<td class="text-center">{{ $data->sum('register_qty') }}</td>
+				<td colspan="{{ 1 + (count($tanggal) * 2) }}">Total Outstanding</td>
+				<td class="text-center">{{ $total }}</td>
 			</tr>
 
 		</tbody>

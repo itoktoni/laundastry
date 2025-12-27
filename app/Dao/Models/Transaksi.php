@@ -35,6 +35,27 @@ class Transaksi extends SystemModel
 
     public $timestamps = true;
 
+    public function start_date($query)
+    {
+        $date = request()->get('start_date');
+        if ($date) {
+            $query = $query->whereDate($this->field_tanggal(), '>=', $date);
+        }
+
+        return $query;
+    }
+
+    public function end_date($query)
+    {
+        $date = request()->get('end_date');
+
+        if ($date) {
+            $query = $query->whereDate($this->field_tanggal(), '<=', $date);
+        }
+
+        return $query;
+    }
+
     public static function field_name()
     {
         return 'transaksi_code';

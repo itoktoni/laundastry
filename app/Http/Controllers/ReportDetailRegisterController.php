@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Dao\Models\Core\User;
 use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
 use App\Dao\Models\Register;
 use App\Http\Controllers\Core\ReportController;
-use Illuminate\Http\Request;
+use App\Http\Requests\Core\ReportRequest;
 use Plugins\Query;
 
 class ReportDetailRegisterController extends ReportController
@@ -50,13 +49,15 @@ class ReportDetailRegisterController extends ReportController
         return $query;
     }
 
-    public function getPrint(Request $request)
+    public function getPrint(ReportRequest $request)
     {
         set_time_limit(0);
         $this->data = $this->getData($request);
+        $model = $this->data->first();
 
         return moduleView(modulePathPrint(), $this->share([
             'data' => $this->data,
+            'model' => $model
         ]));
     }
 }

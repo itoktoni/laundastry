@@ -50,6 +50,11 @@ class Customer extends SystemModel
         return 'customer_nama';
     }
 
+    public function getFieldNameAttribute()
+    {
+        return $this->{$this->field_name()};
+    }
+
     public function fieldSearching()
     {
         return 'customer_nama';

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Dao\Enums\TransactionType;
 use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
-use App\Dao\Models\Register;
+use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\ReportController;
 use App\Http\Requests\Core\ReportRequest;
 use Plugins\Query;
 use Carbon\CarbonPeriod;
 
-class ReportRekapRegisterController extends ReportController
+class ReportRekapPendingController extends ReportController
 {
     public $data;
 
@@ -35,20 +36,35 @@ class ReportRekapRegisterController extends ReportController
 
     public function getData()
     {
-        $query = Register::select([
-            Register::getTableName().'.*',
+        $query = Transaksi::select([
+            Transaksi::getTableName().'.*',
             Customer::field_name(),
             Jenis::field_primary(),
             Jenis::field_name()
         ])
         ->leftJoinRelationship('has_customer')
         ->leftJoinRelationship('has_jenis')
+        ->whereNotNull(Transaksi::field_report())
+        ->where(Transaksi::field_status(), TransactionType::KOTOR)
         ->orderBy(Customer::field_name(), 'ASC')
-        ->orderBy(Jenis::field_name(), 'ASC')
-        ->filter()
-        ->get();
+        ->orderBy(Jenis::field_name(), 'ASC');
 
-        return $query;
+        if($customer = request('customer_code'))
+        {
+            $query = $query->where('transaksi_code_customer', $customer);
+        }
+
+        if($start_date = request()->get('start_date'))
+        {
+            $query = $query->where('transaksi_report', '>=', $start_date);
+        }
+
+        if($end_date = request()->get('end_date'))
+        {
+            $query = $query->where('transaksi_report', '<=', $end_date);
+        }
+
+        return $query->get();
     }
 
     public function getPrint(ReportRequest $request)
@@ -58,7 +74,6 @@ class ReportRekapRegisterController extends ReportController
         $model = $this->data->first();
 
         $tanggal = CarbonPeriod::create(request('start_date'), request('end_date'));
-
         $jenis = $this->data->sortBy('jenis_nama')->pluck(Jenis::field_name(), Jenis::field_primary());
 
         return moduleView(modulePathPrint(), $this->share([

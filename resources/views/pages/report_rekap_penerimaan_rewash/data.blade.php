@@ -24,7 +24,7 @@
 		<td></td>
 		<td colspan="10">
 			<h3>
-				Tanggal Register : {{ formatDate(request()->get('start_date')) }} - {{ formatDate(request()->get('end_date')) }}
+				Tanggal : {{ formatDate(request()->get('start_date')) }} - {{ formatDate(request()->get('end_date')) }}
 			</h3>
 		</td>
 	</tr>
@@ -37,7 +37,9 @@
 			<tr>
 				<th width="1">No. </th>
 				<th>JENIS LINEN</th>
-				<th>TANGGAL REGISTER</th>
+				@foreach ($tanggal as $tgl)
+				<th>{{ $tgl->format('d') }}</th>
+				@endforeach
 				<th>QTY</th>
 			</tr>
 		</thead>
@@ -46,19 +48,31 @@
 			$total_berat = 0;
 			@endphp
 
-			@forelse($data as $table)
+			@forelse($jenis as $id => $name)
 			<tr>
 				<td>{{ $loop->iteration }}</td>
-				<td>{{ $table->jenis_nama }}</td>
-				<td>{{ formatDate($table->register_tanggal) }}</td>
-				<td>{{ $table->register_qty }}</td>
+				<td>{{ $name }}</td>
+				@foreach ($tanggal as $tgl)
+				<td class="text-center">
+					{{ $data->where('jenis_id', $id)->where('transaksi_tanggal', $tgl->format('Y-m-d'))->sum('transaksi_scan') }}
+				</td>
+				@endforeach
+				<td class="text-center">{{ $data->where('jenis_id', $id)->sum('transaksi_scan') }}</td>
 			</tr>
 			@empty
 			@endforelse
+
 			<tr>
 				<td>*</td>
-				<td colspan="2">Total Register</td>
-				<td>{{ $table->sum('register_qty') }}</td>
+				<td>Total Semua Linen</td>
+				@foreach ($tanggal as $tgl)
+				@php
+				$jumlah_tgl = $data->where('transaksi_tanggal', $tgl->format('Y-m-d'))->sum('transaksi_scan');
+				@endphp
+
+				<td class="text-center">{{ $jumlah_tgl }}</td>
+				@endforeach
+				<td class="text-center">{{ $data->sum('transaksi_scan') }}</td>
 			</tr>
 
 		</tbody>

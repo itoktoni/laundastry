@@ -36,14 +36,14 @@ class Query
         try {
             $groups = GroupModel::with([
                 'has_menu' => function ($query) {
-                    $query->orderBy('system_menu_sort', 'DESC');
+                    $query->orderBy('system_menu_sort', 'ASC');
                 },
                 'has_menu.has_link' => function ($query) {
-                    $query->orderBy('system_link_sort', 'DESC');
+                    $query->orderBy('system_link_sort', 'ASC');
                 },
             ])
                 ->leftJoin('system_group_connection_role', 'system_group_connection_role.system_group_code', 'system_group.system_group_code')
-                ->orderBy('system_group_sort', 'DESC')
+                ->orderBy('system_group_sort', 'ASC')
                 ->get();
             Cache::put('groups', $groups);
 
@@ -261,9 +261,9 @@ class Query
 
                 return [
                     $item->opname_id => $item->opname_id.' | '.
-                    $customer.' = '.
-                    $item->opname_mulai.'-'.
-                    $item->opname_selesai,
+                    $customer.' = ( '.
+                    formatDate($item->opname_mulai).' - '.
+                    formatDate($item->opname_selesai).' )',
                 ];
             });
 
