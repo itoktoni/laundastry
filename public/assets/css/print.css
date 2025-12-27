@@ -1,41 +1,44 @@
 /* ==========================================================
-   Modern print.css
-   - Mobile preview: modern card + clean spacing + elegant bottom bar
-   - Print: 80mm thermal receipt
+   Modern print.css (Mobile preview + 80mm thermal print)
+   - Screen: modern card, readable, clean action bar
+   - Print : 80mm roll (forced widths in mm), hides action bar
+   Notes:
+   - Works best with: <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
    ========================================================== */
 
-/* Optional viewport help (works only in some environments) */
 @viewport { width: device-width; zoom: 1.0; }
 @-ms-viewport { width: device-width; }
 
 :root{
+  /* UI */
   --bg: #f2f4f7;
   --card: #ffffff;
   --text: #0f172a;
   --muted: #475569;
   --stroke: rgba(15,23,42,.10);
-
   --shadow: 0 12px 30px rgba(2, 6, 23, .10);
 
   /* Actions */
-  --action-bg: rgba(255,255,255,.78);
-  --action-stroke: rgba(15,23,42,.10);
+  --dock-bg: rgba(255,255,255,.80);
+  --dock-stroke: rgba(15,23,42,.10);
 
   /* Receipt */
-  --paper80: 80mm;
-  --safe: 76mm; /* safe inner width to avoid cutting on printers */
+  --paper: 80mm;     /* physical paper width */
+  --safe: 76mm;      /* safe printable width (many drivers add margins) */
 }
 
-/* Reset */
 *{ box-sizing: border-box; }
+
 html, body{ margin:0; padding:0; }
+
 body{
- font-family: Inter, InterVariable, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: inter, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   color: var(--text);
+  background: var(--bg);
   -webkit-text-size-adjust: 100%;
 }
 
-/* Utilities used in your HTML */
+/* utilities used by your HTML */
 .text-left{ text-align:left; }
 .text-center{ text-align:center; }
 .text-right{ text-align:right; }
@@ -45,11 +48,9 @@ body{
    ========================= */
 @media screen{
   body{
-    background: var(--bg);
-    padding: 14px 12px 110px; /* space for bottom bar */
+    padding: 14px 12px 114px; /* room for bottom action bar */
   }
 
-  /* Modern card */
   .invoice{
     width: 100% !important;
     max-width: 560px;
@@ -61,7 +62,7 @@ body{
     overflow: hidden;
   }
 
-  /* Inner padding (use existing blocks) */
+  /* spacing */
   .invoice-header,
   .invoice-info,
   .table-responsive{
@@ -109,16 +110,15 @@ body{
     color: var(--muted);
   }
 
-  /* Table */
   .table-responsive{
     padding-top: 8px;
     padding-bottom: 16px;
-    overflow: visible; /* prevent horizontal scroll look */
+    overflow: visible;
   }
 
   table{
     width: 100%;
-    min-width: 0 !important; /* important for mobile sizing (removes old 350px constraint) */
+    min-width: 0 !important; /* IMPORTANT: prevents mobile scaling issues */
     border-collapse: collapse;
     table-layout: fixed;
     font-size: 13px;
@@ -136,7 +136,6 @@ body{
     font-size: 13px;
   }
 
-  /* Column widths (mobile friendly) */
   th.col-no, td.col-no{ width: 12% !important; text-align:left; }
   th.col-name, td.col-name{ width: 68% !important; text-align:left; }
   th.col-qty, td.col-qty{ width: 20% !important; text-align:right; white-space: nowrap; }
@@ -147,11 +146,8 @@ body{
     word-break: break-word;
   }
 
-  tfoot td{
-    font-weight: 900;
-  }
+  tfoot td{ font-weight: 900; }
 
-  /* text below table */
   .table-responsive > p{
     margin: 12px 0 0;
     font-size: 13px;
@@ -175,7 +171,6 @@ body{
     border-top: 1px solid rgba(15,23,42,.08);
   }
 
-  /* “Floating dock” container */
   .header-action nav{
     width: min(560px, 100%);
     margin: 0 auto;
@@ -185,7 +180,10 @@ body{
     gap: 10px;
 
     padding: 10px;
-
+    background: var(--dock-bg);
+    border: 1px solid var(--dock-stroke);
+    border-radius: 18px;
+    box-shadow: 0 14px 34px rgba(2, 6, 23, .14);
   }
 
   .header-action nav a{
@@ -202,6 +200,7 @@ body{
     color: var(--text);
 
     text-decoration: none;
+    font-weight: 900;
     font-size: 14px;
     letter-spacing: .15px;
 
@@ -214,7 +213,7 @@ body{
     text-overflow: ellipsis;
   }
 
-  /* Primary: your HTML uses class="cursor" for Print */
+  /* Print link uses class="cursor" in your HTML */
   .header-action nav a.cursor{
     background: #0f172a;
     border-color: #0f172a;
@@ -230,21 +229,29 @@ body{
 
 /* =========================
    PRINT (80mm thermal)
+   - Use --paper when possible
+   - Use --safe to avoid cut-off if driver adds margins
    ========================= */
 @media print{
   @page{
-    size: var(--paper80) auto;
+    size: var(--paper) auto;  /* 80mm roll */
     margin: 0;
   }
 
   html, body{
     margin: 0 !important;
     padding: 0 !important;
+
+    /* Force the print canvas width (reduces auto-scaling) */
+    width: var(--paper) !important;
+    max-width: var(--paper) !important;
+
     background: #fff !important;
     color: #000 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    font-family: "Courier New", ui-monospace, monospace;
+
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
   /* hide UI */
@@ -252,12 +259,13 @@ body{
     display: none !important;
   }
 
-  /* force safe width for printer */
+  /* Use safe width to prevent clipping on many thermal drivers */
   .invoice, .table-responsive{
     width: var(--safe) !important;
     max-width: var(--safe) !important;
-    margin: 0 auto !important;
+    margin: 0 !important;     /* avoid centering that can trigger scaling */
     padding: 0 !important;
+
     background: transparent !important;
     border: 0 !important;
     border-radius: 0 !important;
@@ -299,16 +307,20 @@ body{
   }
 
   table{
-    width: 100% !important;
-    min-width: 0 !important;
+    width: var(--safe) !important;
+    max-width: var(--safe) !important;
+    margin: 0 !important;
+
     border-collapse: collapse !important;
     table-layout: fixed !important;
+    min-width: 0 !important;
+
     font-size: 10.5pt;
   }
 
   th, td{
     border: 1px solid #000 !important;
-    padding: 2.2mm 1.6mm !important;
+    padding: 2mm 1.5mm !important;
     vertical-align: top !important;
   }
 
