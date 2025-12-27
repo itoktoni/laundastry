@@ -163,6 +163,13 @@ th {
   }
 }
 
+@media screen and (min-width: 1200px) {
+  .invoice {
+    max-width: 400px;
+    margin: 0px auto;
+  }
+}
+
 /* ==========================================================
    PRINT STYLES (RawBT / 80mm Thermal)
    ========================================================== */
