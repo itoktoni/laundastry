@@ -16,26 +16,3 @@
         </nav>
     </div>
 @endif
-
-<style>
-    @media (max-width: 768px) {
-        .header-action{
-            height: 100px;
-        }
-
-        .header-action nav {
-            display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-            padding: 20px;
-        }
-
-        .header-action nav a {
-            text-decoration: none;
-            color: #000;
-            font-size: 2rem;
-            padding: 1rem 2rem;
-            font-weight: bold;
-        }
-    }
-</style>

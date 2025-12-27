@@ -1,127 +1,145 @@
 /* ==========================================================
-   PRINT.CSS (80mm receipt + mobile preview)
-   - No HTML changes required
-   - Screen: looks like an 80mm receipt preview (big, readable)
-   - Print: outputs as 80mm roll and hides action buttons
+   Modern print.css
+   - Mobile preview: modern card + clean spacing + elegant bottom bar
+   - Print: 80mm thermal receipt
    ========================================================== */
 
+/* Optional viewport help (works only in some environments) */
+@viewport { width: device-width; zoom: 1.0; }
+@-ms-viewport { width: device-width; }
+
 :root{
-  /* 80mm paper effective width is usually a bit less due to printer margins,
-     so use 72-76mm as "content width" for preview/print. */
-  --paper-80mm: 80mm;
-  --receipt-width: 76mm;
+  --bg: #f2f4f7;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --stroke: rgba(15,23,42,.10);
 
-  --ink: #000;
-  --muted: #444;
-  --line: #000;
+  --shadow: 0 12px 30px rgba(2, 6, 23, .10);
 
-  --ui-bg: #f3f4f6;
-  --card: #fff;
-  --shadow: 0 10px 30px rgba(0,0,0,.10);
+  /* Actions */
+  --action-bg: rgba(255,255,255,.78);
+  --action-stroke: rgba(15,23,42,.10);
+
+  /* Receipt */
+  --paper80: 80mm;
+  --safe: 76mm; /* safe inner width to avoid cutting on printers */
 }
 
+/* Reset */
 *{ box-sizing: border-box; }
-
-html, body{
-  margin:0;
-  padding:0;
-  color: var(--ink);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+html, body{ margin:0; padding:0; }
+body{
+ font-family: Inter, InterVariable, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
   -webkit-text-size-adjust: 100%;
 }
 
+/* Utilities used in your HTML */
+.text-left{ text-align:left; }
+.text-center{ text-align:center; }
+.text-right{ text-align:right; }
+
 /* =========================
-   SCREEN (Mobile Preview)
+   SCREEN (mobile preview)
    ========================= */
 @media screen{
   body{
-    background: var(--ui-bg);
-    /* space for fixed bottom buttons */
-    padding: 14px 12px 92px;
+    background: var(--bg);
+    padding: 14px 12px 110px; /* space for bottom bar */
   }
 
-  /* The key: constrain invoice to receipt width so it is NOT tiny on phone.
-     It will appear big because it uses real 76mm width, not full A4 scaling. */
+  /* Modern card */
   .invoice{
-    width: min(var(--receipt-width), 100%);
+    width: 100% !important;
+    max-width: 560px;
     margin: 0 auto;
     background: var(--card);
-    border-radius: 12px;
+    border: 1px solid var(--stroke);
+    border-radius: 16px;
     box-shadow: var(--shadow);
-    padding: 10px 10px 12px;
+    overflow: hidden;
+  }
+
+  /* Inner padding (use existing blocks) */
+  .invoice-header,
+  .invoice-info,
+  .table-responsive{
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
   .invoice-header{
-    text-align:center;
-    padding: 6px 0 10px;
-    border-bottom: 1px dashed #777;
-    margin-bottom: 10px;
+    padding-top: 14px;
+    padding-bottom: 12px;
+    text-align: center;
+    border-bottom: 1px dashed rgba(15,23,42,.25);
   }
 
   .invoice-header img{
     display:block;
-    margin: 0 auto 6px;
-    max-width: 60mm;
-    max-height: 20mm;
+    margin: 0 auto 8px;
+    max-width: 220px;
+    max-height: 72px;
     object-fit: contain;
   }
 
   .invoice-header h1{
     margin: 0;
-    font-size: 14px;
-    font-weight: 800;
+    font-size: 16px;
+    line-height: 1.25;
+    font-weight: 900;
     letter-spacing: .2px;
   }
 
   .invoice-info{
-    margin: 0 0 10px 0;
+    padding-top: 12px;
+    padding-bottom: 10px;
   }
 
   .invoice-info h2{
-    margin: 0 0 6px 0;
-    font-size: 12.5px;
-    font-weight: 800;
+    margin: 0 0 6px;
+    font-size: 14px;
+    font-weight: 900;
   }
 
   .invoice-info p{
     margin: 2px 0;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--muted);
   }
 
+  /* Table */
   .table-responsive{
-    width: 100%;
-    overflow: visible; /* receipt shouldn't scroll horizontally */
+    padding-top: 8px;
+    padding-bottom: 16px;
+    overflow: visible; /* prevent horizontal scroll look */
   }
 
   table{
     width: 100%;
+    min-width: 0 !important; /* important for mobile sizing (removes old 350px constraint) */
     border-collapse: collapse;
     table-layout: fixed;
-    font-size: 12px;
-
-    /* IMPORTANT: remove the min-width that makes it shrink/scale weird on mobile */
-    min-width: 0 !important; /* overrides your old min-width:350px [file:1] */
+    font-size: 13px;
   }
 
   th, td{
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    padding: 6px 4px;
+    border: 1px solid rgba(15,23,42,.55);
+    padding: 8px 7px;
     vertical-align: top;
   }
 
-  thead th{
-    border-top: 1px solid var(--line);
+  th{
+    background: #fff;
     font-weight: 900;
-    text-transform: none;
-    font-size: 12px;
+    font-size: 13px;
   }
 
-  /* Column sizing tuned for receipt */
-  th.col-no, td.col-no{ width: 10% !important; text-align: left; }
-  th.col-name, td.col-name{ width: 70% !important; text-align: left; }
-  th.col-qty, td.col-qty{ width: 20% !important; text-align: right; white-space: nowrap; }
+  /* Column widths (mobile friendly) */
+  th.col-no, td.col-no{ width: 12% !important; text-align:left; }
+  th.col-name, td.col-name{ width: 68% !important; text-align:left; }
+  th.col-qty, td.col-qty{ width: 20% !important; text-align:right; white-space: nowrap; }
 
   td.col-name{
     white-space: normal !important;
@@ -133,87 +151,95 @@ html, body{
     font-weight: 900;
   }
 
-  /* Text below table (Tangerang/date + Admin) */
+  /* text below table */
   .table-responsive > p{
     margin: 12px 0 0;
-    font-size: 12px;
-    color: var(--ink);
-  }
-
-  /* the footer table exists but is empty in your markup; keep it harmless */
-  table.footer{
-    width: 100%;
-    border: 0;
+    font-size: 13px;
+    color: var(--text);
   }
 
   /* =========================
-     Bottom action bar (3 buttons)
+     Bottom action bar (modern)
      ========================= */
   .header-action{
     position: fixed;
-    left:0;
-    right:0;
-    bottom:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 9999;
-    background: rgba(243,244,246,.92);
-    backdrop-filter: blur(8px);
-    border-top: 1px solid #dcdcdc;
-    padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(242,244,247,.70);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(15,23,42,.08);
   }
 
+  /* “Floating dock” container */
   .header-action nav{
-    width: min(520px, 100%);
+    width: min(560px, 100%);
     margin: 0 auto;
+
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Back | Print | Excel */
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
+
+    padding: 10px;
+
   }
 
   .header-action nav a{
-    display:flex;
-    align-items:center;
-    justify-content:center;
     height: 44px;
-    border-radius: 12px;
-    border: 1px solid #cfcfcf;
+    padding: 0 12px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+    border: 1px solid rgba(15,23,42,.14);
     background: #fff;
-    color: #111;
-    text-decoration:none;
-    font-weight: 800;
+    color: var(--text);
+
+    text-decoration: none;
     font-size: 14px;
-    line-height: 1;
+    letter-spacing: .15px;
+
+    box-shadow: 0 6px 16px rgba(2,6,23,.10);
     user-select: none;
     -webkit-tap-highlight-color: transparent;
-    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
-  /* Your HTML marks Print link with class="cursor" */
+  /* Primary: your HTML uses class="cursor" for Print */
   .header-action nav a.cursor{
-    background: #111;
+    background: #0f172a;
+    border-color: #0f172a;
     color: #fff;
-    border-color: #111;
+    box-shadow: 0 12px 24px rgba(2,6,23,.22);
   }
 
   .header-action nav a:active{
     transform: translateY(1px);
+    box-shadow: 0 4px 12px rgba(2,6,23,.10);
   }
 }
 
 /* =========================
-   PRINT (80mm receipt output)
+   PRINT (80mm thermal)
    ========================= */
 @media print{
-  /* Print to 80mm roll */
   @page{
-    size: var(--paper-80mm) auto;
-    margin: 0; /* maximize printable area */
+    size: var(--paper80) auto;
+    margin: 0;
   }
 
   html, body{
-    margin:0 !important;
-    padding:0 !important;
-    width: 100% !important;
-    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
     background: #fff !important;
     color: #000 !important;
     -webkit-print-color-adjust: exact;
@@ -221,30 +247,27 @@ html, body{
     font-family: "Courier New", ui-monospace, monospace;
   }
 
-  /* Hide UI buttons */
-  .header-action,
-  nav,
-  button,
-  .no-print,
-  .action-bar{
-    display:none !important;
+  /* hide UI */
+  .header-action, nav, button, .no-print, .action-bar{
+    display: none !important;
   }
 
-  /* Force receipt width in print */
-  .invoice,
-  .table-responsive{
-    width: var(--paper-80mm) !important;
-    max-width: var(--paper-80mm) !important;
-    margin: 0 !important;
+  /* force safe width for printer */
+  .invoice, .table-responsive{
+    width: var(--safe) !important;
+    max-width: var(--safe) !important;
+    margin: 0 auto !important;
     padding: 0 !important;
     background: transparent !important;
-    box-shadow: none !important;
+    border: 0 !important;
     border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
   }
 
   .invoice-header{
-    text-align:center;
-    padding: 0 0 5mm 0;
+    text-align: center;
+    padding: 0 0 4mm 0;
     margin: 0 0 3mm 0;
     border-bottom: 1px dashed #000;
   }
@@ -258,14 +281,9 @@ html, body{
   }
 
   .invoice-header h1{
-    margin:0;
+    margin: 0;
     font-size: 12pt;
     font-weight: 700;
-  }
-
-  .invoice-info{
-    margin: 0 0 3mm 0;
-    padding: 0;
   }
 
   .invoice-info h2{
@@ -277,29 +295,30 @@ html, body{
   .invoice-info p{
     margin: 0 0 1.2mm 0;
     font-size: 10.5pt;
+    color: #000 !important;
   }
 
   table{
     width: 100% !important;
+    min-width: 0 !important;
     border-collapse: collapse !important;
     table-layout: fixed !important;
     font-size: 10.5pt;
-    min-width: 0 !important;
   }
 
   th, td{
-    border-top: 1px solid #000 !important;
-    border-bottom: 1px solid #000 !important;
+    border: 1px solid #000 !important;
     padding: 2.2mm 1.6mm !important;
     vertical-align: top !important;
   }
 
-  thead th{
+  th{
+    background: #fff !important;
     font-weight: 900;
   }
 
-  th.col-no, td.col-no{ width: 10% !important; text-align:left !important; }
-  th.col-name, td.col-name{ width: 70% !important; text-align:left !important; }
+  th.col-no, td.col-no{ width: 12% !important; text-align:left !important; }
+  th.col-name, td.col-name{ width: 68% !important; text-align:left !important; }
   th.col-qty, td.col-qty{ width: 20% !important; text-align:right !important; white-space: nowrap !important; }
 
   td.col-name{
@@ -307,21 +326,12 @@ html, body{
     overflow-wrap: anywhere !important;
   }
 
-  tfoot td{
-    font-weight: 900;
-  }
-
-  /* Keep header row repeating if long receipt */
   thead{ display: table-header-group; }
   tfoot{ display: table-row-group; }
-
-  /* avoid breaking inside rows */
   tr, td, th{ page-break-inside: avoid !important; }
 
   .table-responsive > p{
     margin: 4mm 0 0 0;
     font-size: 10.5pt;
   }
-
-  table.footer{ border: 0 !important; }
 }
