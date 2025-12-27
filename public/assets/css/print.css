@@ -1,19 +1,19 @@
 /* ==========================================================
-   print.css (Modern UI + thermal widths 58/80/88)
-   How to switch paper:
-     Option A (recommended): set CSS variable --paper in :root
-       --paper: 58mm;  OR 80mm; OR 88mm;
-     Option B: add class on body:
-       <body class="paper-58"> or paper-80 or paper-88
-   Notes:
-   - Android print services may still apply margins; adjust --safe (inner width).
+   print.css (STANDARD 80mm)
+   - SCREEN: modern preview + dock buttons
+   - PRINT : fixed thermal 80mm layout using SAFE printable width
+   IMPORTANT:
+     If print is too small on Android, you must set:
+       - Paper size: 80mm roll
+       - Margins: None (if available)
+       - Scale: 100% (disable "Fit to page/Shrink to fit") [web:70]
    ========================================================== */
 
 @viewport { width: device-width; zoom: 1.0; }
 @-ms-viewport { width: device-width; }
 
 :root{
-  /* ===== UI colors ===== */
+  /* UI */
   --bg:#f2f4f7;
   --card:#ffffff;
   --text:#0f172a;
@@ -21,26 +21,19 @@
   --stroke: rgba(15,23,42,.10);
   --shadow: 0 12px 30px rgba(2,6,23,.10);
 
-  /* ===== action dock ===== */
+  /* dock */
   --dock-bg: rgba(255,255,255,.82);
   --dock-stroke: rgba(15,23,42,.10);
 
-  /* ===== PAPER MODE (change this!) ===== */
-  --paper: 80mm;   /* set to 58mm / 80mm / 88mm */
+  /* ===== STANDARD 80MM PRINT ===== */
+  --paper: 80mm;
 
-  /* inner safe width (reduce if printer clips left/right) */
-  --safe: calc(var(--paper) - 4mm);
-
-  /* If Android print is too small, increase this slowly (1.0–1.6) */
-  --print-scale: 1.0;
+  /* SAFE width: many 80mm printers have printable width ~72mm.
+     If your output has too much left/right margin, try 74mm or 76mm. */
+  --safe: 72mm;
 }
 
-/* Optional body class switching */
-body.paper-58{ --paper: 58mm; --safe: 54mm; }
-body.paper-80{ --paper: 80mm; --safe: 76mm; }
-body.paper-88{ --paper: 88mm; --safe: 84mm; }
-
-/* ===== reset ===== */
+/* Reset */
 *{ box-sizing:border-box; }
 html, body{ margin:0; padding:0; }
 
@@ -50,25 +43,23 @@ body{
   -webkit-text-size-adjust: 100%;
 }
 
-/* HTML utilities */
 .text-left{ text-align:left; }
 .text-center{ text-align:center; }
 .text-right{ text-align:right; }
 
 /* =========================
-   SCREEN (mobile preview)
+   SCREEN (full-fit preview)
    ========================= */
 @media screen{
   body{
     background: var(--bg);
-    padding: 14px 12px 114px;
+    padding: 12px 10px 114px;
   }
 
-  /* Preview card width follows paper width so user sees real receipt width */
   .invoice{
-    width: min(var(--paper), 100%) !important;
-    max-width: 560px; /* keep nice on big phones */
-    margin: 0 auto;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
     background: var(--card);
     border: 1px solid var(--stroke);
     border-radius: 16px;
@@ -79,8 +70,8 @@ body{
   .invoice-header,
   .invoice-info,
   .table-responsive{
-    padding-left: 14px;
-    padding-right: 14px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
   .invoice-header{
@@ -149,7 +140,6 @@ body{
     font-size: 13px;
   }
 
-  /* Columns */
   th.col-no, td.col-no{ width: 14% !important; text-align:left; }
   th.col-name, td.col-name{ width: 66% !important; text-align:left; }
   th.col-qty, td.col-qty{ width: 20% !important; text-align:right; white-space: nowrap; }
@@ -168,7 +158,7 @@ body{
     color: var(--text);
   }
 
-  /* Bottom action bar */
+  /* Dock */
   .header-action{
     position: fixed;
     left: 0;
@@ -184,7 +174,7 @@ body{
   }
 
   .header-action nav{
-    width: min(560px, 100%);
+    width: 100%;
     margin: 0 auto;
 
     display: grid;
@@ -230,19 +220,14 @@ body{
     color: #fff;
     box-shadow: 0 12px 24px rgba(2,6,23,.22);
   }
-
-  .header-action nav a:active{
-    transform: translateY(1px);
-    box-shadow: 0 4px 12px rgba(2,6,23,.10);
-  }
 }
 
 /* =========================
-   PRINT (58/80/88 via vars)
+   PRINT (STANDARD 80mm)
    ========================= */
 @media print{
   @page{
-    size: var(--paper) auto;
+    size: var(--paper) auto; /* request 80mm */
     margin: 0;
   }
 
@@ -253,20 +238,21 @@ body{
     color: #000 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-
     font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
   /* Hide UI */
   .header-action, nav, button, .no-print, .action-bar{
-    display: none !important;
+    display:none !important;
   }
 
-  /* Force receipt block width even if print canvas is A4 */
-  .invoice{
+  /* Force the actual receipt block width to SAFE width.
+     This avoids clipping and reduces weird scaling. */
+  .invoice,
+  .table-responsive{
     width: var(--safe) !important;
     max-width: var(--safe) !important;
-    margin: 0 auto !important;
+    margin: 0 auto !important; /* center on whatever canvas the print service uses */
     padding: 0 !important;
 
     background: transparent !important;
@@ -274,17 +260,44 @@ body{
     border-radius: 0 !important;
     box-shadow: none !important;
     overflow: visible !important;
-
-    /* If Android makes it too small, raise --print-scale (1.2..1.6) */
-    transform: scale(var(--print-scale));
-    transform-origin: top center;
   }
 
   .invoice-header,
-  .invoice-info,
-  .table-responsive{
+  .invoice-info{
     padding-left: 0 !important;
     padding-right: 0 !important;
+  }
+
+  .invoice-header{
+    text-align: center;
+    padding: 0 0 4mm 0 !important;
+    margin: 0 0 3mm 0 !important;
+    border-bottom: 1px dashed #000 !important;
+  }
+
+  .invoice-header img{
+    display:block;
+    margin: 0 auto 2mm !important;
+    max-width: 65mm !important;
+    max-height: 18mm !important;
+    object-fit: contain !important;
+  }
+
+  .invoice-header h1{
+    margin: 0 !important;
+    font-size: 12pt !important;
+    font-weight: 700 !important;
+  }
+
+  .invoice-info h2{
+    margin: 0 0 2mm 0 !important;
+    font-size: 11pt !important;
+    font-weight: 700 !important;
+  }
+
+  .invoice-info p{
+    margin: 0 0 1.2mm 0 !important;
+    font-size: 10.5pt !important;
   }
 
   table{
@@ -292,7 +305,7 @@ body{
     min-width: 0 !important;
     border-collapse: collapse !important;
     table-layout: fixed !important;
-    font-size: 10.5pt;
+    font-size: 10.5pt !important;
   }
 
   th, td{
@@ -306,7 +319,6 @@ body{
     font-weight: 900 !important;
   }
 
-  /* Columns (works for 58/80/88) */
   th.col-no, td.col-no{ width: 14% !important; text-align:left !important; }
   th.col-name, td.col-name{ width: 66% !important; text-align:left !important; }
   th.col-qty, td.col-qty{ width: 20% !important; text-align:right !important; white-space: nowrap !important; }
@@ -319,29 +331,4 @@ body{
   thead{ display: table-header-group; }
   tfoot{ display: table-row-group; }
   tr, td, th{ page-break-inside: avoid !important; }
-}
-
-
-/* FULL-WIDTH mobile preview override */
-@media screen and (max-width: 600px){
-  body{
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-  }
-
-  .invoice{
-    width: 100% !important;
-    max-width: none !important;   /* important: remove 560px cap */
-    margin: 0 !important;
-
-    border-radius: 14px;
-  }
-
-  /* make inside padding consistent when full-width */
-  .invoice-header,
-  .invoice-info,
-  .table-responsive{
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
 }
