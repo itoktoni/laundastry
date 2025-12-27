@@ -69,8 +69,8 @@
 				<td>*</td>
 				<td>Total Summary</td>
 				<td>Total Pending</td>
-				<td class="text-center">{{ $table->sum('transaksi_pending') }}</td>
-				<td class="text-center">{{ $table->sum('transaksi_bayar') }}</td>
+				<td class="text-center">{{ $data->sum('transaksi_pending') }}</td>
+				<td class="text-center">{{ $data->sum('transaksi_bayar') }}</td>
 				<td>Total Outstanding</td>
 				<td class="text-center" colspan="2">{{ $total }}</td>
 			</tr>
