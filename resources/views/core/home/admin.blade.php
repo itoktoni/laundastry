@@ -22,7 +22,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h2 class="font-weight-bold mb-2">{{ $bersih }}</h2>
-                            <div id="detail">LINEN BERSIH</div>
+                            <div id="detail">BERSIH</div>
                         </div>
                     </div>
                 </div>
