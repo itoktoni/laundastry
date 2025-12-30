@@ -3,7 +3,7 @@
     <x-scriptcustomer />
 
     <div class="row mb-2">
-        <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-4 col-md-3 col-sm-12">
             <div class="card">
                 <div class="card-body" style="padding:19px">
                     <div class="d-flex justify-content-between align-items-center">
@@ -16,13 +16,13 @@
                 </div>
             </div>
         </div>
-         <div class="col-lg-3 col-md-3 col-sm-12">
+         <div class="col-lg-2 col-md-3 col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h2 class="font-weight-bold mb-2">{{ $bersih }}</h2>
-                            <div id="detail">LINEN BERSIH HARI INI</div>
+                            <div id="detail">LINEN BERSIH</div>
                         </div>
                     </div>
                 </div>
