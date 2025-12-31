@@ -27,7 +27,7 @@
                                             {{ __($value->name) }}
                                         </th>
                                     @endforeach
-                                    <th>Warna</th>
+                                    <th style="width: 120px">Warna</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,7 +44,7 @@
 										<td data-label="Code">{{ $table->category_code }}</td>
 										<td data-label="Nama">{{ $table->category_nama }}</td>
 										<td data-label="Warna">
-                                            <button style="color:white; background-color: {{ $table->category_warna }}" class="btn">
+                                            <button style="color:white; background-color: {{ $table->category_warna }}" class="btn btn-block">
                                                 {{ $table->category_nama }}
                                             </button>
                                         </td>
