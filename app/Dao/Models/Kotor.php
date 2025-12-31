@@ -20,6 +20,7 @@ class Kotor extends SystemModel
         'filter',
         'start_date',
         'end_date',
+        'category_code',
         'customer_code',
     ];
 

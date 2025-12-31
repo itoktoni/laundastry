@@ -17,12 +17,14 @@ class UpdatePending extends Component
     public $message;
 
     public $id;
+    public $module;
 
-    public function mount($transaksiID = null, $id = null)
+    public function mount($transaksiID = null, $id = null, $module = null)
     {
         $this->prefilledtransaksiID = $transaksiID;
         $kotor =  Transaksi::where('transaksi_id', $transaksiID)->first();
         $this->transaksiID = $transaksiID;
+        $this->module = $module;
 
         if($kotor)
         {
@@ -80,8 +82,7 @@ class UpdatePending extends Component
             $this->message = 'Error: ' . $e->getMessage();
         }
 
-
-        return redirect()->route('pending.getPrint', ['code' => $this->transaksiID]);
+        return redirect()->route($this->module.'.getPrint', ['code' => $this->transaksiID]);
     }
 
     public function settransaksiID($transaksiID)

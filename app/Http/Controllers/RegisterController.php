@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dao\Models\Customer;
+use App\Dao\Models\Jenis;
 use App\Dao\Models\Register;
 use App\Http\Controllers\Core\MasterController;
 use App\Http\Function\CreateFunction;
@@ -134,10 +135,16 @@ class RegisterController extends MasterController
         $model = $this->model::with(['has_customer', 'has_jenis'])->where('register_code', $code)->first();
         $customer = $model->has_customer ?? false;
         $jenis = $model->has_jenis ?? false;
+        $data = $this->model->addSelect([Register::getTableName().'.*', Jenis::field_name()])
+            ->leftJoinRelationship('has_jenis')
+            ->where('register_code', $code)
+            ->orderBy(Jenis::field_name(), 'ASC')
+            ->get();
 
        return $this->views($this->template(), $this->share([
             'jenis' => $jenis,
             'customer' => $customer,
+            'data' => $data,
             'model' => $model,
             'print' => true,
         ]));

@@ -37,16 +37,22 @@
                 </tr>
             </thead>
             <tbody>
+                @forelse ($data as $item)
+
                 <tr class="item">
-                    <td class="col-no">{{ 1 }}</td>
-                    <td class="col-name text-left">{{ $jenis->jenis_nama }}</td>
-                    <td class="col-qty">{{ $model->register_qty }}</td>
+                    <td class="col-no">{{ $loop->iteration }}</td>
+                    <td class="col-name text-left">{{ $item->jenis_nama }}</td>
+                    <td class="col-qty">{{ $item->register_qty }}</td>
                 </tr>
+                @empty
+
+                @endforelse
+
             </tbody>
 			<tfoot>
 				<tr>
 					<td colspan="2" style="text-align: right">Total</td>
-					<td class="col-qty">{{ $model->register_qty }}</td>
+					<td class="col-qty">{{ $data->sum('register_qty') }}</td>
 				</tr>
 			</tfoot>
         </table>

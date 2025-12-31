@@ -1,7 +1,9 @@
 <x-layout>
     <x-form :model="$model">
         <x-card>
-            <x-action form="form" />
+            <x-action form="form">
+                <x-button :href="moduleRoute('getPrint', ['code' => $model->register_code])" color="dark" label="Print Delivery" />
+            </x-action>
 
                 @bind($model)
 

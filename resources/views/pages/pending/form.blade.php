@@ -2,6 +2,7 @@
     <x-form :model="$model">
         <x-card label="Pending">
             <x-action form="blank">
+                <x-button :href="moduleRoute('getPrint', ['code' => $model->transaksi_code_scan])" color="success" label="Print Pengiriman Pending" />
             </x-action>
 
                 @bind($model)
@@ -52,7 +53,7 @@
                                         {{ $qty_pending }}
                                     </td>
 
-                                    <livewire:update-pending :transaksiID="$transaksi_id" :id="$key"/>
+                                    <livewire:update-pending :transaksiID="$transaksi_id" :id="$key" :module="moduleCode()"/>
 
                                 </tr>
 
