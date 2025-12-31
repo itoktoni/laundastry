@@ -34,7 +34,7 @@
                 <tr>
                     <th class="col-no">No.</th>
                     <th class="col-name text-left" style="width:70%;">Nama Jenis Linen</th>
-                    <th class="col-qty" style="width:10%;">Qty</th>
+                    <th class="col-qty" style="width:15%;">Qty</th>
                 </tr>
             </thead>
             <tbody>

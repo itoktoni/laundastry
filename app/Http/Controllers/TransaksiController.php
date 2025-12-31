@@ -136,6 +136,7 @@ class TransaksiController extends MasterController
             'transaksi_scan',
             'jenis_nama',
         ])
+        ->where('transaksi_code_scan', $code)
         ->where('transaksi_scan', '>', 0)
         ->leftJoinRelationship('has_jenis')->get();
 
