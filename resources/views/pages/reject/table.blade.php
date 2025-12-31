@@ -85,7 +85,7 @@
                                             {{ $table->customer_nama }}
                                         </td>
                                          <td class="text-center" data-label="Category">
-                                            <button class="btn btn-block" style="color:white;background-color: {{ $table->category_warna ?? '' }}">{{ $table->category_nama ?? '' }}</button>
+                                            <span class="btn btn-block" style="color:white;background-color: {{ $table->category_warna ?? '' }}">{{ $table->category_nama ?? '' }}</span>
                                         </td>
                                         <td data-label="Kotor" class="text-center">{{ $table->field_scan }}</td>
                                         <td data-label="QC" class="col-qty text-center">{{ $table->field_qc }}</td>
