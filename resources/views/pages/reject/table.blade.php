@@ -36,7 +36,7 @@
                                     <th class="text-center column-action">{{ __('Action') }}</th>
                                     <th class="text-center" style="width: 120px">Kode</th>
                                     <th>Detail</th>
-                                    <th class="col-qty text-center" style="width:70px;">Kotor</th>
+                                    <th class="col-qty text-center" style="width:80px;">Kotor</th>
                                     <th class="col-qty text-center" style="width:60px;">QC</th>
                                     <th class="col-qty text-center" style="width:90px;">Packing</th>
                                     <th class="col-qty text-center" style="width:90px;">Pending</th>
