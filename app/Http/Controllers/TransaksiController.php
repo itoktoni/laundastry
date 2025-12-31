@@ -203,7 +203,6 @@ class TransaksiController extends MasterController
         ])
             ->leftJoinRelationship('has_jenis')
             ->where('transaksi_code_scan', $code)
-            ->where('transaksi_bersih', '>', 0)
             ->get();
 
         $model = $data->first();
