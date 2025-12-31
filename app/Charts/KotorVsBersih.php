@@ -54,6 +54,7 @@ class KotorVsBersih
             ->setSubtitle('Durasi 7 hari kebelakang')
             ->addData('Bersih', $bersih)
             ->addData('Kotor', $kotor)
-            ->setXAxis($format);
+            ->setXAxis($format)
+            ->setGrid();
     }
 }
