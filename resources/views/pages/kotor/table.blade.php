@@ -35,7 +35,8 @@
                                     </th>
                                     <th class="text-center column-action">{{ __('Action') }}</th>
                                     <th class="text-center" style="width: 120px">Kode</th>
-                                    <th>Detail</th>
+                                    <th>Customer</th>
+                                    <th class="text-center" style="width: 120px">Category</th>
                                     <th class="col-qty text-center" style="width:80px;">Kotor</th>
                                     <th class="col-qty text-center" style="width:60px;">QC</th>
                                     <th class="col-qty text-center" style="width:90px;">Packing</th>
@@ -78,12 +79,13 @@
                                             {{ $table->field_primary }}
                                             <br>
                                             <br>
-                                            <button class="btn btn-block" style="color:white;background-color: {{ $table->category_warna ?? '' }}">{{ $table->category_nama ?? '' }}</button>
-                                        </td>
-                                        <td data-label="Detail">
                                             {{ formatDate($table->field_tanggal) }}
-                                            <br>
+                                        </td>
+                                        <td data-label="Customer">
                                             {{ $table->customer_nama }}
+                                        </td>
+                                        <td class="text-center" data-label="Category">
+                                            <button class="btn btn-block" style="color:white;background-color: {{ $table->category_warna ?? '' }}">{{ $table->category_nama ?? '' }}</button>
                                         </td>
                                         <td class="text-center" data-label="Kotor">{{ $table->field_scan }}</td>
                                         <td class="text-center" data-label="QC">{{ $table->field_qc }}</td>
