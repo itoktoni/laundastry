@@ -11,7 +11,11 @@ class CreateTransaksiService
     {
         $check = false;
         try {
-            $check = Transaksi::insert($data->data);
+            foreach($data->data as $trans)
+            {
+                $check = Transaksi::create($trans);
+            }
+
             if ($check) {
 
                 Alert::create();

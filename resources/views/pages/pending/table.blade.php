@@ -40,7 +40,7 @@
                                     <th>Jenis Linen</th>
                                     <th class="text-right">Pending</th>
                                     <th class="text-right">Pembayaran</th>
-                                    <th class="col-qty text-center" style="width:6%;">Sisa</th>
+                                    <th class="col-qty text-center" style="width:70px;">Sisa</th>
                                 </tr>
                             </thead>
                             <tbody>

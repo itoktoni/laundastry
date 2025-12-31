@@ -49,7 +49,7 @@ class TransaksiRequest extends FormRequest
         foreach (request('qty', []) as $key => $value) {
 
             $data[$key] = [
-                'transaksi_id' => $value['kotor_id'] ?? null,
+                // 'transaksi_id' => $value['kotor_id'] ?? null,
                 'transaksi_code_customer' => $customer_code,
                 'transaksi_id_jenis' => $key,
                 'transaksi_code_category' => $this->transaksi_code_category ?? 'NORMAL',

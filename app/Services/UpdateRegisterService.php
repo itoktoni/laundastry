@@ -14,9 +14,14 @@ class UpdateRegisterService
        try {
         foreach ($data->data as $key => $quantity) {
 
-            Register::where('register_id_jenis', $quantity['register_id_jenis'])
-                ->where('register_code', $quantity['register_code'])
-                ->update(['register_qty' => $quantity['register_qty'] ]);
+            Register::updateOrCreate([
+                'register_id_jenis' => intval($quantity['register_id_jenis']),
+                'register_code' => $quantity['register_code']
+            ], $quantity);
+
+            // Register::where('register_id_jenis', intval($quantity['register_id_jenis']))
+            //     ->where('register_code', $quantity['register_code'])
+            //     ->update(['register_qty' => $quantity['register_qty'] ]);
         }
 
         Alert::update();

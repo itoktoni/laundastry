@@ -48,7 +48,7 @@ class RegisterRequest extends FormRequest
         foreach (request('qty', []) as $key => $value) {
 
             $data[$key] = [
-                'register_id' => $value['register_id'] ?? null,
+                // 'register_id' => $value['register_id'] ?? null,
                 'register_code_customer' => $customer_code,
                 'register_code' => $code,
                 'register_id_jenis' => $key,

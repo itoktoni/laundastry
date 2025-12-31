@@ -23,6 +23,7 @@
         "livewire/livewire": "^3.6",
         "mehradsadeghi/laravel-filter-querystring": "^1.1",
         "opcodesio/log-viewer": "^3.1",
+        "owen-it/laravel-auditing": "^14.0",
         "php-flasher/flasher-notyf-laravel": "*",
         "spatie/simple-excel": "^3.6",
         "wildside/userstamps": "^2.2"

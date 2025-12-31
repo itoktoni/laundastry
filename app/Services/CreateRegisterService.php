@@ -12,7 +12,11 @@ class CreateRegisterService
         $check = false;
         try {
 
-            $check = Register::insert($data->data);
+            foreach($data->data as $reg)
+            {
+                $check = Register::create($reg);
+            }
+
             if ($check) {
 
                 Alert::create();

@@ -3,15 +3,21 @@
 namespace App\Dao\Models;
 
 use App\Dao\Models\Core\SystemModel;
+use App\Dao\Models\Core\User;
 use App\Models\Scopes\RegisterScope;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
+use OwenIt\Auditing\Auditable;
 
 #[ScopedBy(RegisterScope::class)]
-class Register extends SystemModel
+class Register extends SystemModel implements \OwenIt\Auditing\Contracts\Auditable
 {
+    use Auditable;
+
     protected $perPage = 20;
     protected $table = 'register';
     protected $primaryKey = 'register_id';
+
+    public $incrementing = true;
 
     protected $filters = [
         'filter',
@@ -19,6 +25,22 @@ class Register extends SystemModel
         'end_date',
         'customer_code',
     ];
+
+    protected $auditInclude = [
+        'register_id_jenis',
+        'register_qty',
+        'register_tanggal',
+        'register_code_customer',
+        'register_code',
+    ];
+
+    public function generateTags(): array
+    {
+        return [
+            $this->has_jenis->jenis_nama,
+            $this->has_customer->customer_nama,
+        ];
+    }
 
     public function getFieldNameAttribute()
     {
@@ -82,6 +104,11 @@ class Register extends SystemModel
     public function has_customer()
     {
         return $this->hasOne(Customer::class, 'customer_code', 'register_code_customer');
+    }
+
+    public function has_user()
+    {
+        return $this->hasOne(User::class, 'id', 'register_created_by');
     }
 
     public function has_jenis()

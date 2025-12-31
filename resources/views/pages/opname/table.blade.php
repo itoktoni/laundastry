@@ -35,11 +35,8 @@
                                     <th class="text-center column-action">{{ __('Action') }}</th>
                                     <th style="width: 70px">Code</th>
                                     <th>Customer</th>
-                                    <th>Tgl Buat</th>
-                                    <th>Tgl Mulai</th>
-                                    <th>Tgl Selesai</th>
-                                    <th>Waktu Capture</th>
-                                    <th style="width: 100px">Status</th>
+                                    <th>Detail</th>
+                                    <th style="width: 85px">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,10 +55,15 @@
 
 										<td data-label="Code">{{ $table->field_primary }}</td>
 										<td data-label="Customer">{{ $table->customer_nama }}</td>
-										<td data-label="Tgl Buat">{{ formatDate($table->opname_created_at) }}</td>
-										<td data-label="Tgl Mulai">{{ formatDate($table->opname_mulai) }}</td>
-										<td data-label="Tgl Selesai">{{ formatDate($table->opname_selesai) }}</td>
-										<td data-label="Capture">{{ formatDate($table->opname_capture) }}</td>
+										<td data-label="Detail">
+                                            Tgl buat : {{ formatDate($table->opname_created_at) }}
+                                            <br>
+                                            Tgl Mulai : {{ formatDate($table->opname_mulai) }}
+                                            <br>
+                                            Tgl Selesai : {{ formatDate($table->opname_selesai) }}
+                                            <br>
+                                            Tgl Capture : {{ formatDate($table->opname_capture) }}
+                                        </td>
 										<td data-label="Status">{{ OpnameType::getDescription($table->opname_status) }}</td>
 
                                     </tr>

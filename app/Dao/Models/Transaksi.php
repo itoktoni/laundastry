@@ -6,16 +6,19 @@ use App\Dao\Entities\TransaksiEntity;
 use App\Dao\Models\Core\SystemModel;
 use App\Models\Scopes\TransaksiScope;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
+use OwenIt\Auditing\Auditable;
 use Wildside\Userstamps\Userstamps;
 
 #[ScopedBy(TransaksiScope::class)]
-class Transaksi extends SystemModel
+class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Auditable
 {
-    use TransaksiEntity, Userstamps;
+    use TransaksiEntity, Userstamps, Auditable;
 
     protected $perPage = 20;
     protected $table = 'transaksi';
     protected $primaryKey = 'transaksi_id';
+
+    public $incrementing = true;
 
     protected $filters = [
         'filter',
@@ -28,6 +31,26 @@ class Transaksi extends SystemModel
         self::UPDATED_AT,
         self::DELETED_AT,
     ];
+
+    protected $auditInclude = [
+        'transaksi_id_jenis',
+        'transaksi_code_customer',
+        'transaksi_scan',
+        'transaksi_qc',
+        'transaksi_bersih',
+        'transaksi_pending',
+        'transaksi_bayar',
+        'transaksi_tanggal',
+        'transaksi_report',
+    ];
+
+    public function generateTags(): array
+    {
+        return [
+            $this->has_jenis->jenis_nama,
+            $this->has_customer->customer_nama,
+        ];
+    }
 
     protected function casts(): array
     {

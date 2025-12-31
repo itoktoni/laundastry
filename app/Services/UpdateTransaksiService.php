@@ -45,8 +45,15 @@ class UpdateTransaksiService
                 $update['transaksi_bersih_by'] = $user;
             }
 
-            $kotorDetail = Transaksi::where('transaksi_code_scan', $code)
-                ->where('transaksi_id_jenis', $key)->update($update);
+            $update = array_merge($quantity, $update);
+
+            Transaksi::updateOrCreate([
+                'transaksi_id_jenis' => intval($key),
+                'transaksi_code_scan' => $code
+            ], $update);
+
+            // $kotorDetail = Transaksi::where('transaksi_code_scan', $code)
+            //     ->where('transaksi_id_jenis', $key)->update($update);
         }
 
         Alert::update();
