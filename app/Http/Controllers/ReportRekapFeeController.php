@@ -10,6 +10,7 @@ use App\Http\Controllers\Core\ReportController;
 use App\Http\Requests\Core\ReportRequest;
 use Plugins\Query;
 use Carbon\CarbonPeriod;
+use Illuminate\Http\Request;
 
 class ReportRekapFeeController extends ReportController
 {
@@ -46,7 +47,7 @@ class ReportRekapFeeController extends ReportController
         return $query;
     }
 
-    public function getPrint(ReportRequest $request)
+    public function getPrint(Request $request)
     {
         set_time_limit(0);
         $this->data = $this->getData($request);
