@@ -19,8 +19,8 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th style="width: 4%" class="checkbox-column">No.</th>
-                                <th style="width: 60%">Jenis Linen</th>
+                                <th style="width: 60px" class="checkbox-column">No.</th>
+                                <th>Jenis Linen</th>
                                 <th style="width: 10%" class="text-center">Qty</th>
                             </tr>
                         </thead>

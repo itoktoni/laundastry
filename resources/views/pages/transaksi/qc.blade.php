@@ -25,10 +25,10 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th style="width: 5%" class="checkbox-column">No.</th>
-                                <th style="width: 60%">Jenis Linen</th>
-                                <th style="width: 10%" class="text-center">Kotor</th>
-                                <th style="width: 10%" class="text-center">QC</th>
+                                <th style="width: 60px" class="checkbox-column">No.</th>
+                                <th>Jenis Linen</th>
+                                <th style="width: 100px" class="text-center">Kotor</th>
+                                <th style="width: 100px" class="text-center">QC</th>
                             </tr>
                         </thead>
                         <tbody>

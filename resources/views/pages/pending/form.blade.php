@@ -19,10 +19,10 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th style="width: 5%" class="checkbox-column">No.</th>
-                                <th style="width: 60%">Jenis Linen</th>
-                                <th style="width: 10%" class="text-center">Pending</th>
-                                <th style="width: 15%" class="text-center">Pembayaran</th>
+                                <th style="width: 60px" class="checkbox-column">No.</th>
+                                <th>Jenis Linen</th>
+                                <th style="width: 100px" class="text-center">Pending</th>
+                                <th style="width: 170px" class="text-center">Pembayaran</th>
                             </tr>
                         </thead>
                         <tbody>
