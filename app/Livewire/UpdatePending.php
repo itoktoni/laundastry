@@ -39,7 +39,7 @@ class UpdatePending extends Component
 
         $this->status = null;
         $this->qtyPending = $kotor ? intval($kotor->transaksi_pending) : 0;
-        $this->qty = $kotor ? intval($kotor->transaksi_bayar) : 0;
+        $this->qty = intval($kotor->transaksi_pending);
         $this->message = null;
 
         $this->id = $id;

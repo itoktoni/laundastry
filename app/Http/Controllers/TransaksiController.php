@@ -65,6 +65,21 @@ class TransaksiController extends MasterController
         ]));
     }
 
+    public function postTable()
+    {
+        if (request()->exists('delete'))
+        {
+            $data = $this->deleteData(request()->get('code'));
+        }
+
+        if (request()->exists('sort')) {
+            $sort = array_unique(request()->get('sort'));
+            $data = self::$service->sort($this->model, $sort);
+        }
+
+        return Response::redirectBack($data);
+    }
+
     public function getCreate()
     {
         return moduleView(modulePathForm('form', 'transaksi'), $this->share([
@@ -264,13 +279,16 @@ class TransaksiController extends MasterController
     {
         $code = array_unique(request()->get('code'));
 
-        $check = Transaksi::where('transaksi_code_scan', $code)->delete();
+        $check = Transaksi::whereIn('transaksi_code_scan', $code)->delete();
         $data = ["Gagal"];
 
         if($check)
         {
             $data = Notes::delete($data);
-            Alert::delete("success");
+            Alert::delete("Data berhasil di hapus !");
+        }
+        else{
+            Alert::error('Error !');
         }
 
         return $data;

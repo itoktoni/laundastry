@@ -1,7 +1,8 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flasher/flasher@2.2.0/dist/flasher.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.min.css">
+<script src="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.min.js"></script>
 
 @if ($errors->any())
-<script type="text/javascript">
+<script>
     @foreach($errors->all() as $error)
         @php
             $string = Str::of($error);
@@ -10,14 +11,46 @@
                 $error = formatAttribute($string->before($required)).$required ?? $error;
             }
         @endphp
-        flasher.error('{{ $error }}');
+        new Notify({
+            status: 'error',
+            title: 'Error',
+            text: '{{ $error }}',
+            effect: 'fade',
+            speed: 300,
+            customClass: null,
+            customIcon: null,
+            showIcon: true,
+            showCloseButton: true,
+            autoclose: true,
+            autotimeout: 3000,
+            gap: 20,
+            distance: 20,
+            type: 1,
+            position: 'right top'
+        });
     @endforeach
 </script>
 @endif
 
 @if(session()->has('success') && !request()->ajax())
-<script type="text/javascript">
-    flasher.error('{{ $error }}');
+<script>
+    new Notify({
+        status: 'success',
+        title: 'Success',
+        text: '{{ session('success') }}',
+        effect: 'fade',
+        speed: 300,
+        customClass: null,
+        customIcon: null,
+        showIcon: true,
+        showCloseButton: true,
+        autoclose: true,
+        autotimeout: 3000,
+        gap: 20,
+        distance: 20,
+        type: 1,
+        position: 'right top'
+    });
 </script>
 @php
 session()->forget('success');
@@ -25,8 +58,24 @@ session()->forget('success');
 @endif
 
 @if(session()->has('error') && !request()->ajax())
-<script type="text/javascript">
-       flasher.error('{{ $error }}');
+<script>
+    new Notify({
+        status: 'error',
+        title: 'Error',
+        text: '{{ session('error') }}',
+        effect: 'fade',
+        speed: 300,
+        customClass: null,
+        customIcon: null,
+        showIcon: true,
+        showCloseButton: true,
+        autoclose: true,
+        autotimeout: 3000,
+        gap: 20,
+        distance: 20,
+        type: 1,
+        position: 'right top'
+    });
 </script>
 @php
 session()->forget('error');

@@ -49,7 +49,9 @@
                                         <td data-label="Action" class="col-md-2 text-center column-action">
                                             <x-crud :model="$table">
                                                 <x-button module="getCapture" key="{{ $table->field_primary }}" color="warning" label="Capture" />
+                                                @if(!empty($table->opname_capture))
                                                 <x-button module="getOpname" key="{{ $table->field_primary }}" color="success" label="Opname" />
+                                                @endif
                                             </x-crud>
                                         </td>
 

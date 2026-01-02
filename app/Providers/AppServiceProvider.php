@@ -50,5 +50,10 @@ class AppServiceProvider extends ServiceProvider
         if(env('APP_ENV') !== 'local') {
             URL::forceScheme('https');
         }
+
+        if (class_exists(\Barryvdh\Debugbar\Facades\Debugbar::class)) {
+            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+            $loader->alias('Debugbar', \Barryvdh\Debugbar\Facades\Debugbar::class);
+        }
     }
 }

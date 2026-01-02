@@ -38,6 +38,16 @@ trait TransaksiEntity
         return $this->{$this->field_code_scan()};
     }
 
+        public static function field_code_bersih()
+    {
+        return 'transaksi_code_bersih';
+    }
+
+    public function getFieldCodeBersihAttribute()
+    {
+        return $this->{$this->field_code_bersih()};
+    }
+
     public static function field_jenis_id()
     {
         return 'transaksi_id_jenis';

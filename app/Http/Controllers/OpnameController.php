@@ -10,15 +10,16 @@ use App\Dao\Models\Register;
 use App\Http\Controllers\Core\MasterController;
 use App\Http\Function\CreateFunction;
 use App\Http\Function\UpdateFunction;
+use App\Http\Requests\OpnameRequest;
+use App\Services\Master\CreateService;
 use App\Services\Master\SingleService;
+use App\Services\Master\UpdateService;
 use Plugins\Alert;
 use Plugins\Query;
+use Plugins\Response;
 
 class OpnameController extends MasterController
 {
-    use CreateFunction;
-    use UpdateFunction;
-
     public function __construct(Opname $model, SingleService $service)
     {
         self::$service = self::$service ?? $service;
@@ -31,12 +32,26 @@ class OpnameController extends MasterController
         $status = OpnameType::getOptions();
 
         $view = [
-            'model' => false,
+            'model' => $this->model,
             'customer' => $customer,
             'status' => $status,
         ];
 
         return self::$share = array_merge($view, self::$share, $data);
+    }
+
+    public function postCreate(OpnameRequest $request, CreateService $service)
+    {
+        $data = $service->save($this->model, $request);
+
+        return Response::redirectBack($data);
+    }
+
+    public function postUpdate($code, OpnameRequest $request, UpdateService $service)
+    {
+        $data = $service->update($this->model, $request, $code);
+
+        return Response::redirectBack($data);
     }
 
     public function getData()
