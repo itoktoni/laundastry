@@ -53,7 +53,7 @@
                                         </td>
                                         <td data-label="Action" class="col-md-2 text-center column-action">
                                             <div class="action-table">
-                                                @if ($table->field_qc == 0)
+                                                @if (empty($table->field_code_bersih))
                                                     <x-button module="getUpdate" key="{{ $table->field_primary }}"
                                                         color="primary" icon="pencil-square" />
                                                     <x-button module="getDelete" key="{{ $table->field_primary }}"
@@ -64,7 +64,7 @@
                                                 <x-button module="getPrintKotor" key="{{ $table->field_primary }}"
                                                     color="dark" icon="printer" />
 
-                                                @if ($table->field_qc == 0)
+                                                @if (empty($table->field_code_bersih))
                                                     <x-button module="getQc" key="{{ $table->field_primary }}"
                                                         color="warning" label="QC" icon="list" />
                                                 @endif
