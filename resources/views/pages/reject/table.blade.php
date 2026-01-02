@@ -54,8 +54,11 @@
                                         <td data-label="Action" class="col-md-2 text-center column-action">
                                             <div class="action-table">
                                                 @if (empty($table->field_code_bersih))
+                                                    @if ($table->transaksi_qc == 0 )
                                                     <x-button module="getUpdate" key="{{ $table->field_primary }}"
                                                         color="primary" icon="pencil-square" />
+                                                    @endif
+
                                                     <x-button module="getDelete" key="{{ $table->field_primary }}"
                                                         color="danger" icon="trash3"
                                                         onclick="return confirm('Apakah anda yakin ingin menghapus ?')"
@@ -69,10 +72,13 @@
                                                         color="warning" label="QC" icon="list" />
                                                 @endif
 
+                                                @if ($table->transaksi_qc > 0 )
                                                 <x-button module="getPacking" key="{{ $table->field_primary }}"
                                                     color="info" label="Packing" />
                                                 <x-button module="getPrintBersih" key="{{ $table->field_primary }}"
                                                     color="success" label="Print DO" />
+                                                @endif
+
                                             </div>
                                         </td>
 

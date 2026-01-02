@@ -26,8 +26,8 @@ class TransaksiRequest extends FormRequest
             $max = env('MAXIMUM_QC', 20);
 
             foreach($data as $qc){
-                $kotor = intval($qc['scan']);
-                $qc = intval($qc['qc']);
+                $kotor = intval($qc['scan'] ?? 0);
+                $qc = intval($qc['qc'] ?? 0);
 
                 if($message = $this->checkQC($kotor, $qc))
                 {
