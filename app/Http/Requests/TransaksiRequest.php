@@ -17,6 +17,52 @@ class TransaksiRequest extends FormRequest
         ];
     }
 
+    public function withValidator($validator)
+    {
+        $data = collect(request('qty'));
+
+        $validator->after(function ($validator) use ($data) {
+
+            $max = env('MAXIMUM_QC', 20);
+
+            foreach($data as $qc){
+                $kotor = intval($qc['scan']);
+                $qc = intval($qc['qc']);
+
+                if($message = $this->checkQC($kotor, $qc))
+                {
+                    $validator->errors()->add('customer_code', $message);
+                }
+            }
+
+        });
+    }
+
+    private function checkQC($kotor, $qc)
+    {
+        $kotor = intval($kotor);
+        $qc = intval($qc);
+        $max = env('MAXIMUM_QC', 0);
+
+        if($qc == 0 || $max == 0)
+        {
+            return false;
+        }
+
+        $plus = $kotor + $max;
+
+        if($qc > $kotor && $plus < $qc)
+        {
+            return "QC {$qc} lebih dari toleransi {$plus} ";
+        }
+
+        $minus = $kotor - $max;
+        if($kotor > $qc && $minus > $qc)
+        {
+            return "QC {$qc} kurang dari toleransi {$minus} ";
+        }
+    }
+
     public function prepareForValidation()
     {
         $customer_code = $this->customer_code;
