@@ -10,12 +10,12 @@
 			<x-logo/>
 		</td>
 	</tr>
-	@if ($model)
+	@if ($customer)
 	<tr>
 		<td></td>
 		<td colspan="10">
 			<h3>
-				Customer : {{ $model->customer_nama ?? '' }}
+				Customer : {{ $customer->customer_nama ?? '' }}
 			</h3>
 		</td>
 	</tr>

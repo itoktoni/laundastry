@@ -55,12 +55,14 @@ class ReportRekapTagihanController extends ReportController
 
         $tanggal = CarbonPeriod::create(request('start_date'), request('end_date'));
         $jenis = $this->data->sortBy('jenis_nama')->pluck(Jenis::field_name(), Jenis::field_primary());
+        $customer = Customer::find($request->get('customer_code'));
 
         return moduleView(modulePathPrint(), $this->share([
             'data' => $this->data,
             'jenis' => $jenis,
             'model' => $model,
             'tanggal' => $tanggal,
+            'customer' => $customer,
         ]));
     }
 }

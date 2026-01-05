@@ -68,10 +68,12 @@ class ReportDetailPendingKotorController extends ReportController
     {
         set_time_limit(0);
         $this->data = $this->getData($request);
+        $customer = Customer::find($request->get('customer_code'));
         $model = $this->data->first();
 
         return moduleView(modulePathPrint(), $this->share([
             'data' => $this->data,
+            'customer' => $customer,
             'model' => $model
         ]));
     }

@@ -58,9 +58,11 @@ class ReportDataOpnameController extends ReportController
             return [$item->jenis_id => $item];
         });
 
+        $customer = Customer::find($request->get('customer_code'));
         $model = Opname::with('has_customer')->find(request('opname'));
 
         return moduleView(modulePathPrint(), $this->share([
+            'customer' => $customer,
             'data' => $this->data,
             'model' => $model,
             'detail' => $detail

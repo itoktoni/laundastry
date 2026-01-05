@@ -54,9 +54,11 @@ class ReportDetailRegisterController extends ReportController
         set_time_limit(0);
         $this->data = $this->getData($request);
         $model = $this->data->first();
+        $customer = Customer::find($request->get('customer_code'));
 
         return moduleView(modulePathPrint(), $this->share([
             'data' => $this->data,
+            'customer' => $customer,
             'model' => $model
         ]));
     }

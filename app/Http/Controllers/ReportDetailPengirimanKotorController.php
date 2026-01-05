@@ -19,9 +19,9 @@ class ReportDetailPengirimanKotorController extends ReportController
         $customer = Query::getCustomerByUser();
         $jenis = [];
 
-        if(request()->has('customer'))
+        if(request()->has('customer_code'))
         {
-            $jenis = Query::getJenisByCustomerCode(request()->get('customer'));
+            $jenis = Query::getJenisByCustomerCode(request()->get('customer_code'));
         }
 
         $view = [
@@ -57,9 +57,12 @@ class ReportDetailPengirimanKotorController extends ReportController
         set_time_limit(0);
         $this->data = $this->getData($request);
         $model = $this->data->first();
+        $customer = Customer::find($request->get('customer_code'));
+
 
         return moduleView(modulePathPrint(), $this->share([
             'data' => $this->data,
+            'customer' => $customer,
             'model' => $model
         ]));
     }
