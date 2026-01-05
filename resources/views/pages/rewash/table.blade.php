@@ -90,8 +90,8 @@
                                         <td data-label="Customer">
                                             {{ $table->customer_nama }}
                                         </td>
-                                         <td class="text-center" data-label="Category">
-                                            <span class="btn btn-block" style="color:white;background-color: {{ $table->category_warna ?? '' }}">{{ $table->category_nama ?? '' }}</span>
+                                        <td class="text-center" data-label="Category">
+                                            <span class="btn btn-block" style="color:white;background-color: {{ $table->category_warna ?? '' }}">{{ $table->catagory_nama ?? '' }}</span>
                                         </td>
                                         <td class="text-center" data-label="Kotor">{{ $table->field_scan }}</td>
                                         <td class="text-center" data-label="QC">{{ $table->field_qc }}</td>
