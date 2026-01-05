@@ -56,9 +56,9 @@
                             <tr>
                                 <td class="text-center">*</td>
                                 <td>Total Summary Opname</td>
-                                <td class="text-center">{{ $transaksi->sum('odetail_register') }}</td>
+                                <td class="text-center">{{ $detail->sum('odetail_register') }}</td>
                                 <td>
-                                    <input type="text" value="{{ $transaksi->sum('odetail_ketemu') }}" class="form-control">
+                                    <input type="text" value="{{ $detail->sum('odetail_ketemu') }}" class="form-control">
                                 </td>
                             </tr>
                         </tbody>

@@ -71,7 +71,7 @@ class Opname extends SystemModel
 
     public function fieldSearching()
     {
-        return 'opname_nama';
+        return 'opname_selesai';
     }
 
     public function has_customer()

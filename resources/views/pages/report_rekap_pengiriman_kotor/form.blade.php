@@ -15,6 +15,4 @@
         </x-card>
     </x-form>
 
-    <x-scriptcustomer/>
-
 </x-layout>

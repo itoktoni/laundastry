@@ -13,6 +13,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Services\CreateRegisterService;
 use App\Services\UpdateRegisterService;
 use Illuminate\Support\Facades\DB;
+use Plugins\Alert;
 use Plugins\Query;
 use Plugins\Response;
 
@@ -41,7 +42,7 @@ class RegisterController extends MasterController
         $view = [
             'category' => $category,
             'jenis' => $jenis,
-            'model' => $this->model,
+            'model' => false,
             'customer' => $customer,
         ];
 

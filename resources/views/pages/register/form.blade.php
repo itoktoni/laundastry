@@ -2,7 +2,9 @@
     <x-form :model="$model">
         <x-card>
             <x-action form="form">
+                @if($model)
                 <x-button :href="moduleRoute('getPrint', ['code' => $model->register_code])" color="dark" label="Print Delivery" />
+                @endif
             </x-action>
 
                 @bind($model)

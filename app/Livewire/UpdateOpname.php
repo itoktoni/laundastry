@@ -23,14 +23,19 @@ class UpdateOpname extends Component
     {
         $this->prefilledtransaksiID = $transaksiID;
         $opname = OpnameDetail::where('odetail_id', $transaksiID)->first();
+        $code = env('CODE_OPNAME', 'OPM').'-'.date('Ymd').unic(5).'_';
+
+        if($opname)
+        {
+            $code = env('CODE_OPNAME', 'OPM').'-'.$opname->odetail_code_customer.'-'.date('Ymd').unic(5).'_';
+            $this->status = null;
+            $this->qty = intval($opname->odetail_ketemu);
+            $this->qtyRegister = intval($opname->odetail_register);
+        }
 
         $this->transaksiID = $transaksiID;
-        $code = env('CODE_OPNAME', 'OPM').'-'.$opname->odetail_code_customer.'-'.date('Ymd').unic(5).'_';
         $this->opnameCode = $code;
 
-        $this->status = null;
-        $this->qtyRegister = intval($opname->odetail_register);
-        $this->qty = intval($opname->odetail_ketemu);
         $this->message = null;
 
         $this->id = $id;

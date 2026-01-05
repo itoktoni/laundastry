@@ -200,7 +200,7 @@ class SharedData implements Arrayable, ArrayAccess, Jsonable, JsonSerializable, 
         return Arr::has($this->data, $offset);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->get($offset);
     }
