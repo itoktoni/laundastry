@@ -35,7 +35,7 @@
                                         <input class="btn-check-d" type="checkbox">
                                     </th>
                                     <th class="text-center column-action">{{ __('Action') }}</th>
-                                    <th style="width: 80px" >Code</th>
+                                    <th style="width: 120px" >Code</th>
                                     <th>Customer</th>
                                     <th>Jenis Linen</th>
                                     <th class="text-right">Pending</th>
