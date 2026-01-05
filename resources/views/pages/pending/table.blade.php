@@ -59,7 +59,7 @@
 
                                         </td>
 
-										<td data-label="Code">{{ $table->field_primary }}</td>
+										<td data-label="Code">{{ $table->transaksi_code_scan }}</td>
 										<td data-label="Customer">
                                             {{ $table->customer_nama }}
                                         </td>
