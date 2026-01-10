@@ -28,6 +28,7 @@
                                         </th>
                                     @endforeach
                                     <th>Customer</th>
+                                    <th>Berat Kg</th>
                                     <th>Harga</th>
                                     @if (auth()->user()->role == RoleType::Developer)
                                     <th>Fee</th>
@@ -48,6 +49,7 @@
 										<td data-label="ID">{{ $table->jenis_id }}</td>
 										<td data-label="Nama">{{ $table->jenis_nama }}</td>
 										<td data-label="Customer">{{ $table->customer_nama }}</td>
+										<td data-label="Berat Kg">{{ $table->jenis_berat }}</td>
 										<td data-label="Harga">{{ $table->jenis_harga }}</td>
                                         @if (auth()->user()->role == RoleType::Developer)
                                         <td data-label="Fee">{{ $table->jenis_fee }}</td>

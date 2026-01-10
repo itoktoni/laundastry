@@ -42,6 +42,8 @@
 				<th>{{ $tgl->format('d') }}</th>
 				@endforeach
 				<th class="text-right">QTY</th>
+				<th class="text-right">BERAT KG</th>
+				<th class="text-right">VOLUME</th>
 				<th class="text-right">HARGA</th>
 				<th class="text-right">JUMLAH</th>
 			</tr>
@@ -57,7 +59,9 @@
 				$single = $data->where('jenis_id', $id)->first();
 				$harga = $single->jenis_harga;
 				$type = $single->jenis_type;
-				$total_harga = $total_jenis * $harga;
+				$berat = $single->jenis_berat;
+				$volume = $single->total_volume;
+				$total_harga = $single->total_harga;
 				$total = $total + $total_harga;
 			@endphp
 			<tr>
@@ -70,6 +74,8 @@
 				</td>
 				@endforeach
 				<td class="text-center">{{ $total_jenis }}</td>
+				<td class="text-right">{{ $berat }}</td>
+				<td class="text-right">{{ $volume }}</td>
 				<td class="text-right">{{ $harga }}</td>
 				<td class="text-right">{{ $total_harga }}</td>
 
@@ -84,10 +90,11 @@
 				@php
 				$jumlah_tgl = $data->where('transaksi_report', $tgl->format('Y-m-d'))->sum('transaksi_bersih');
 				@endphp
-
 				<td class="text-center">{{ $jumlah_tgl }}</td>
 				@endforeach
 				<td class="text-center">{{ $data->sum('transaksi_bersih') }}</td>
+				<td class="text-right">VOLUME</td>
+				<td class="text-right">{{ $data->sum('total_volume') }}</td>
 				<td class="text-right">TOTAL</td>
 				<td class="text-right">{{ $total }}</td>
 			</tr>

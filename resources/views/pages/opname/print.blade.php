@@ -16,7 +16,7 @@
             <img src="{{ imageUrl($customer->customer_logo, 'customer') }}" alt="">
         </h1>
 		@endif
-        <h1>PEMBAYARAN PENDING</h1>
+        <h1>OPNAME</h1>
     </div>
 
     <!-- CUSTOMER INFO -->
@@ -51,17 +51,7 @@
 			</tfoot>
         </table>
 
-        <table class="footer">
-            <p>
-                {{ $customer->customer_alamat ?? '' }}, {{ date('d F Y') }}
-            </p>
-            <br>
-            <p>
-                {{ auth()->user()->name ?? '' }}
-            </p>
-            <br>
-            <span>.</span>
-        </table>
+        <x-footer />
 
     </div>
 

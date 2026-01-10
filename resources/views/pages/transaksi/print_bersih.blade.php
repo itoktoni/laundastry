@@ -58,17 +58,7 @@
 			</tfoot>
         </table>
 
-        <table class="footer">
-            <p>
-                {{ $customer->customer_alamat ?? '' }}, {{ date('d F Y') }}
-            </p>
-            <br>
-            <p>
-                {{ auth()->user()->name ?? '' }}
-            </p>
-            <br>
-            <span>.</span>
-        </table>
+        <x-footer />
 
     </div>
 

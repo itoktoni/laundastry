@@ -74,7 +74,8 @@
 
                                                 @if ($table->transaksi_qc > 0 )
                                                 <x-button module="getPacking" key="{{ $table->field_primary }}"
-                                                    color="info" label="Packing" />
+                                                    color="info" label="Kirim Bersih" />
+
                                                 <x-button module="getPrintBersih" key="{{ $table->field_primary }}"
                                                     color="success" label="Print DO" />
                                                 @endif
@@ -90,9 +91,16 @@
                                         </td>
                                         <td data-label="Customer">
                                             {{ $table->customer_nama }}
+                                            <br>
+                                            <br>
+                                            Kotor : {{ $table->user_kotor ?? '' }}
+                                            <br>
+                                            QC : {{ $table->user_qc ?? '' }}
+                                            <br>
+                                            Bersih : {{ $table->user_bersih ?? '' }}
                                         </td>
                                         <td class="text-center" data-label="Category">
-                                            <span class="btn btn-block" style="color:white;background-color: {{ $table->category_warna ?? '' }}">{{ $table->catagory_nama ?? '' }}</span>
+                                            <span class="btn btn-block" style="color:white;background-color: {{ $table->category_warna ?? '' }}">{{ $table->category_nama ?? '' }}</span>
                                         </td>
                                         <td data-label="Kotor" class="text-center">{{ $table->field_scan }}</td>
                                         <td data-label="QC" class="col-qty text-center">{{ $table->field_qc }}</td>
