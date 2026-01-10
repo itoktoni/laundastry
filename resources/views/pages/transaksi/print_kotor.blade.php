@@ -13,9 +13,7 @@
     <!-- HEADER -->
     <div class="invoice-header">
         @if ($customer)
-        <h1>
-            <img src="{{ imageUrl($customer->customer_logo, 'customer') }}" alt="">
-        </h1>
+        <x-header :customer="$customer"/>
 		@endif
         <h1> DETAIL TRANSAKSI {{ $type }}</h1>
     </div>
