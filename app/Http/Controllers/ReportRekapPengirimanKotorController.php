@@ -24,6 +24,9 @@ class ReportRekapPengirimanKotorController extends ReportController
         {
             $jenis = Query::getJenisByCustomerCode(request()->get('customer_code'));
         }
+        else{
+            $jenis = Query::getJenisByCustomerCode($customer->keys());
+        }
 
         $view = [
             'jenis' => $jenis,

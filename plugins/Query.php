@@ -215,9 +215,19 @@ class Query
     public static function getJenisByCustomerCode($code)
     {
         $data = [];
-        $jenis = Jenis::select('jenis_id', 'jenis_nama')
+
+        if(is_string($code))
+        {
+            $jenis = Jenis::select('jenis_id', 'jenis_nama')
             ->where('jenis_code_customer', $code)
             ->get();
+        }
+        else
+        {
+            $jenis = Jenis::select('jenis_id', 'jenis_nama')
+            ->whereIn('jenis_code_customer', $code)
+            ->get();
+        }
 
         if ($jenis) {
             $data = $jenis->pluck('jenis_nama', 'jenis_id');
@@ -238,7 +248,7 @@ class Query
         return $data;
     }
 
-    public static function getCustomerByRole()
+    public static function getCustomerByRole($user = false)
     {
         $userId = auth()->id();
 
@@ -256,7 +266,7 @@ class Query
         });
     }
 
-    public static function getCustomerByUser()
+    public static function getCustomerByUser($logo = false)
     {
         $data = [];
         $query = Customer::select(Customer::field_primary(), Customer::field_name());

@@ -36,7 +36,7 @@ class Customer extends SystemModel
         {
             if (request()->hasFile('image')) {
                 $file = request()->file('image');
-                $name = uploadImage($file, 'customer', 100);
+                $name = uploadImage($file, 'customer', 300);
                 $model->customer_logo = $name;
             }
 

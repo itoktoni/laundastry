@@ -1,6 +1,7 @@
 <?php
 
 use App\Dao\Enums\BellType;
+use App\Dao\Models\Customer;
 use App\Events\SendBroadcast;
 use App\Facades\Model\UserModel;
 use Carbon\Carbon;
@@ -8,6 +9,7 @@ use Coderello\SharedData\Facades\SharedData;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Carbon as SupportCarbon;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -15,6 +17,7 @@ use Laravie\SerializesQuery\Eloquent;
 use MBarlow\Megaphone\Types\General;
 use Intervention\Image\Laravel\Facades\Image;
 use Illuminate\Support\Facades\File;
+use Plugins\Query;
 
 define('ACTION_CREATE', 'getCreate');
 define('ACTION_UPDATE', 'getUpdate');
@@ -238,6 +241,25 @@ function imageUrl($value, $folder = null)
 function logoUrl($isLogo = true)
 {
     $logo = env('APP_LOGO');
+
+
+    if(auth()->check())
+    {
+        $customer = Query::getCustomerByUser();
+        if(count($customer) == 1)
+        {
+            $code = $customer->keys()->first();
+
+            $key = "user_customer:customer_ids:user:{$code}";
+
+            return Cache::remember($key, now()->addMinutes(60), function () use ($code) {
+
+                $single = Customer::find($code);
+                return imageUrl($single->customer_logo, 'customer');
+            });
+        }
+    }
+
 
     if(env('PATH_LINK', false))
     {

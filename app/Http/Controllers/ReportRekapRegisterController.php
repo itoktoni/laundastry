@@ -23,6 +23,9 @@ class ReportRekapRegisterController extends ReportController
         {
             $jenis = Query::getJenisByCustomerCode(request()->get('customer'));
         }
+        else{
+            $jenis = Query::getJenisByCustomerCode($customer->keys());
+        }
 
         $view = [
             'jenis' => $jenis,
