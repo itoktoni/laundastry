@@ -41,38 +41,58 @@
 				<th>PENDING</th>
 				<th>BAYAR</th>
 				<th>TANGGAL BAYAR</th>
-				<th>OUTSTANDING</th>
+				<th>PIC BAYAR</th>
+				<th>SISA</th>
 			</tr>
 		</thead>
 		<tbody>
 			@php
-			$total = 0;
+				$total = $pending = $bayar = 0;
 			@endphp
+			@forelse ($data as $jenis_nama => $item)
 
-			@forelse($data as $table)
-			@php
-				$sub = ($table->field_pending - $table->transaksi_bayar);
-				$total = $total + $sub;
-			@endphp
-			<tr>
-				<td>{{ $loop->iteration }}</td>
-				<td>{{ $table->jenis_nama }}</td>
-				<td>{{ formatDate($table->field_report) }}</td>
-				<td class="text-center">{{ $table->field_pending }}</td>
-				<td class="text-center">{{ $table->transaksi_bayar }}</td>
-				<td>{{ formatDate($table->transaksi_pending_at) }}</td>
-				<td class="text-center">{{ $sub }}</td>
-			</tr>
+				@php
+					$single = $item->first();
+					$pending = $pending + $single->transaksi_pending;
+					$bayar = $bayar + $single->transaksi_bayar;
+					$sum = $single->transaksi_pending - $single->transaksi_bayar;
+					$total = $total + $sum;
+				@endphp
+
+				<tr>
+					<td>Sum</td>
+					<td colspan="2">{{ $jenis_nama }}</td>
+					<td class="text-center">{{ $single->transaksi_pending }}</td>
+					<td class="text-center">{{ $single->transaksi_bayar }}</td>
+					<td colspan="3" class="text-right">{{ $single->transaksi_pending - $single->transaksi_bayar }}</td>
+				</tr>
+
+				@forelse($item as $table)
+				<tr>
+					<td>{{ $loop->iteration }}</td>
+					<td>{{ $table->jenis_nama }}</td>
+					<td>{{ formatDate($table->field_report) }}</td>
+					<td class="text-center"></td>
+					<td class="text-center">{{ $table->pending_qty }}</td>
+					<td>{{ formatDate($table->transaksi_pending_at) }}</td>
+					<td class="text-center">{{ $table->name }}</td>
+					<td></td>
+				</tr>
+				@empty
+				@endforelse
+
 			@empty
+
 			@endforelse
+
 			<tr>
 				<td>*</td>
 				<td>Total Summary</td>
 				<td>Total Pending</td>
-				<td class="text-center">{{ $data->sum('transaksi_pending') }}</td>
-				<td class="text-center">{{ $data->sum('transaksi_bayar') }}</td>
+				<td class="text-center">{{ $pending }}</td>
+				<td class="text-center">{{ $bayar }}</td>
 				<td>Total Outstanding</td>
-				<td class="text-center" colspan="2">{{ $total }}</td>
+				<td class="text-right" colspan="2">{{ $total ?? '0' }}</td>
 			</tr>
 
 		</tbody>

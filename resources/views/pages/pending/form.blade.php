@@ -2,7 +2,7 @@
     <x-form :model="$model">
         <x-card label="Pending">
             <x-action form="blank">
-                <x-button :href="moduleRoute('getPrint', ['code' => $model->transaksi_code_scan])" color="success" label="Print Pengiriman Pending" />
+                <x-button :href="moduleRoute('getPrintOutstanding', ['code' => $model->transaksi_id])" color="success" label="Print Summary Pending" />
             </x-action>
 
                 @bind($model)
@@ -23,6 +23,8 @@
                                 <th style="width: 60px" class="checkbox-column">No.</th>
                                 <th>Jenis Linen</th>
                                 <th style="width: 100px" class="text-center">Pending</th>
+                                <th style="width: 100px" class="text-center">Dibayar</th>
+                                <th style="width: 100px" class="text-center">Sisa</th>
                                 <th style="width: 170px" class="text-center">Pembayaran</th>
                             </tr>
                         </thead>
@@ -46,12 +48,14 @@
                                     <td data-label="No." class="text-center">{{ $loop->iteration }}</td>
                                     <td data-label="Linen">{{ $value }}</td>
 
-                                    <td class="text-center" data-label="Kotor">
+                                    <td class="text-center" data-label="Pending">
                                         <input type="hidden" name="qty[{{ $key }}][qc]"
                                         value="{{ $qty_pending ?? null }}" />
 
                                         {{ $qty_pending }}
                                     </td>
+                                    <td class="text-center" data-label="Dibayar">{{ $qty_bayar ?? 0 }}</td>
+                                    <td class="text-center" data-label="Dibayar">{{ $qty_pending - $qty_bayar }}</td>
 
                                     <livewire:update-pending :transaksiID="$transaksi_id" :id="$key" :module="moduleCode()"/>
 
@@ -68,6 +72,47 @@
                 @endbind
 
         </x-card>
+
+        @if(count($pending) > 0)
+
+        <x-card label="Detail Pembayaran">
+             <div class="container">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px" class="checkbox-column">No.</th>
+                                <th>Kode Pembayaran</th>
+                                <th>PIC</th>
+                                <th>Waktu Pembayaran</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-center" style="width: 110px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($pending as $item)
+
+                                <tr>
+                                    <td data-label="No." class="text-center">{{ $loop->iteration }}</td>
+                                    <td data-label="Kode Pending">{{ $item->pending_code }}</td>
+                                    <td data-label="PIC">{{ $item->name }}</td>
+                                    <td data-label="Waktu">{{ $item->pending_created_at }}</td>
+                                    <td class="text-center" data-label="Qty">{{ $item->pending_qty }}</td>
+                                    <td data-label="Action">
+                                        <x-button module="getDetailPending" key="{{ $item->field_primary }}"
+                                                    color="danger" label="Delete" />
+                                    </td>
+                                </tr>
+
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+        </x-card>
+
+        @endif
+
     </x-form>
 
      <script>

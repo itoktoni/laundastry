@@ -1,16 +1,18 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Dao\Models\Core\User;
 use App\Dao\Models\Pending;
+use App\Dao\Models\PendingDetail;
 use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\MasterController;
 use App\Http\Function\CreateFunction;
 use App\Http\Function\UpdateFunction;
-use App\Services\Master\SingleService;
 use App\Http\Requests\RegisterRequest;
 use App\Services\CreateRegisterService;
+use App\Services\Master\SingleService;
 use App\Services\UpdateRegisterService;
+use Plugins\Alert;
 use Plugins\Query;
 use Plugins\Response;
 
@@ -22,22 +24,21 @@ class PendingController extends MasterController
     public function __construct(Transaksi $model, SingleService $service)
     {
         self::$service = self::$service ?? $service;
-        $this->model = $model::getModel();
+        $this->model   = $model::getModel();
     }
 
     protected function share($data = [])
     {
         $customer = Query::getCustomerByUser();
-        $jenis = [];
+        $jenis    = [];
 
-        if(request()->has('customer') || count($customer) == 1)
-        {
+        if (request()->has('customer') || count($customer) == 1) {
             $jenis = Query::getJenisByCustomerCode(request()->get('customer', convertSingleKeys($customer)));
         }
 
         $view = [
-            'jenis' => $jenis,
-            'model' => $this->model,
+            'jenis'    => $jenis,
+            'model'    => $this->model,
             'customer' => $customer,
         ];
 
@@ -49,7 +50,7 @@ class PendingController extends MasterController
         $data = $this->getData();
 
         return $this->views($this->template('table', 'pending'), $this->share([
-            'data' => $data,
+            'data'   => $data,
             'fields' => $this->model::getModel()->getShowField(),
         ]));
     }
@@ -75,20 +76,26 @@ class PendingController extends MasterController
 
     public function getUpdate($code)
     {
-        $model = $this->model::where('transaksi_id', $code)->first();
-        $detail = $this->model::where('transaksi_id', $code)->get();
+        $model   = $this->model::where('transaksi_id', $code)->first();
+        $detail  = $this->model::where('transaksi_id', $code)->get();
+        $pending = PendingDetail::addSelect([PendingDetail::getTableName() . '.*', User::field_name()])
+            ->where('pending_id_transaksi', $code)
+            ->leftJoinRelationship('has_user')
+        // ->leftJoinRelationship('has_transaksi')
+        // ->leftJoinRelationship('has_transaksi.has_jenis')
+            ->get();
 
         $jenis = Query::getJenisPending($model->transaksi_code_customer, $model->transaksi_report);
 
-        if(request()->has('customer'))
-        {
+        if (request()->has('customer')) {
             $jenis = Query::getJenisPending(request()->get('customer'), request()->get('tanggal'));
         }
 
         return $this->views($this->template('form', 'pending'), $this->share([
-            'model' => $model,
-            'jenis' => $jenis,
-            'detail' => $detail,
+            'model'   => $model,
+            'jenis'   => $jenis,
+            'detail'  => $detail,
+            'pending' => $pending,
         ]));
     }
 
@@ -107,10 +114,30 @@ class PendingController extends MasterController
         return $data;
     }
 
+    public function getDetailPending($code)
+    {
+        try {
+            $data         = PendingDetail::find($code);
+            $transaksi_id = $data->pending_id_transaksi;
+            $data->delete();
+
+            $pending = PendingDetail::where('pending_id_transaksi', $transaksi_id)->sum('pending_qty');
+            Transaksi::where('transaksi_id', $transaksi_id)->update([
+                'transaksi_bayar' => $pending,
+            ]);
+
+            Alert::delete("success");
+
+        } catch (\Throwable $th) {
+            Alert::error($th->getMessage());
+        }
+
+        return redirect()->back();
+    }
+
     public function postTable()
     {
-        if (request()->exists('delete'))
-        {
+        if (request()->exists('delete')) {
             $data = $this->deleteData(request()->get('code'));
         }
 
@@ -124,15 +151,31 @@ class PendingController extends MasterController
 
     public function getPrint($code)
     {
-        $model = $this->model::with(['has_customer', 'has_jenis'])->where('transaksi_id', $code)->first();
-        $customer = $model->has_customer ?? false;
-        $jenis = $model->has_jenis ?? false;
+        $model     = PendingDetail::with(['has_transaksi', 'has_transaksi.has_customer', 'has_transaksi.has_jenis'])->where('pending_code', $code)->first();
+        $customer  = $model->has_transaksi->has_customer ?? false;
+        $jenis     = $model->has_transaksi->has_jenis ?? false;
+        $transaksi = $model->has_transaksi ?? false;
+
+        return $this->views($this->template('packing', 'pending'), $this->share([
+            'transaksi' => $transaksi,
+            'jenis'     => $jenis,
+            'customer'  => $customer,
+            'model'     => $model,
+            'print'     => true,
+        ]));
+    }
+
+    public function getPrintOutstanding($code)
+    {
+        $model     = Transaksi::with(['has_customer', 'has_jenis'])->where('transaksi_id', $code)->first();
+        $customer  = $model->has_customer ?? false;
+        $jenis     = $model->has_jenis ?? false;
 
         return $this->views($this->template('print', 'pending'), $this->share([
-            'jenis' => $jenis,
-            'customer' => $customer,
-            'model' => $model,
-            'print' => true,
+            'jenis'     => $jenis,
+            'customer'  => $customer,
+            'model'     => $model,
+            'print'     => true,
         ]));
     }
 

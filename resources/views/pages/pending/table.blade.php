@@ -54,7 +54,7 @@
 
                                             <div class="action-table">
                                                 <x-button module="getUpdate" key="{{ $table->field_primary }}" color="success" label="Bayar" />
-                                                <x-button module="getPrint" key="{{ $table->field_primary }}" color="dark" label="Cetak"/>
+                                                <x-button module="getPrintOutstanding" key="{{ $table->field_primary }}" color="dark" label="Cetak"/>
                                             </div>
 
                                         </td>

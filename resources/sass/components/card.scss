@@ -1,7 +1,7 @@
 
 .card{
 	border: unset;
-    margin-bottom: 5%;
+    margin-bottom: 1.5rem;
 
     .card-header{
         background-color: whitesmoke;
@@ -35,4 +35,8 @@
 		// border-bottom-right-radius: 9px;
 		// border-bottom-left-radius: 9px;
 	}
+
+    &:last-child {
+        margin-bottom: 4rem;
+    }
 }

@@ -131,4 +131,9 @@ class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Audita
     {
         return $this->hasOne(Category::class, 'category_id', 'transaksi_code_category');
     }
+
+    public function has_detail()
+    {
+        return $this->hasMany(PendingDetail::class, 'pending_id_transaksi', 'transaksi_id');
+    }
 }
