@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Dao\Models\Core\User;
 use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
 use App\Dao\Models\Register;
@@ -40,10 +41,12 @@ class ReportDetailRegisterController extends ReportController
         $query = Register::select([
             Register::getTableName().'.*',
             Customer::field_name(),
+            User::field_name(),
             Jenis::field_name()
         ])
         ->leftJoinRelationship('has_customer')
         ->leftJoinRelationship('has_jenis')
+        ->leftJoinRelationship('has_user')
         ->orderBy(Customer::field_name(), 'ASC')
         ->orderBy(Jenis::field_name(), 'ASC')
         ->filter()

@@ -41,7 +41,7 @@
 				<th>PENDING</th>
 				<th>BAYAR</th>
 				<th>TANGGAL BAYAR</th>
-				<th>PIC BAYAR</th>
+				<th>OPERATOR</th>
 				<th>SISA</th>
 			</tr>
 		</thead>

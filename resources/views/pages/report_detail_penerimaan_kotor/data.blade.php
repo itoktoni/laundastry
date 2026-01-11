@@ -38,6 +38,7 @@
 				<th width="1">No. </th>
 				<th>JENIS LINEN</th>
 				<th>TANGGAL KOTOR</th>
+				<th>OPERATOR</th>
 				<th>QTY</th>
 			</tr>
 		</thead>
@@ -51,6 +52,7 @@
 				<td>{{ $loop->iteration }}</td>
 				<td>{{ $table->jenis_nama }}</td>
 				<td>{{ formatDate($table->field_tanggal) }}</td>
+				<td>{{ $table->name }}</td>
 				<td class="text-center">{{ $table->field_scan }}</td>
 			</tr>
 			@empty

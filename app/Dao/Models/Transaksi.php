@@ -4,6 +4,7 @@ namespace App\Dao\Models;
 
 use App\Dao\Entities\TransaksiEntity;
 use App\Dao\Models\Core\SystemModel;
+use App\Dao\Models\Core\User;
 use App\Models\Scopes\TransaksiScope;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use OwenIt\Auditing\Auditable;
@@ -135,5 +136,15 @@ class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Audita
     public function has_detail()
     {
         return $this->hasMany(PendingDetail::class, 'pending_id_transaksi', 'transaksi_id');
+    }
+
+    public function has_created()
+    {
+        return $this->hasOne(User::class, 'id', 'transaksi_created_by');
+    }
+
+    public function has_qc()
+    {
+        return $this->hasOne(User::class, 'id', 'transaksi_qc_by');
     }
 }

@@ -38,6 +38,7 @@
 				<th width="1">No. </th>
 				<th>JENIS LINEN</th>
 				<th>TANGGAL PENGIRIMAN</th>
+				<th>OPERATOR</th>
 				<th>QTY</th>
 			</tr>
 		</thead>
@@ -51,6 +52,7 @@
 				<td>{{ $loop->iteration }}</td>
 				<td>{{ $table->jenis_nama }}</td>
 				<td>{{ formatDate($table->field_report) }}</td>
+				<td>{{ $table->name }}</td>
 				<td class="text-center">{{ $table->field_bersih }}</td>
 			</tr>
 			@empty

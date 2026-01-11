@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dao\Enums\TransactionType;
+use App\Dao\Models\Core\User;
 use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
 use App\Dao\Models\Transaksi;
@@ -41,9 +42,11 @@ class ReportDetailPenerimaanKotorController extends ReportController
         $query = Transaksi::select([
             Transaksi::getTableName().'.*',
             Customer::field_name(),
+            User::field_name(),
             Jenis::field_name()
         ])
         ->leftJoinRelationship('has_customer')
+        ->leftJoinRelationship('has_created')
         ->leftJoinRelationship('has_jenis')
         ->where(Transaksi::field_status(), TransactionType::KOTOR)
         ->orderBy(Customer::field_name(), 'ASC')
