@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Dao\Enums\TransactionType;
 use App\Dao\Models\Category;
 use App\Dao\Models\Customer;
-use App\Dao\Models\DetailKotor;
 use App\Dao\Models\Kotor;
 use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\MasterController;
@@ -19,6 +18,7 @@ use Plugins\Alert;
 use Plugins\Notes;
 use Plugins\Query;
 use Plugins\Response;
+use Illuminate\Support\Carbon;
 
 class TransaksiController extends MasterController
 {
@@ -244,13 +244,23 @@ class TransaksiController extends MasterController
 
         $unic = env('CODE_BERSIH', 'BSH').'-'.$unic.'-'.$model->transaksi_code_customer.'-'.date('Ymd').unic(5);
 
+        $startDate = Carbon::createFromFormat('Y-m-d H:i', date('Y-m-d').' 13:00');
+        $endDate = Carbon::createFromFormat('Y-m-d H:i:s', date('Y-m-d').' 23:59:59');
+
+        $check_date = Carbon::now()->between($startDate, $endDate);
+        $report_date = Carbon::now();
+
+        if ($check_date) {
+            $report_date = Carbon::now()->addDay(1);
+        }
+
         $update =  Transaksi::query()
             ->where('transaksi_code_scan', $code)
             ->whereNull('transaksi_code_bersih')
 
             ->update([
                 'transaksi_code_bersih' => $unic,
-                'transaksi_report' => date('Y-m-d')
+                'transaksi_report' => $report_date->format('Y-m-d')
             ]);
 
         $model = Transaksi::where('transaksi_code_scan', $code)->first();
