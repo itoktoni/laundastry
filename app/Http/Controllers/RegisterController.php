@@ -139,6 +139,7 @@ class RegisterController extends MasterController
         $data = $this->model->addSelect([Register::getTableName().'.*', Jenis::field_name()])
             ->leftJoinRelationship('has_jenis')
             ->where('register_code', $code)
+            ->where('register_qty', '>', 0)
             ->orderBy(Jenis::field_name(), 'ASC')
             ->get();
 
