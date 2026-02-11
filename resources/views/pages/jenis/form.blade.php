@@ -6,7 +6,7 @@
             <div class="row">
                 @bind($model)
 
-                <x-form-select col="6" id="customer" name="jenis_code_customer" label="Customer" :options="$customer" />
+                <x-form-select id="customer" :default="request()->get('customer') ?? ''" col="6" id="customer" name="jenis_code_customer" label="Customer" :options="$customer" />
                 <x-form-input col="6" name="jenis_nama" />
                 <x-form-input col="3" name="jenis_harga" />
                 <x-form-input col="3" type="number" step="any" min="0" name="jenis_berat" label="Berat Kg"/>
@@ -21,4 +21,7 @@
 
         </x-card>
     </x-form>
+
+    <x-scriptcustomertable />
+
 </x-layout>
