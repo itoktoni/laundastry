@@ -8,10 +8,10 @@ use App\Dao\Models\Opname;
 use App\Dao\Models\OpnameDetail;
 use App\Dao\Models\Register;
 use App\Http\Controllers\Core\MasterController;
-use App\Http\Function\CreateFunction;
-use App\Http\Function\UpdateFunction;
+use App\Http\Requests\Core\DeleteRequest;
 use App\Http\Requests\OpnameRequest;
 use App\Services\Master\CreateService;
+use App\Services\Master\DeleteService;
 use App\Services\Master\SingleService;
 use App\Services\Master\UpdateService;
 use Plugins\Alert;
@@ -70,6 +70,36 @@ class OpnameController extends MasterController
         $query = env('PAGINATION_SIMPLE') ? $query->simplePaginate($per_page) : $query->fastPaginate($per_page);
 
         return $query;
+    }
+
+    public function postDelete(DeleteRequest $request, DeleteService $service)
+    {
+        $code = $request->get('code');
+        $data = $service->delete($this->model, $code);
+
+        OpnameDetail::whereIn('odetail_id_opname', $code)->delete();
+
+        return Response::redirectBack($data);
+    }
+
+    public function getDelete()
+    {
+        $code = request()->get('code');
+        $data = self::$service->delete($this->model, $code);
+
+        OpnameDetail::where('odetail_id_opname', $code)->delete();
+
+        return Response::redirectBack($data);
+    }
+
+    public function deleteData($code)
+    {
+        $code = array_unique(request()->get('code'));
+        $data = self::$service->delete($this->model, $code);
+
+        OpnameDetail::whereIn('odetail_id_opname', $code)->delete();
+
+        return $data;
     }
 
     public function getCapture($code)
