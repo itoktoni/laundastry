@@ -114,6 +114,12 @@ function modulePathForm($name = null, $template = null, $path = false)
     return $path.moduleController().'.form';
 }
 
+function cleanCode($code)
+{
+    $clean_url = strpos($code, '&') !== false ? strstr($code, '&', true) : $code;
+    return $clean_url;
+}
+
 function moduleView($template, $data = [])
 {
     $view = view($template)->with($data);

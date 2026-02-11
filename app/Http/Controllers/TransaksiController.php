@@ -142,6 +142,7 @@ class TransaksiController extends MasterController
 
     public function getPrintKotor($code)
     {
+        $code = cleanCode($code);
         $model = Kotor::with('has_customer')->find($code);
 
         $detail = Transaksi::select([
@@ -155,7 +156,7 @@ class TransaksiController extends MasterController
         ->where('transaksi_scan', '>', 0)
         ->leftJoinRelationship('has_jenis')->get();
 
-        $jenis = Query::getJenisByCustomerCode($model->customer_code);
+        $jenis = Query::getJenisByCustomerCode($model->customer_code ?? null);
 
         if(request()->has('customer'))
         {
