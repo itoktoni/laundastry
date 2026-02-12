@@ -54,7 +54,7 @@
 				<td>{{ $name }}</td>
 				@foreach ($tanggal as $tgl)
 				<td class="text-center">
-					{{ $data->where('jenis_id', $id)->where('transaksi_tanggal', $tgl->format('Y-m-d'))->sum('transaksi_scan') }}
+					{{ $data->where('jenis_id', $id)->where('transaksi_tanggal', $tgl)->sum('transaksi_scan') }}
 				</td>
 				@endforeach
 				<td class="text-center">{{ $data->where('jenis_id', $id)->sum('transaksi_scan') }}</td>
@@ -67,7 +67,7 @@
 				<td>Total Semua Linen</td>
 				@foreach ($tanggal as $tgl)
 				@php
-				$jumlah_tgl = $data->where('transaksi_tanggal', $tgl->format('Y-m-d'))->sum('transaksi_scan');
+				$jumlah_tgl = $data->where('transaksi_tanggal', $tgl)->sum('transaksi_scan');
 				@endphp
 
 				<td class="text-center">{{ $jumlah_tgl }}</td>

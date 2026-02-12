@@ -37,10 +37,11 @@
 			<tr>
 				<th width="1">No. </th>
 				<th>JENIS LINEN</th>
-				@foreach ($tanggal as $tgl)
-				<th>{{ $tgl->format('d') }}</th>
-				@endforeach
-				<th>QTY</th>
+				<th>TANGGAL KOTOR</th>
+				<th>OPERATOR</th>
+				<th>KOTOR</th>
+				<th>HASIL QC</th>
+				<th>SELISIH SORTIR</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -48,32 +49,18 @@
 			$total_berat = 0;
 			@endphp
 
-			@forelse($jenis as $id => $name)
+			@forelse($data as $table)
 			<tr>
 				<td>{{ $loop->iteration }}</td>
-				<td>{{ $name }}</td>
-				@foreach ($tanggal as $tgl)
-				<td class="text-center">
-					{{ $data->where('jenis_id', $id)->where('transaksi_tanggal', $tgl)->sum('transaksi_bersih') }}
-				</td>
-				@endforeach
-				<td class="text-center">{{ $data->where('jenis_id', $id)->sum('transaksi_bersih') }}</td>
+				<td>{{ $table->jenis_nama }}</td>
+				<td>{{ formatDate($table->field_tanggal) }}</td>
+				<td>{{ $table->name }}</td>
+				<td class="text-center">{{ $table->field_scan }}</td>
+				<td class="text-center">{{ $table->field_qc }}</td>
+				<td class="text-center">{{ $table->field_qc - $table->field_scan }}</td>
 			</tr>
 			@empty
 			@endforelse
-
-			<tr>
-				<td>*</td>
-				<td>Total Semua Linen</td>
-				@foreach ($tanggal as $tgl)
-				@php
-				$jumlah_tgl = $data->where('transaksi_tanggal', $tgl)->sum('transaksi_bersih');
-				@endphp
-
-				<td class="text-center">{{ $jumlah_tgl }}</td>
-				@endforeach
-				<td class="text-center">{{ $data->sum('transaksi_bersih') }}</td>
-			</tr>
 
 		</tbody>
 	</table>
