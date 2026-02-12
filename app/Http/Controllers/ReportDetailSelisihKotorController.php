@@ -49,6 +49,7 @@ class ReportDetailSelisihKotorController extends ReportController
         ->leftJoinRelationship('has_created')
         ->leftJoinRelationship('has_jenis')
         ->where(Transaksi::field_status(), TransactionType::KOTOR)
+        ->where(Transaksi::field_scan(), '>', 0)
         ->orderBy(Customer::field_name(), 'ASC')
         ->orderBy(Jenis::field_name(), 'ASC')
         ->filter()
