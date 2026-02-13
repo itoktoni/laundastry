@@ -34,7 +34,12 @@ class JenisController extends MasterController
 
     public function getData()
     {
-        $query = $this->model->dataRepository([$this->model->getTable().'.*', 'customer_nama'], ['has_customer']);
+        $query = $this->model->select([$this->model->getTable().'.*', 'customer_nama'])
+            ->leftJoinRelationship('has_customer')
+            ->filter();
+
+        $query = $query->paginate(100);
+
         return $query;
     }
 }
