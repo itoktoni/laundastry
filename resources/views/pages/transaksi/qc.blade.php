@@ -55,7 +55,7 @@
                                     </td>
 
                                     <td data-label="Qty">
-                                        <input class="form-control text-center" type="number" min="0" value="{{ $qty_qc ?? null }}"
+                                        <input class="form-control text-center" type="number" min="0" value="{{ $qty_qc == 0 ? $qty_scan : $qty_qc }}"
                                             name="qty[{{ $key }}][qc]" />
                                     </td>
                                 </tr>

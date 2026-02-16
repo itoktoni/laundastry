@@ -36,23 +36,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($jenis as $key => $value)
                             @php
-                            $transaksi = $detail->firstWhere('transaksi_id_jenis', $key);
+                            $nomer = 1;
+                            @endphp
+                            @foreach ($jenis as $item)
+                            @php
+                            $transaksi = $detail->firstWhere('transaksi_id_jenis', $item->jenis_id);
                             $qty_scan = $transaksi ? $transaksi->transaksi_scan : 0;
                             $qty_qc = $transaksi ? $transaksi->transaksi_qc : 0;
                             $qty_bersih = $transaksi ? $transaksi->qty_bersih : 0;
+                            $key = $item->jenis_id;
+                            $value = $item->jenis_nama;
 
                             $transaksi_id = $transaksi ? $transaksi->transaksi_id : null;
 
                             @endphp
-
+                                @if($item->transaksi_scan != 0)
                                 <tr>
                                     <input type="hidden" name="qty[{{ $key }}][jenis_id]"
                                         value="{{ $key ?? null }}" />
 
-                                    <td data-label="No." class="text-center">{{ $loop->iteration }}</td>
-                                    <td data-label="Linen">{{ $value }}</td>
+                                    <td data-label="No." class="text-center">{{ $nomer++ }}</td>
+                                    <td style="background-color: {{ $item->jenis_type == 'CUCI' ? 'rgb(245, 164, 164)' : '' }}" data-label="Linen">{{ $value }}</td>
 
                                     <td class="text-center" data-label="Kotor">
                                         <input type="hidden" name="qty[{{ $key }}][scan]"
@@ -67,7 +72,45 @@
                                     <livewire:update-qty :kotorId="$transaksi_id" :id="$key"/>
 
                                 </tr>
+                                @endif
                             @endforeach
+
+                            @foreach ($jenis as $item)
+                            @php
+                            $transaksi = $detail->firstWhere('transaksi_id_jenis', $item->jenis_id);
+                            $qty_scan = $transaksi ? $transaksi->transaksi_scan : 0;
+                            $qty_qc = $transaksi ? $transaksi->transaksi_qc : 0;
+                            $qty_bersih = $transaksi ? $transaksi->qty_bersih : 0;
+                            $key = $item->jenis_id;
+                            $value = $item->jenis_nama;
+
+                            $transaksi_id = $transaksi ? $transaksi->transaksi_id : null;
+
+                            @endphp
+                                @if($item->transaksi_scan == 0)
+                                <tr>
+                                    <input type="hidden" name="qty[{{ $key }}][jenis_id]"
+                                        value="{{ $key ?? null }}" />
+
+                                    <td data-label="No." class="text-center">{{ $loop->iteration }}</td>
+                                    <td style="background-color: {{ $item->jenis_type == 'CUCI' ? 'rgb(245, 164, 164)' : '' }}" data-label="Linen">{{ $value }}</td>
+
+                                    <td class="text-center" data-label="Kotor">
+                                        <input type="hidden" name="qty[{{ $key }}][scan]"
+                                        value="{{ $qty_scan ?? null }}" />
+
+                                         <input type="hidden" name="qty[{{ $key }}][qc]"
+                                        value="{{ $qty_qc ?? null }}" />
+
+                                        {{ $qty_qc }}
+                                    </td>
+
+                                    <livewire:update-qty :kotorId="$transaksi_id" :id="$key"/>
+
+                                </tr>
+                                @endif
+                            @endforeach
+
                         </tbody>
                     </table>
 

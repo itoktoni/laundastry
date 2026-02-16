@@ -4,6 +4,7 @@ namespace App\Dao\Models;
 
 use App\Dao\Entities\TransaksiEntity;
 use App\Dao\Models\Core\SystemModel;
+use App\Dao\Models\Core\User;
 use App\Models\Scopes\TransaksiScope;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 
@@ -65,5 +66,20 @@ class Kotor extends SystemModel
     public function has_category()
     {
         return $this->hasOne(Category::class, 'category_id', 'transaksi_code_category');
+    }
+
+    public function has_user_scan()
+    {
+        return $this->hasOne(User::class, 'id', 'user_kotor');
+    }
+
+    public function has_user_qc()
+    {
+        return $this->hasOne(User::class, 'id', 'user_qc');
+    }
+
+    public function has_user_bersih()
+    {
+        return $this->hasOne(User::class, 'id', 'user_bersih');
     }
 }

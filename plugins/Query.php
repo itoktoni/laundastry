@@ -236,6 +236,63 @@ class Query
         return $data;
     }
 
+    public static function getJenisByTransaksiCode($code)
+    {
+        $data = [];
+
+        if(is_string($code))
+        {
+            $jenis = Jenis::select('jenis_id', 'jenis_nama', 'transaksi_scan')
+            ->leftJoin('transaksi', 'transaksi.transaksi_id_jenis', '=', 'jenis.jenis_id')
+            ->where('transaksi_code_scan', $code)
+            ->orderBy('transaksi_scan', 'DESC')
+            ->get();
+        }
+        else
+        {
+            $jenis = Jenis::select('jenis_id', 'jenis_nama')
+            ->leftJoin('transaksi', 'transaksi.transaksi_id_jenis', '=', 'jenis.jenis_id')
+            ->where('transaksi_code_scan', $code)
+            ->get();
+        }
+
+        if ($jenis) {
+            $data = $jenis->pluck('jenis_nama', 'jenis_id');
+        }
+
+        return $data;
+    }
+
+    public static function getJenisByPackingCode($code)
+    {
+        $data = [];
+
+        if(is_string($code))
+        {
+            $jenis = Jenis::select('jenis_id', 'jenis_nama', 'transaksi_scan', 'jenis_type')
+            ->leftJoin('transaksi', 'transaksi.transaksi_id_jenis', '=', 'jenis.jenis_id')
+            ->where('transaksi_code_scan', $code)
+            ->orderBy('jenis_type', 'ASC')
+            ->orderBy('transaksi_scan', 'DESC')
+            ->get();
+        }
+        else
+        {
+            $jenis = Jenis::select('jenis_id', 'jenis_nama', 'transaksi_scan', 'jenis_type')
+            ->leftJoin('transaksi', 'transaksi.transaksi_id_jenis', '=', 'jenis.jenis_id')
+            ->where('transaksi_code_scan', $code)
+            ->orderBy('jenis_type', 'ASC')
+            ->orderBy('transaksi_scan', 'DESC')
+            ->get();
+        }
+
+        if ($jenis) {
+            $data = $jenis;
+        }
+
+        return $data;
+    }
+
     public static function getJenisPending($customer, $tanggal)
     {
         $data = [];

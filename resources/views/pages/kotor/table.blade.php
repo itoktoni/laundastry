@@ -86,19 +86,11 @@
 
                                         <td class="text-center" data-label="ID">
                                             {{ $table->field_primary }}
-                                            <br>
-                                            <br>
-                                            {{ formatDate($table->field_tanggal) }}
                                         </td>
                                         <td data-label="Customer">
                                             {{ $table->customer_nama }}
                                             <br>
-                                            <br>
-                                            Kotor : {{ $table->user_kotor ?? '' }}
-                                            <br>
-                                            QC : {{ $table->user_qc ?? '' }}
-                                            <br>
-                                            Bersih : {{ $table->user_bersih ?? '' }}
+                                            Tanggal : {{ formatDate($table->field_tanggal) }}
 
                                         </td>
                                         <td class="text-center" data-label="Category">

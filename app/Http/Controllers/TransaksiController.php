@@ -125,11 +125,11 @@ class TransaksiController extends MasterController
         $data = Kotor::find($code);
         $detail = Transaksi::where('transaksi_code_scan', $code)->get();
 
-        $jenis = Query::getJenisByCustomerCode($data->customer_code);
+        $jenis = Query::getJenisByTransaksiCode($code);
 
         if(request()->has('customer'))
         {
-            $jenis = Query::getJenisByCustomerCode(request()->get('customer'));
+            $jenis = Query::getJenisByTransaksiCode(request()->get('customer'));
         }
 
         return moduleView(modulePathForm('qc', 'transaksi'), $this->share([
@@ -178,12 +178,7 @@ class TransaksiController extends MasterController
         $data = Kotor::find($code);
         $detail = Transaksi::where('transaksi_code_scan', $code)->get();
 
-        $jenis = Query::getJenisByCustomerCode($data->customer_code);
-
-        if(request()->has('customer'))
-        {
-            $jenis = Query::getJenisByCustomerCode(request()->get('customer'));
-        }
+        $jenis = Query::getJenisByPackingCode($code);
 
         return moduleView(modulePathForm('packing', 'transaksi'), $this->share([
             'model' => $data,
