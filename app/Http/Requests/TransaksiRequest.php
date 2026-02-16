@@ -87,7 +87,6 @@ class TransaksiRequest extends FormRequest
             $code = request()->segment(6);
         }
 
-        $date = $this->tanggal ?? date('Y-m-d');
         $now = date('Y-m-d H:i:s');
         $user = auth()->user()->id;
 
@@ -103,13 +102,17 @@ class TransaksiRequest extends FormRequest
                 'transaksi_scan' => $value['scan'] ?? 0,
                 'transaksi_qc' => $value['qc'] ?? 0,
                 'transaksi_bersih' => $value['bersih'] ?? 0,
-                'transaksi_tanggal' => $date,
                 'transaksi_status' => $this->type,
                 'transaksi_created_at' => $now,
                 'transaksi_updated_at' => $now,
                 'transaksi_created_by' => $user,
                 'transaksi_updated_by' => $user,
             ];
+
+            if(!empty($this->tanggal))
+            {
+                $data[$key]['transaksi_tanggal'] = $this->tanggal;
+            }
         }
 
         $this->merge([
