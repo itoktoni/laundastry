@@ -69,7 +69,7 @@ class HomeController extends Controller
 
         $register = Register::select('register_qty')
                 ->when($customer_code, function ($query) use ($customer_code) {
-                    return $query->where(Register::field_customer_code(), $customer_code);
+                    return $query->where('register_code', $customer_code);
                 })->sum('register_qty');
         $tanggal  = date('Y-m-d');
 
