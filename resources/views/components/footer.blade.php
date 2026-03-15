@@ -11,6 +11,5 @@
 </table>
 
 <p style="font-size: 8px;margin-top:2rem">
-    *Apabila terjadi perbedaan maka harus bersatu
-    .
+    *Apabila terdapat perbedaan dalam perhitungan yang dianggap benar adalah berdasarkan fisik linen yang dihitung saat sortir.
 </p>
