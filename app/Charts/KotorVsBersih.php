@@ -52,8 +52,8 @@ class KotorVsBersih
         return $this->chart->barChart()
             ->setTitle('Perbandingan Bersih vs Kotor')
             ->setSubtitle('Durasi 7 hari kebelakang')
-            ->addData('Bersih', $bersih)
-            ->addData('Kotor', $kotor)
+            ->addData($bersih, 'Bersih')
+            ->addData($kotor, 'Kotor')
             ->setXAxis($format)
             ->setGrid();
     }
