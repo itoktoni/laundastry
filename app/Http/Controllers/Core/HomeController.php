@@ -67,7 +67,10 @@ class HomeController extends Controller
 
         $customer_code = request('customer');
 
-        $register = Register::select('register_qty')->sum('register_qty');
+        $register = Register::select('register_qty')
+                ->when($customer_code, function ($query) use ($customer_code) {
+                    return $query->where(Register::field_customer_code(), $customer_code);
+                })->sum('register_qty');
         $tanggal  = date('Y-m-d');
 
         $bersih = Transaksi::select(Transaksi::field_bersih())
