@@ -59,13 +59,14 @@ class HomeController extends Controller
         }
 
         $template = auth()->user()->role;
+        $customer_code = request('customer');
 
         $customer = Query::getCustomerByUser();
         if (count($customer) == 1) {
+            $customer_code = array_keys($customer->toArray())[0];
+
             $customer = $customer->first();
         }
-
-        $customer_code = request('customer');
 
         $register = Register::select('register_qty')
                 ->when($customer_code, function ($query) use ($customer_code) {
