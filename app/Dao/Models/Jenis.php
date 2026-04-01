@@ -25,6 +25,12 @@ class Jenis extends SystemModel
     protected $table = 'jenis';
     protected $primaryKey = 'jenis_id';
 
+    protected $filters = [
+        'filter',
+        'jenis_code_customer',
+        'jenis_nama',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -45,5 +51,15 @@ class Jenis extends SystemModel
     public function fieldSearching()
     {
         return 'jenis_nama';
+    }
+
+    public function jenis_nama($query)
+    {
+        $name = request()->get('jenis_nama');
+        if ($name) {
+            $query = $query->where($this->field_name(), 'like', "%$name%");
+        }
+
+        return $query;
     }
 }

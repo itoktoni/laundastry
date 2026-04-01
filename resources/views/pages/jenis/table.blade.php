@@ -6,6 +6,16 @@
 
             <x-form method="GET" x-init="" x-target="table" role="search" aria-label="Contacts"
                 autocomplete="off" action="{{ moduleRoute('getTable') }}">
+
+                <div class="container-fluid filter-container mb-2">
+                    <div class="row">
+
+                        <x-form-input type="text" col="6" label="Nama Jenis Linen" name="jenis_nama" />
+                        <x-form-select col="6" name="jenis_code_customer" label="Customer" :options="$customer" />
+
+                    </div>
+                </div>
+
                 <x-filter toggle="Filter" :fields="$fields" />
             </x-form>
 
