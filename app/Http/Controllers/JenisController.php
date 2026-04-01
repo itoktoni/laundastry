@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Dao\Enums\JenisType;
 use App\Dao\Models\Customer;
 use App\Http\Controllers\Core\MasterController;
 use App\Http\Function\CreateFunction;
@@ -23,10 +24,12 @@ class JenisController extends MasterController
     protected function share($data = [])
     {
         $customer = Query::getCustomerByUser();
+        $jenis = JenisType::getOptions();
 
         $view = [
             'model' => false,
             'customer' => $customer,
+            'jenis' => $jenis,
         ];
 
         return self::$share = array_merge($view, self::$share, $data);

@@ -10,7 +10,8 @@
                 <div class="container-fluid filter-container mb-2">
                     <div class="row">
 
-                        <x-form-input type="text" col="6" label="Nama Jenis Linen" name="jenis_nama" />
+                        <x-form-select col="3" name="jenis_type" label="Jenis" :options="$jenis" />
+                        <x-form-input type="text" col="3" label="Nama Jenis Linen" name="jenis_nama" />
                         <x-form-select col="6" name="jenis_code_customer" label="Customer" :options="$customer" />
 
                     </div>
@@ -38,6 +39,7 @@
                                         </th>
                                     @endforeach
                                     <th>Customer</th>
+                                    <th>Type</th>
                                     <th>Berat Kg</th>
                                     <th>Harga</th>
                                     @if (auth()->user()->role == RoleType::Developer)
@@ -59,6 +61,7 @@
 										<td data-label="ID">{{ $table->jenis_id }}</td>
 										<td data-label="Nama">{{ $table->jenis_nama }}</td>
 										<td data-label="Customer">{{ $table->customer_nama }}</td>
+										<td data-label="Type">{{ $table->jenis_type }}</td>
 										<td data-label="Berat Kg">{{ $table->jenis_berat }}</td>
 										<td data-label="Harga">{{ $table->jenis_harga }}</td>
                                         @if (auth()->user()->role == RoleType::Developer)

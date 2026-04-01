@@ -29,6 +29,7 @@ class Jenis extends SystemModel
         'filter',
         'jenis_code_customer',
         'jenis_nama',
+        'jenis_type',
     ];
 
     /**
