@@ -53,6 +53,7 @@ class ReportRekapPenerimaanKotorController extends ReportController
         ->leftJoinRelationship('has_customer')
         ->leftJoinRelationship('has_jenis')
         ->where(Transaksi::field_status(), TransactionType::KOTOR)
+        ->where(Transaksi::field_scan(), '>=', 1)
         ->orderBy(Customer::field_name(), 'ASC')
         ->orderBy(Jenis::field_name(), 'ASC')
         ->filter()
