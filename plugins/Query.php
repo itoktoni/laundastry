@@ -243,7 +243,7 @@ class Query
         return $data;
     }
 
-    public static function getLokasiByCustomerCode($code)
+    public static function getLokasiByCustomerCode($code, $filterLokasi = [])
     {
         $data = [];
 
@@ -253,19 +253,23 @@ class Query
             {
                 $lokasi = Lokasi::select('lokasi_id', 'lokasi_nama')
                 ->where('lokasi_code_customer', $code)
-                ->orderBy('lokasi_nama', 'ASC')
-                ->get();
+                ->orderBy('lokasi_nama', 'ASC');
             }
             else
             {
                 $lokasi = Lokasi::select('lokasi_id', 'lokasi_nama')
                 ->whereIn('lokasi_code_customer', $code)
-                ->orderBy('lokasi_nama', 'ASC')
-                ->get();
+                ->orderBy('lokasi_nama', 'ASC');
+            }
+
+            if($filterLokasi)
+            {
+                $lokasi = $lokasi->whereIn('lokasi_id', $filterLokasi);
+
             }
 
             if ($lokasi) {
-                $data = $lokasi->pluck('lokasi_nama', 'lokasi_id');
+                $data = $lokasi->get()->pluck('lokasi_nama', 'lokasi_id');
             }
         }
 

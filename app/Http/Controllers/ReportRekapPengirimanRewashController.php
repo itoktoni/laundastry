@@ -57,10 +57,14 @@ class ReportRekapPengirimanRewashController extends ReportController
         ->where(Transaksi::field_bersih(), '>=', 1)
         ->orderBy(Customer::field_name(), 'ASC')
         ->orderBy(Jenis::field_name(), 'ASC')
-        ->filter()
-        ->get();
+        ->filter();
 
-        return $query;
+        if($lokasi = request()->get('lokasi'))
+        {
+            $query->whereIn('transaksi_id_lokasi', $lokasi);
+        }
+
+        return $query->get();
     }
 
     public function getPrint(ReportRequest $request)
@@ -72,7 +76,7 @@ class ReportRekapPengirimanRewashController extends ReportController
         $tanggal = CarbonPeriod::create(request('start_date'), request('end_date'));
         $jenis = $this->data->sortBy('jenis_nama')->pluck(Jenis::field_name(), Jenis::field_primary());
         $customer = Customer::find(request()->get('customer_code'));
-        $lokasi = Query::getLokasiByCustomerCode(request()->get('customer_code'));
+        $lokasi = Query::getLokasiByCustomerCode(request()->get('customer_code'), request()->get('lokasi'));
 
         return moduleView(modulePathPrint(), $this->share([
             'data' => $this->data,

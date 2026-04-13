@@ -10,6 +10,8 @@
                 <x-form-input col="3" type="date" label="Tanggal Awal" name="start_date" />
                 <x-form-input col="3" type="date" label="Tanggal Akhir" name="end_date" />
 
+                <x-form-select col="12" class="search" multiple name="lokasi[]" label="Lokasi" :options="$lokasi" />
+
             @endbind
 
         </x-card>
