@@ -4,6 +4,7 @@ namespace Plugins;
 
 use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
+use App\Dao\Models\Lokasi;
 use App\Dao\Models\Opname;
 use App\Dao\Models\Pending;
 use App\Dao\Models\Transaksi;
@@ -203,6 +204,7 @@ class Query
         $data = [];
         $jenis = Jenis::select('jenis_id', 'jenis_nama')
             // ->where('jenis_code_customer', $code)
+            ->orderBy('jenis_nama', 'ASC')
             ->get();
 
         if ($jenis) {
@@ -216,21 +218,55 @@ class Query
     {
         $data = [];
 
-        if(is_string($code))
+        if(!empty($code))
         {
-            $jenis = Jenis::select('jenis_id', 'jenis_nama')
-            ->where('jenis_code_customer', $code)
-            ->get();
-        }
-        else
-        {
-            $jenis = Jenis::select('jenis_id', 'jenis_nama')
-            ->whereIn('jenis_code_customer', $code)
-            ->get();
+            if(is_string($code))
+            {
+                $jenis = Jenis::select('jenis_id', 'jenis_nama')
+                ->where('jenis_code_customer', $code)
+                ->orderBy('jenis_nama', 'ASC')
+                ->get();
+            }
+            else
+            {
+                $jenis = Jenis::select('jenis_id', 'jenis_nama')
+                ->whereIn('jenis_code_customer', $code)
+                ->orderBy('jenis_nama', 'ASC')
+                ->get();
+            }
+
+            if ($jenis) {
+                $data = $jenis->pluck('jenis_nama', 'jenis_id');
+            }
         }
 
-        if ($jenis) {
-            $data = $jenis->pluck('jenis_nama', 'jenis_id');
+        return $data;
+    }
+
+    public static function getLokasiByCustomerCode($code)
+    {
+        $data = [];
+
+        if(!empty($code))
+        {
+            if(is_string($code))
+            {
+                $lokasi = Lokasi::select('lokasi_id', 'lokasi_nama')
+                ->where('lokasi_code_customer', $code)
+                ->orderBy('lokasi_nama', 'ASC')
+                ->get();
+            }
+            else
+            {
+                $lokasi = Lokasi::select('lokasi_id', 'lokasi_nama')
+                ->whereIn('lokasi_code_customer', $code)
+                ->orderBy('lokasi_nama', 'ASC')
+                ->get();
+            }
+
+            if ($lokasi) {
+                $data = $lokasi->pluck('lokasi_nama', 'lokasi_id');
+            }
         }
 
         return $data;
@@ -240,24 +276,29 @@ class Query
     {
         $data = [];
 
-        if(is_string($code))
+        if(!empty($code))
         {
-            $jenis = Jenis::select('jenis_id', 'jenis_nama', 'transaksi_scan')
-            ->leftJoin('transaksi', 'transaksi.transaksi_id_jenis', '=', 'jenis.jenis_id')
-            ->where('transaksi_code_scan', $code)
-            ->orderBy('transaksi_scan', 'DESC')
-            ->get();
-        }
-        else
-        {
-            $jenis = Jenis::select('jenis_id', 'jenis_nama')
-            ->leftJoin('transaksi', 'transaksi.transaksi_id_jenis', '=', 'jenis.jenis_id')
-            ->where('transaksi_code_scan', $code)
-            ->get();
-        }
+            if(is_string($code))
+            {
+                $jenis = Jenis::select('jenis_id', 'jenis_nama', 'transaksi_scan')
+                ->leftJoin('transaksi', 'transaksi.transaksi_id_jenis', '=', 'jenis.jenis_id')
+                ->where('transaksi_code_scan', $code)
+                ->orderBy('jenis_nama', 'ASC')
+                ->orderBy('transaksi_scan', 'DESC')
+                ->get();
+            }
+            else
+            {
+                $jenis = Jenis::select('jenis_id', 'jenis_nama')
+                ->leftJoin('transaksi', 'transaksi.transaksi_id_jenis', '=', 'jenis.jenis_id')
+                ->where('transaksi_code_scan', $code)
+                ->orderBy('jenis_nama', 'ASC')
+                ->get();
+            }
 
-        if ($jenis) {
-            $data = $jenis->pluck('jenis_nama', 'jenis_id');
+            if ($jenis) {
+                $data = $jenis->pluck('jenis_nama', 'jenis_id');
+            }
         }
 
         return $data;
@@ -267,27 +308,32 @@ class Query
     {
         $data = [];
 
-        if(is_string($code))
+        if(!empty($code))
         {
-            $jenis = Jenis::select('jenis_id', 'jenis_nama', 'transaksi_scan', 'jenis_type')
-            ->leftJoin('transaksi', 'transaksi.transaksi_id_jenis', '=', 'jenis.jenis_id')
-            ->where('transaksi_code_scan', $code)
-            ->orderBy('jenis_type', 'ASC')
-            ->orderBy('transaksi_scan', 'DESC')
-            ->get();
-        }
-        else
-        {
-            $jenis = Jenis::select('jenis_id', 'jenis_nama', 'transaksi_scan', 'jenis_type')
-            ->leftJoin('transaksi', 'transaksi.transaksi_id_jenis', '=', 'jenis.jenis_id')
-            ->where('transaksi_code_scan', $code)
-            ->orderBy('jenis_type', 'ASC')
-            ->orderBy('transaksi_scan', 'DESC')
-            ->get();
-        }
+            if(is_string($code))
+            {
+                $jenis = Jenis::select('jenis_id', 'jenis_nama', 'transaksi_scan', 'jenis_type')
+                ->join('transaksi', 'transaksi.transaksi_id_jenis', '=', 'jenis.jenis_id')
+                ->where('transaksi_code_scan', $code)
+                ->orderBy('jenis_nama', 'ASC')
+                ->orderBy('jenis_type', 'ASC')
+                ->orderBy('transaksi_scan', 'DESC')
+                ->get();
+            }
+            else
+            {
+                $jenis = Jenis::select('jenis_id', 'jenis_nama', 'transaksi_scan', 'jenis_type')
+                ->join('transaksi', 'transaksi.transaksi_id_jenis', '=', 'jenis.jenis_id')
+                ->where('transaksi_code_scan', $code)
+                ->orderBy('jenis_nama', 'ASC')
+                ->orderBy('jenis_type', 'ASC')
+                ->orderBy('transaksi_scan', 'DESC')
+                ->get();
+            }
 
-        if ($jenis) {
-            $data = $jenis;
+            if ($jenis) {
+                $data = $jenis;
+            }
         }
 
         return $data;

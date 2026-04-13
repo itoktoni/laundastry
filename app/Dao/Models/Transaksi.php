@@ -56,8 +56,8 @@ class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Audita
     protected function casts(): array
     {
         return [
-            'transaksi_tanggal' => 'date',
-            'transaksi_report' => 'date',
+            // 'transaksi_tanggal' => 'date',
+            // 'transaksi_report' => 'date',
             'transaksi_update_at' => 'datetime',
             'transaksi_created_at' => 'datetime',
             'transaksi_qc_at' => 'datetime',
@@ -116,7 +116,7 @@ class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Audita
      *
      * @var array<int, string>
      */
-    protected $fillable = ['transaksi_id', 'transaksi_status', 'transaksi_code_scan', 'transaksi_code_pending', 'transaksi_bayar', 'transaksi_transaksi', 'transaksi_code_packing', 'transaksi_code_bersih', 'transaksi_code_customer', 'transaksi_code_category', 'transaksi_id_jenis', 'transaksi_scan', 'transaksi_qc', 'transaksi_bersih', 'transaksi_pending', 'transaksi_tanggal', 'transaksi_report', 'transaksi_created_at', 'transaksi_created_by', 'transaksi_updated_at', 'transaksi_updated_by', 'transaksi_deleted_at', 'transaksi_deleted_by', 'transaksi_qc_at', 'transaksi_qc_by', 'transaksi_bersih_at', 'transaksi_bersih_by', 'transaksi_pending_at', 'transaksi_pending_by'];
+    protected $fillable = ['transaksi_id', 'transaksi_status', 'transaksi_code_scan', 'transaksi_code_pending', 'transaksi_bayar', 'transaksi_transaksi', 'transaksi_code_packing', 'transaksi_code_bersih', 'transaksi_code_customer', 'transaksi_code_category', 'transaksi_id_jenis', 'transaksi_id_lokasi', 'transaksi_scan', 'transaksi_qc', 'transaksi_bersih', 'transaksi_pending', 'transaksi_tanggal', 'transaksi_report', 'transaksi_created_at', 'transaksi_created_by', 'transaksi_updated_at', 'transaksi_updated_by', 'transaksi_deleted_at', 'transaksi_deleted_by', 'transaksi_qc_at', 'transaksi_qc_by', 'transaksi_bersih_at', 'transaksi_bersih_by', 'transaksi_pending_at', 'transaksi_pending_by'];
 
     public function has_customer()
     {
@@ -126,6 +126,11 @@ class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Audita
     public function has_jenis()
     {
         return $this->hasOne(Jenis::class, 'jenis_id', 'transaksi_id_jenis');
+    }
+
+    public function has_lokasi()
+    {
+        return $this->hasOne(Lokasi::class, 'lokasi_id', 'transaksi_id_lokasi');
     }
 
     public function has_category()
