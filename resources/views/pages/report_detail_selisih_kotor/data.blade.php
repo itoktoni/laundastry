@@ -36,7 +36,9 @@
 		<thead>
 			<tr>
 				<th width="1">No. </th>
+				<th>KODE TRANSAKSI</th>
 				<th>JENIS LINEN</th>
+				<th>{{ env('LOCATION_LABEL', 'Ruangan') }}</th>
 				<th>TANGGAL KOTOR</th>
 				<th>OPERATOR</th>
 				<th>KOTOR</th>
@@ -52,7 +54,9 @@
 			@forelse($data as $table)
 			<tr>
 				<td>{{ $loop->iteration }}</td>
+				<td>{{ $table->transaksi_code_scan }}</td>
 				<td>{{ $table->jenis_nama }}</td>
+				<td>{{ $table->lokasi_nama }}</td>
 				<td>{{ formatDate($table->field_tanggal) }}</td>
 				<td>{{ $table->name }}</td>
 				<td class="text-center">{{ $table->field_scan }}</td>

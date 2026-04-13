@@ -59,12 +59,16 @@
 			<tr>
 				<td>{{ $loop->iteration }}</td>
 				<td>{{ $name }}</td>
+
+				@php
+				$sub = 0;
+				@endphp
 				@foreach ($tanggal as $tgl)
 
 				@php
 				$pending = $data->where('jenis_id', $id)->where('transaksi_report', $tgl->format('Y-m-d'))->sum('transaksi_pending');
 				$bayar = $data->where('jenis_id', $id)->where('transaksi_report', $tgl->format('Y-m-d'))->sum('transaksi_bayar');
-				$sub = $pending - $bayar;
+				$sub = ($pending - $bayar) + $sub;
 				$total = $total + $sub;
 				@endphp
 
@@ -83,7 +87,7 @@
 			<tr>
 				<td>*</td>
 				<td colspan="{{ 1 + (count($tanggal) * 2) }}">Total Outstanding</td>
-				<td class="text-center">{{ $total }}</td>
+				<td class="text-center">{{ $data->sum('transaksi_pending') -   $data->sum('transaksi_bayar')}}</td>
 			</tr>
 
 		</tbody>

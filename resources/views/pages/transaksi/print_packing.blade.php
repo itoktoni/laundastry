@@ -20,6 +20,7 @@
     <!-- CUSTOMER INFO -->
     <div class="invoice-info">
         <h2>Customer: {{ strtoupper($customer->customer_nama ?? '') }}</h2>
+        <h3>{{ env('LOCATION_LABEL', 'Ruangan') }}: {{ strtoupper($lokasi->lokasi_nama ?? '') }}</h3>
         <p>Tanggal: {{ formatDate($model->transaksi_tanggal) }}</p>
         <p>Code: {{ $model->transaksi_code_packing ?? null }}</p>
     </div>

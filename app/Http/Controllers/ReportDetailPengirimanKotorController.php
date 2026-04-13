@@ -6,6 +6,7 @@ use App\Dao\Enums\TransactionType;
 use App\Dao\Models\Core\User;
 use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
+use App\Dao\Models\Lokasi;
 use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\ReportController;
 use Illuminate\Http\Request;
@@ -43,10 +44,12 @@ class ReportDetailPengirimanKotorController extends ReportController
             Transaksi::getTableName().'.*',
             Customer::field_name(),
             User::field_name(),
+            Lokasi::field_name(),
             Jenis::field_name()
         ])
         ->leftJoinRelationship('has_customer')
         ->leftJoinRelationship('has_jenis')
+        ->leftJoinRelationship('has_lokasi')
         ->leftJoinRelationship('has_qc')
         ->where(Transaksi::field_status(), TransactionType::KOTOR)
         ->where(Transaksi::field_bersih(), '>=', 1)

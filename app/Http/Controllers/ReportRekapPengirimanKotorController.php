@@ -20,16 +20,22 @@ class ReportRekapPengirimanKotorController extends ReportController
         $customer = Query::getCustomerByUser();
         $jenis = [];
 
+         $lokasi = [];
+
         if(request()->has('customer_code'))
         {
             $jenis = Query::getJenisByCustomerCode(request()->get('customer_code'));
+            $lokasi = Query::getLokasiByCustomerCode(request()->get('customer_code'));
         }
-        else{
+        else
+        {
             $jenis = Query::getJenisByCustomerCode($customer->keys());
+            $lokasi = Query::getLokasiByCustomerCode($customer->keys());
         }
 
         $view = [
             'jenis' => $jenis,
+            'lokasi' => $lokasi,
             'model' => $this->model,
             'customer' => $customer,
         ];
@@ -47,6 +53,7 @@ class ReportRekapPengirimanKotorController extends ReportController
         ])
         ->leftJoinRelationship('has_customer')
         ->leftJoinRelationship('has_jenis')
+        ->leftJoinRelationship('has_lokasi')
         ->where(Transaksi::field_status(), TransactionType::KOTOR)
         ->where(Transaksi::field_bersih(), '>=', 1)
         ->orderBy(Customer::field_name(), 'ASC')
@@ -65,11 +72,13 @@ class ReportRekapPengirimanKotorController extends ReportController
 
         $tanggal = CarbonPeriod::create(request('start_date'), request('end_date'));
         $jenis = $this->data->sortBy('jenis_nama')->pluck(Jenis::field_name(), Jenis::field_primary());
-        $customer = Customer::find($request->get('customer_code'));
+        $customer = Customer::find(request()->get('customer_code'));
+        $lokasi = Query::getLokasiByCustomerCode(request()->get('customer_code'));
 
         return moduleView(modulePathPrint(), $this->share([
             'data' => $this->data,
             'jenis' => $jenis,
+            'lokasi' => $lokasi,
             'model' => $model,
             'customer' => $customer,
             'tanggal' => $tanggal,

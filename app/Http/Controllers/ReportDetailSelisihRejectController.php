@@ -47,6 +47,7 @@ class ReportDetailSelisihRejectController extends ReportController
         ])
         ->leftJoinRelationship('has_customer')
         ->leftJoinRelationship('has_created')
+        ->leftJoinRelationship('has_lokasi')
         ->leftJoinRelationship('has_jenis')
         ->where(Transaksi::field_status(), TransactionType::REJECT)
         ->where(Transaksi::field_scan(), '>', 0)

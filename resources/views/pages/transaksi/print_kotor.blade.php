@@ -21,6 +21,7 @@
     <!-- CUSTOMER INFO -->
     <div class="invoice-info">
         <h2>Customer: {{ strtoupper($customer->field_name ?? '') }}</h2>
+        <h3>{{ env('LOCATION_LABEL', 'Ruangan') }}: {{ strtoupper($model->lokasi_nama ?? '') }}</h3>
         <p>Tanggal: {{ formatDate($model->field_tanggal) }}</p>
         <p>Code: {{ $model->field_code ?? null }}</p>
     </div>

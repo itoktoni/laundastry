@@ -50,19 +50,20 @@
 		</thead>
 		<tbody>
 			@php
-			$total = 0;
+			$total = $total_volume = 0;
 			@endphp
 
 			@forelse($jenis as $id => $name)
 			@php
-				$total_jenis = $data->where('jenis_id', $id)->sum('transaksi_bersih');
+				$qty = $data->where('jenis_id', $id)->sum('transaksi_bersih');
 				$single = $data->where('jenis_id', $id)->first();
 				$harga = $single->jenis_harga;
 				$type = $single->jenis_type;
 				$berat = $single->jenis_berat;
-				$volume = $single->total_volume;
-				$total_harga = $single->total_harga;
+				$volume = $berat * $qty;
+				$total_harga = $volume * $harga;
 				$total = $total + $total_harga;
+				$total_volume = $total_volume + $volume;
 			@endphp
 			<tr>
 				<td>{{ $loop->iteration }}</td>
@@ -73,7 +74,7 @@
 					{{ $data->where('jenis_id', $id)->where('transaksi_report', $tgl->format('Y-m-d'))->sum('transaksi_bersih') }}
 				</td>
 				@endforeach
-				<td class="text-center">{{ $total_jenis }}</td>
+				<td class="text-center">{{ $qty }}</td>
 				<td class="text-right">{{ $berat }}</td>
 				<td class="text-right">{{ $volume }}</td>
 				<td class="text-right">{{ $harga }}</td>
@@ -94,7 +95,7 @@
 				@endforeach
 				<td class="text-center">{{ $data->sum('transaksi_bersih') }}</td>
 				<td class="text-right">VOLUME</td>
-				<td class="text-right">{{ $data->sum('total_volume') }}</td>
+				<td class="text-right">{{ $total_volume }}</td>
 				<td class="text-right">TOTAL</td>
 				<td class="text-right">{{ $total }}</td>
 			</tr>

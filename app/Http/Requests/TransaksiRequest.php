@@ -14,6 +14,7 @@ class TransaksiRequest extends FormRequest
     {
         return [
             'customer_code' => 'required',
+            'lokasi' => 'required',
         ];
     }
 
@@ -66,6 +67,7 @@ class TransaksiRequest extends FormRequest
     public function prepareForValidation()
     {
         $customer_code = $this->customer_code;
+        $lokasi = $this->lokasi;
 
         if($this->type == TransactionType::KOTOR)
         {
@@ -97,6 +99,7 @@ class TransaksiRequest extends FormRequest
                 // 'transaksi_id' => $value['kotor_id'] ?? null,
                 'transaksi_code_customer' => $customer_code,
                 'transaksi_id_jenis' => $key,
+                'transaksi_id_lokasi' => $lokasi,
                 'transaksi_code_category' => $this->transaksi_code_category ?? 'NORMAL',
                 'transaksi_code_scan' => $code,
                 'transaksi_scan' => $value['scan'] ?? 0,

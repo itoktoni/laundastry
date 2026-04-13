@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Dao\Enums\TransactionType;
-use App\Dao\Models\Core\User;
 use App\Dao\Models\Customer;
+use App\Dao\Models\Detail;
 use App\Dao\Models\Jenis;
 use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\ReportController;
@@ -20,16 +20,20 @@ class ReportDetailPenerimaanKotorController extends ReportController
         $customer = Query::getCustomerByUser();
         $jenis = [];
 
-        if(request()->has('customer_code'))
+        if(request()->has('customer'))
         {
-            $jenis = Query::getJenisByCustomerCode(request()->get('customer_code'));
+            $jenis = Query::getJenisByCustomerCode(request()->get('customer'));
+            $lokasi = Query::getLokasiByCustomerCode(request()->get('customer'));
         }
         else{
+
             $jenis = Query::getJenisByCustomerCode($customer->keys());
+            $lokasi = Query::getLokasiByCustomerCode($customer->keys());
         }
 
         $view = [
             'jenis' => $jenis,
+            'lokasi' => $lokasi,
             'model' => $this->model,
             'customer' => $customer,
         ];
@@ -39,20 +43,13 @@ class ReportDetailPenerimaanKotorController extends ReportController
 
     public function getData()
     {
-        $query = Transaksi::select([
-            Transaksi::getTableName().'.*',
-            Customer::field_name(),
-            User::field_name(),
-            Jenis::field_name()
-        ])
-        ->leftJoinRelationship('has_customer')
-        ->leftJoinRelationship('has_created')
-        ->leftJoinRelationship('has_jenis')
-        ->where(Transaksi::field_status(), TransactionType::KOTOR)
-        ->orderBy(Customer::field_name(), 'ASC')
-        ->orderBy(Jenis::field_name(), 'ASC')
-        ->filter()
-        ->get();
+        $query = Detail::query()
+            ->where(Transaksi::field_status(), TransactionType::KOTOR)
+            // ->where(Transaksi::field_scan(), '>', 0)
+            ->orderBy(Customer::field_name(), 'ASC')
+            ->orderBy(Jenis::field_name(), 'ASC')
+            ->filter()
+            ->get();
 
         return $query;
     }

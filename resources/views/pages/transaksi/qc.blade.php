@@ -11,9 +11,11 @@
                     <input class="form-control" type="text" readonly value="{{ $model->customer_nama ?? '' }}">
                 </div>
 
+                <x-form-input col="2" id="tanggal" type="date" readonly default="{{ $model->transaksi_tanggal ?? date('Y-m-d') }}" name="tanggal" label="Tanggal" />
                 <x-form-select col="2" name="transaksi_status" default="{{ $model->transaksi_code_category ?? 'NORMAL' }}"  label="Category" :options="$category" />
+                <x-form-select col="2" readonly default="{{ request()->get('customer') ?? $model->transaksi_id_lokasi ?? null }}" name="lokasi" label="Lokasi" :options="$lokasi" />
 
-                <div class=" form-group col-md-6 ">
+                <div class=" form-group col-md-3 ">
                     <label for="auto_id_filter">Filter Jenis Linen</label>
                     <input class="form-control search" type="text" value="" name="filter" id="auto_id_filter">
                     <input type="hidden" name="type" value="{{ $type }}">

@@ -20,17 +20,22 @@ class ReportDetailPendingRejectController extends ReportController
     {
         $customer = Query::getCustomerByUser();
         $jenis = [];
+        $lokasi = [];
 
         if(request()->has('customer'))
         {
             $jenis = Query::getJenisByCustomerCode(request()->get('customer'));
+            $lokasi = Query::getLokasiByCustomerCode(request()->get('customer'));
         }
         else{
+
             $jenis = Query::getJenisByCustomerCode($customer->keys());
+            $lokasi = Query::getLokasiByCustomerCode($customer->keys());
         }
 
         $view = [
             'jenis' => $jenis,
+            'lokasi' => $lokasi,
             'model' => $this->model,
             'customer' => $customer,
         ];
@@ -42,15 +47,16 @@ class ReportDetailPendingRejectController extends ReportController
     {
         $query = Transaksi::select([
             Transaksi::getTableName().'.*',
-            PendingDetail::getTableName().'.*',
+            // PendingDetail::getTableName().'.*',
             Customer::field_name(),
-            User::field_name(),
+            // User::field_name(),
             Jenis::field_name()
         ])
-        ->leftJoinRelationship('has_detail')
-        ->leftJoinRelationship('has_detail.has_user')
+        // ->leftJoinRelationship('has_detail')
+        // ->leftJoinRelationship('has_detail.has_user')
         ->leftJoinRelationship('has_customer')
         ->leftJoinRelationship('has_jenis')
+        ->leftJoinRelationship('has_lokasi')
         ->whereNotNull(Transaksi::field_report())
         ->where(Transaksi::field_status(), TransactionType::REJECT)
         ->where(Transaksi::field_pending(), '>=', 1)
@@ -83,7 +89,7 @@ class ReportDetailPendingRejectController extends ReportController
         $model = $this->data->first();
 
         return moduleView(modulePathPrint(), $this->share([
-            'data' => $this->data->groupBy('jenis_nama'),
+            'data' => $this->data,
             'customer' => $customer,
             'model' => $model
         ]));

@@ -12,8 +12,8 @@
 
                         <x-form-input type="date" col="3" label="Start Tanggal Pending" name="start_date" />
                         <x-form-input type="date" col="3" label="End Tanggal Pending" name="end_date" />
-                        <x-form-select col="6" name="customer" label="Customer" :options="$customer" />
-
+                        <x-form-select col="3" id="customer" default="{{ request()->get('customer') ?? request()->get('customer_code') }}" name="customer" label="Customer" :options="$customer" />
+                        <x-form-select col="3" id="lokasi" default="{{ request()->get('lokasi') }}" name="lokasi" label="Lokasi" :options="$lokasi" />
                     </div>
                 </div>
 
@@ -61,6 +61,10 @@
 
 										<td data-label="Code">{{ $table->transaksi_code_scan }}</td>
 										<td data-label="Customer">
+                                            <b>
+                                                {{ $table->lokasi_nama }}
+                                            </b>
+                                            <br>
                                             {{ $table->customer_nama }}
                                         </td>
                                         <td data-label="Jenis Linen">
@@ -99,5 +103,7 @@
         </div>
 
     </x-card>
+
+    <x-scriptcustomer />
 
 </x-layout>

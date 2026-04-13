@@ -31,13 +31,20 @@ class PendingController extends MasterController
     {
         $customer = Query::getCustomerByUser();
         $jenis    = [];
+        $lokasi    = [];
 
         if (request()->has('customer') || count($customer) == 1) {
             $jenis = Query::getJenisByCustomerCode(request()->get('customer', convertSingleKeys($customer)));
         }
 
+        if(request()->has('customer') || count($customer) == 1)
+        {
+            $lokasi = Query::getLokasiByCustomerCode(request()->get('customer', convertSingleKeys($customer)));
+        }
+
         $view = [
             'jenis'    => $jenis,
+            'lokasi'   => $lokasi,
             'model'    => $this->model,
             'customer' => $customer,
         ];
@@ -86,6 +93,7 @@ class PendingController extends MasterController
             ->get();
 
         $jenis = Query::getJenisPending($model->transaksi_code_customer, $model->transaksi_report);
+        $lokasi = Query::getLokasiByCustomerCode($model->transaksi_code_customer);
 
         if (request()->has('customer')) {
             $jenis = Query::getJenisPending(request()->get('customer'), request()->get('tanggal'));
@@ -94,6 +102,7 @@ class PendingController extends MasterController
         return $this->views($this->template('form', 'pending'), $this->share([
             'model'   => $model,
             'jenis'   => $jenis,
+            'lokasi'   => $lokasi,
             'detail'  => $detail,
             'pending' => $pending,
         ]));
@@ -167,14 +176,36 @@ class PendingController extends MasterController
 
     public function getPrintOutstanding($code)
     {
-        $model     = Transaksi::with(['has_customer', 'has_jenis'])->where('transaksi_id', $code)->first();
+        $model     = Transaksi::with(['has_customer', 'has_jenis', 'has_lokasi'])->where('transaksi_id', $code)->first();
         $customer  = $model->has_customer ?? false;
         $jenis     = $model->has_jenis ?? false;
+        $lokasi    = $model->has_lokasi ?? false;
 
         return $this->views($this->template('print', 'pending'), $this->share([
             'jenis'     => $jenis,
             'customer'  => $customer,
             'model'     => $model,
+            'lokasi'    => $lokasi,
+            'print'     => true,
+        ]));
+    }
+
+    public function getPrintDetail($code)
+    {
+        $pending = PendingDetail::find($code);
+        $code = $pending->pending_id_transaksi;
+
+        $model     = Transaksi::with(['has_customer', 'has_jenis', 'has_lokasi'])->where('transaksi_id', $code)->first();
+        $customer  = $model->has_customer ?? false;
+        $jenis     = $model->has_jenis ?? false;
+        $lokasi    = $model->has_lokasi ?? false;
+
+        return $this->views($this->template('detail', 'pending'), $this->share([
+            'jenis'     => $jenis,
+            'customer'  => $customer,
+            'model'     => $model,
+            'lokasi'    => $lokasi,
+            'pending'    => $pending,
             'print'     => true,
         ]));
     }

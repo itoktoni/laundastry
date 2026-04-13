@@ -37,6 +37,7 @@
 			<tr>
 				<th width="1">No. </th>
 				<th>JENIS LINEN</th>
+				<th>{{ env('LOCATION_LABEL', 'Ruangan') }}</th>
 				<th>TANGGAL PENGIRIMAN</th>
 				<th>NAME</th>
 				<th>QTY</th>
@@ -50,6 +51,7 @@
 			@forelse($data as $table)
 			<tr>
 				<td>{{ $loop->iteration }}</td>
+				<td>{{ $table->lokasi_nama }}</td>
 				<td>{{ $table->jenis_nama }}</td>
 				<td>{{ formatDate($table->field_report) }}</td>
 				<td>{{ $table->operator }}</td>

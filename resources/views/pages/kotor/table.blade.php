@@ -9,10 +9,11 @@
                 <div class="container-fluid filter-container mb-2">
                     <div class="row">
 
-                        <x-form-input type="date" col="3" label="Start Date" name="start_date" />
-                        <x-form-input type="date" col="3" label="End Date" name="end_date" />
+                        <x-form-input type="date" col="2" label="Start Date" name="start_date" />
+                        <x-form-input type="date" col="2" label="End Date" name="end_date" />
                         <x-form-select col="2" name="category_code" label="Category" :options="$category" />
-                        <x-form-select col="4" name="customer_code" label="Customer" :options="$customer" />
+                        <x-form-select col="3" id="customer" default="{{ request()->get('customer') ?? request()->get('customer_code') }}" name="customer" label="Customer" :options="$customer" />
+                        <x-form-select col="3" name="lokasi" label="Lokasi" :options="$lokasi" />
 
                     </div>
                 </div>
@@ -88,10 +89,13 @@
                                             {{ $table->field_primary }}
                                         </td>
                                         <td data-label="Customer">
+                                            <b>
+                                                {{ $table->lokasi_nama }}
+                                            </b>
+                                            <br>
                                             {{ $table->customer_nama }}
                                             <br>
                                             Tanggal : {{ formatDate($table->field_tanggal) }}
-
                                         </td>
                                         <td class="text-center" data-label="Category">
                                             <span class="btn btn-block" style="color:white;background-color: {{ $table->category_warna ?? '' }}">{{ $table->category_nama ?? '' }}</span>
@@ -99,7 +103,7 @@
                                         <td class="text-center" data-label="Kotor">{{ $table->field_scan }}</td>
                                         <td class="text-center" data-label="QC">{{ $table->field_qc }}</td>
                                         <td class="text-center" data-label="Packing">{{ $table->field_bersih }}</td>
-                                        <td class="text-center" data-label="Pending">{{ $table->field_pending }}</td>
+                                        <td class="text-center" data-label="Pending">{{ $table->field_pending ?? 0 }}</td>
 
                                     </tr>
                                 @empty
@@ -115,5 +119,7 @@
         </div>
 
     </x-card>
+
+    <x-scriptcustomer />
 
 </x-layout>

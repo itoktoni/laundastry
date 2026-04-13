@@ -18,6 +18,7 @@ class Pending extends SystemModel
         'start_date',
         'end_date',
         'customer',
+        'lokasi',
     ];
 
     protected function casts(): array
@@ -32,7 +33,7 @@ class Pending extends SystemModel
     {
         $date = request()->get('start_date');
         if ($date) {
-            $query = $query->whereDate($this->field_report(), '>=', $date);
+            $query = $query->whereDate('transaksi_tanggal', '>=', $date);
         }
 
         return $query;
@@ -43,7 +44,7 @@ class Pending extends SystemModel
         $date = request()->get('end_date');
 
         if ($date) {
-            $query = $query->whereDate($this->field_report(), '<=', $date);
+            $query = $query->whereDate('transaksi_tanggal', '<=', $date);
         }
 
         return $query;
@@ -55,6 +56,17 @@ class Pending extends SystemModel
 
         if ($customer) {
             $query = $query->where($this->field_customer_code(), $customer);
+        }
+
+        return $query;
+    }
+
+    public function lokasi($query)
+    {
+        $lokasi = request()->get('lokasi');
+
+        if ($lokasi) {
+            $query = $query->where('lokasi_id', $lokasi);
         }
 
         return $query;

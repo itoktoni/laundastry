@@ -7,10 +7,11 @@
 
                 @bind($model)
 
-                <x-form-select col="4" id="customer" default="{{ request()->get('customer') ?? $model->transaksi_code_customer ?? null }}" name="customer_code" label="Customer" :options="$customer" />
+                <x-form-select col="3" id="customer" default="{{ request()->get('customer') ?? $model->transaksi_code_customer ?? null }}" name="customer_code" label="Customer" :options="$customer" />
+                <x-form-select col="3" id="lokasi" default="{{ request()->get('lokasi') ?? $model->transaksi_id_lokasi ?? null }}" name="lokasi_id" label="Lokasi" :options="$lokasi" />
                 <x-form-input col="3" id="tanggal" default="{{ request()->get('tanggal') ?? $model->transaksi_bersih_at->format('Y-m-d') ??  date('Y-m-d') }}" name="tanggal" label="Tanggal Pending" type="date"/>
 
-                <div class=" form-group col-md-5 ">
+                <div class=" form-group col-md-3 ">
                     <label for="auto_id_filter">Filter Jenis Linen</label>
                     <input class="form-control search" type="text" value="" name="filter" id="auto_id_filter">
                 </div>
@@ -86,7 +87,7 @@
                                 <th>PIC</th>
                                 <th>Waktu Pembayaran</th>
                                 <th class="text-center">Qty</th>
-                                <th class="text-center" style="width: 110px">Action</th>
+                                <th class="text-center" style="width: 200px">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -98,7 +99,10 @@
                                     <td data-label="PIC">{{ $item->name }}</td>
                                     <td data-label="Waktu">{{ $item->pending_created_at }}</td>
                                     <td class="text-center" data-label="Qty">{{ $item->pending_qty }}</td>
-                                    <td data-label="Action">
+                                    <td data-label="Action" style="text-align: center">
+                                        <x-button module="getPrintDetail" key="{{ $item->field_primary }}"
+                                                    color="primary" label="Print" />
+
                                         <x-button module="getDetailPending" key="{{ $item->field_primary }}"
                                                     color="danger" label="Delete" />
                                     </td>

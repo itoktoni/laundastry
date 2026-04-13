@@ -4,33 +4,36 @@ namespace App\Dao\Models;
 
 use App\Dao\Entities\TransaksiEntity;
 use App\Dao\Models\Core\SystemModel;
-use App\Dao\Models\Core\User;
-use App\Models\Scopes\TransaksiScope;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 
-#[ScopedBy(TransaksiScope::class)]
-class Kotor extends SystemModel
+class Detail extends SystemModel
 {
     use TransaksiEntity;
 
     protected $perPage = 20;
-    protected $table = 'view_transaksi';
-    protected $primaryKey = 'transaksi_code';
+    protected $table = 'view_detail';
+    protected $primaryKey = 'transaksi_id';
 
     protected $filters = [
         'filter',
         'start_date',
         'end_date',
-        'lokasi',
-        'category_code',
         'customer',
+        'lokasi_id',
+        'jenis_id',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'transaksi_tanggal' => 'date',
+        ];
+    }
 
     public function start_date($query)
     {
         $date = request()->get('start_date');
         if ($date) {
-            $query = $query->whereDate($this->field_tanggal(), '>=', $date);
+            $query = $query->whereDate($this->field_report(), '>=', $date);
         }
 
         return $query;
@@ -41,7 +44,7 @@ class Kotor extends SystemModel
         $date = request()->get('end_date');
 
         if ($date) {
-            $query = $query->whereDate($this->field_tanggal(), '<=', $date);
+            $query = $query->whereDate($this->field_report(), '<=', $date);
         }
 
         return $query;
@@ -52,7 +55,7 @@ class Kotor extends SystemModel
         $customer = request()->get('customer');
 
         if ($customer) {
-            $query = $query->where('customer_code', $customer);
+            $query = $query->where($this->field_customer_code(), $customer);
         }
 
         return $query;
@@ -63,11 +66,12 @@ class Kotor extends SystemModel
         $lokasi = request()->get('lokasi');
 
         if ($lokasi) {
-            $query = $query->where('transaksi_id_lokasi', $lokasi);
+            $query = $query->where('lokasi_id', $lokasi);
         }
 
         return $query;
     }
+
 
     /**
      * The attributes that are mass assignable.
@@ -86,23 +90,13 @@ class Kotor extends SystemModel
         return $this->hasOne(Jenis::class, 'jenis_id', 'transaksi_id_jenis');
     }
 
+    public function has_lokasi()
+    {
+        return $this->hasOne(Lokasi::class, 'lokasi_id', 'transaksi_id_lokasi');
+    }
+
     public function has_category()
     {
         return $this->hasOne(Category::class, 'category_id', 'transaksi_code_category');
-    }
-
-    public function has_user_scan()
-    {
-        return $this->hasOne(User::class, 'id', 'user_kotor');
-    }
-
-    public function has_user_qc()
-    {
-        return $this->hasOne(User::class, 'id', 'user_qc');
-    }
-
-    public function has_user_bersih()
-    {
-        return $this->hasOne(User::class, 'id', 'user_bersih');
     }
 }

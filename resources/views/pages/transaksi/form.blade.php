@@ -5,10 +5,11 @@
 
                 @bind($model)
                 <x-form-select col="3" id="customer" default="{{ request()->get('customer') ?? $model->customer_code ?? null }}" name="customer_code" label="Customer" :options="$customer" />
-                <x-form-input col="3" id="tanggal" type="date" default="{{ $model->transaksi_tanggal ?? date('Y-m-d') }}" name="tanggal" label="Tanggal" />
+                <x-form-input col="2" id="tanggal" type="date" default="{{ $model->transaksi_tanggal ?? date('Y-m-d') }}" name="tanggal" label="Tanggal" />
+                <x-form-select col="2" default="{{ request()->get('customer') ?? $model->transaksi_id_lokasi ?? null }}" name="lokasi" label="Lokasi" :options="$lokasi" />
                 <x-form-select col="2" name="transaksi_code_category" default="{{ $model->transaksi_code_category ?? 'NORMAL' }}" label="Category" :options="$category" />
 
-                <div class=" form-group col-md-4 ">
+                <div class=" form-group col-md-3 ">
                     <label for="auto_id_filter">Filter Jenis Linen</label>
                     <input class="form-control search" type="text" value="" name="filter" id="auto_id_filter">
                     <input type="hidden" name="type" value="{{ $type }}">

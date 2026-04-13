@@ -59,4 +59,9 @@ class Customer extends SystemModel
     {
         return 'customer_nama';
     }
+
+    public function has_lokasi()
+    {
+        return $this->hasMany(Lokasi::class, 'lokasi_code_customer', 'customer_code');
+    }
 }

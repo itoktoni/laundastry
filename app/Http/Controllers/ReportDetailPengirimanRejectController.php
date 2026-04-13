@@ -6,6 +6,7 @@ use App\Dao\Enums\TransactionType;
 use App\Dao\Models\Core\User;
 use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
+use App\Dao\Models\Lokasi;
 use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\ReportController;
 use Illuminate\Http\Request;
@@ -43,11 +44,13 @@ class ReportDetailPengirimanRejectController extends ReportController
             Transaksi::getTableName().'.*',
             User::field_name(),
             Customer::field_name(),
+            Lokasi::field_name(),
             Jenis::field_name()
         ])
         ->leftJoinRelationship('has_customer')
         ->leftJoinRelationship('has_qc')
         ->leftJoinRelationship('has_jenis')
+        ->leftJoinRelationship('has_lokasi')
         ->where(Transaksi::field_status(), TransactionType::REJECT)
         ->where(Transaksi::field_bersih(), '>=', 1)
         ->orderBy(Customer::field_name(), 'ASC')

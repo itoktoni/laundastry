@@ -37,8 +37,8 @@
 			<tr>
 				<th width="1">No. </th>
 				<th>JENIS LINEN</th>
-				@foreach ($tanggal as $tgl)
-				<th>{{ $tgl->format('d') }}</th>
+				@foreach ($lokasi as $key => $lok)
+				<th>{{ $lok }}</th>
 				@endforeach
 				<th>QTY</th>
 			</tr>
@@ -52,9 +52,9 @@
 			<tr>
 				<td>{{ $loop->iteration }}</td>
 				<td>{{ $name }}</td>
-				@foreach ($tanggal as $tgl)
+				@foreach ($lokasi as $key => $lok)
 				<td class="text-center">
-					{{ $data->where('jenis_id', $id)->where('transaksi_tanggal', $tgl->format('Y-m-d'))->sum('transaksi_scan') }}
+					{{ $data->where('jenis_id', $id)->where('transaksi_id_lokasi', $key)->sum('transaksi_scan') }}
 				</td>
 				@endforeach
 				<td class="text-center">{{ $data->where('jenis_id', $id)->sum('transaksi_scan') }}</td>
@@ -65,12 +65,12 @@
 			<tr>
 				<td>*</td>
 				<td>Total Semua Linen</td>
-				@foreach ($tanggal as $tgl)
+				@foreach ($lokasi as $key => $lok)
 				@php
-				$jumlah_tgl = $data->where('transaksi_tanggal', $tgl->format('Y-m-d'))->sum('transaksi_scan');
+				$jumlah = $data->where('transaksi_id_lokasi', $key)->sum('transaksi_scan');
 				@endphp
 
-				<td class="text-center">{{ $jumlah_tgl }}</td>
+				<td class="text-center">{{ $jumlah }}</td>
 				@endforeach
 				<td class="text-center">{{ $data->sum('transaksi_scan') }}</td>
 			</tr>

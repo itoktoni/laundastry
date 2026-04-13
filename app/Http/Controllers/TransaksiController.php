@@ -36,10 +36,12 @@ class TransaksiController extends MasterController
     {
         $customer = Query::getCustomerByUser();
         $jenis = [];
+        $lokasi = [];
 
         if(request()->has('customer') || count($customer) == 1)
         {
             $jenis = Query::getJenisByCustomerCode(request()->get('customer', convertSingleKeys($customer)));
+            $lokasi = Query::getLokasiByCustomerCode(request()->get('customer', convertSingleKeys($customer)));
         }
 
         $category = Category::getOptions();
@@ -47,6 +49,7 @@ class TransaksiController extends MasterController
         $view = [
             'category' => $category,
             'jenis' => $jenis,
+            'lokasi' => $lokasi,
             'model' => $this->model,
             'customer' => $customer,
         ];
@@ -99,15 +102,18 @@ class TransaksiController extends MasterController
         $detail = Transaksi::where(Transaksi::field_code_scan(), $code)->get();
 
         $jenis = Query::getJenisByCustomerCode($data->customer_code);
+        $lokasi = Query::getLokasiByCustomerCode($data->customer_code);
 
         if(request()->has('customer'))
         {
             $jenis = Query::getJenisByCustomerCode(request()->get('customer'));
+            $lokasi = Query::getLokasiByCustomerCode(request()->get('customer'));
         }
 
         return moduleView(modulePathForm('form', 'transaksi'), $this->share([
             'model' => $data,
             'jenis' => $jenis,
+            'lokasi' => $lokasi,
             'detail' => $detail,
             'type' => $this->type
         ]));
@@ -126,15 +132,18 @@ class TransaksiController extends MasterController
         $detail = Transaksi::where('transaksi_code_scan', $code)->get();
 
         $jenis = Query::getJenisByTransaksiCode($code);
+        $lokasi = Query::getLokasiByCustomerCode($data->customer_code);
 
         if(request()->has('customer'))
         {
             $jenis = Query::getJenisByTransaksiCode(request()->get('customer'));
+            $lokasi = Query::getLokasiByCustomerCode(request()->get('customer'));
         }
 
         return moduleView(modulePathForm('qc', 'transaksi'), $this->share([
             'model' => $data,
             'jenis' => $jenis,
+            'lokasi' => $lokasi,
             'detail' => $detail,
             'type' => $this->type
         ]));
@@ -179,10 +188,12 @@ class TransaksiController extends MasterController
         $detail = Transaksi::where('transaksi_code_scan', $code)->get();
 
         $jenis = Query::getJenisByPackingCode($code);
+        $lokasi = Query::getLokasiByCustomerCode($data->customer_code);
 
         return moduleView(modulePathForm('packing', 'transaksi'), $this->share([
             'model' => $data,
             'jenis' => $jenis,
+            'lokasi' => $lokasi,
             'detail' => $detail,
             'type' => $this->type
         ]));
@@ -190,13 +201,15 @@ class TransaksiController extends MasterController
 
     public function getPrintPacking($code)
     {
-        $model = Transaksi::with(['has_customer', 'has_jenis'])->find($code);
+        $model = Transaksi::with(['has_customer', 'has_jenis', 'has_lokasi'])->find($code);
         $customer = $model->has_customer ?? false;
         $jenis = $model->has_jenis ?? false;
+        $lokasi = $model->has_lokasi ?? false;
 
         return moduleView(modulePathForm('print_packing', 'transaksi'), $this->share([
             'jenis' => $jenis,
             'customer' => $customer,
+            'lokasi' => $lokasi,
             'model' => $model,
             'print' => true,
             'type' => $this->type
@@ -212,10 +225,12 @@ class TransaksiController extends MasterController
             'transaksi_report',
             'transaksi_bersih',
             'jenis_nama',
+            'lokasi_nama',
         ])
             ->leftJoinRelationship('has_jenis')
+            ->leftJoinRelationship('has_lokasi')
             ->where('transaksi_code_scan', $code)
-             ->where('transaksi_bersih', '>', 0)
+            ->where('transaksi_bersih', '>', 0)
             ->get();
 
         $model = $data->first();
@@ -259,10 +274,12 @@ class TransaksiController extends MasterController
             ]);
 
         $model = Transaksi::where('transaksi_code_scan', $code)->first();
+        $lokasi = $model->has_lokasi ?? false;
 
         return moduleView(modulePathForm('print_bersih', 'transaksi'), $this->share([
             'customer' => $customer,
             'data' => $data,
+            'lokasi' => $lokasi,
             'model' => $model,
             'print' => true,
         ]));

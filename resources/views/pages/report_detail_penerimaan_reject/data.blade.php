@@ -37,6 +37,7 @@
 			<tr>
 				<th width="1">No. </th>
 				<th>JENIS LINEN</th>
+				<th>{{ env('LOCATION_LABEL', 'Ruangan') }}</th>
 				<th>TANGGAL KOTOR</th>
 				<th>OPERATOR</th>
 				<th>QTY</th>
@@ -51,9 +52,9 @@
 			<tr>
 				<td>{{ $loop->iteration }}</td>
 				<td>{{ $table->jenis_nama }}</td>
-				<td>{{ formatDate($table->field_tanggal) }}</td>
-				<td>{{ $table->name }}</td>
-				<td class="text-center">{{ $table->field_scan }}</td>
+				<td>{{ $table->lokasi_nama }}</td>
+				<td>{{ formatDate($table->transaksi_report) }}</td>
+				<td class="text-center">{{ $table->transaksi_scan }}</td>
 			</tr>
 			@empty
 			@endforelse

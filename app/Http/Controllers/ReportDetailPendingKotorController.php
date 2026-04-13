@@ -6,6 +6,7 @@ use App\Dao\Enums\TransactionType;
 use App\Dao\Models\Core\User;
 use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
+use App\Dao\Models\Lokasi;
 use App\Dao\Models\PendingDetail;
 use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\ReportController;
@@ -20,17 +21,21 @@ class ReportDetailPendingKotorController extends ReportController
     {
         $customer = Query::getCustomerByUser();
         $jenis = [];
+        $lokasi = [];
 
         if(request()->has('customer'))
         {
             $jenis = Query::getJenisByCustomerCode(request()->get('customer'));
+            $lokasi = Query::getLokasiByCustomerCode(request()->get('customer'));
         }
         else{
-            $jenis = Query::getJenisByCustomerCode($customer->keys());
-        }
 
+            $jenis = Query::getJenisByCustomerCode($customer->keys());
+            $lokasi = Query::getLokasiByCustomerCode($customer->keys());
+        }
         $view = [
             'jenis' => $jenis,
+            'lokasi' => $lokasi,
             'model' => $this->model,
             'customer' => $customer,
         ];
@@ -42,15 +47,17 @@ class ReportDetailPendingKotorController extends ReportController
     {
         $query = Transaksi::select([
             Transaksi::getTableName().'.*',
-            PendingDetail::getTableName().'.*',
+            // PendingDetail::getTableName().'.*',
             Customer::field_name(),
-            User::field_name(),
+            // User::field_name(),
+            Lokasi::field_name(),
             Jenis::field_name()
         ])
-        ->leftJoinRelationship('has_detail')
-        ->leftJoinRelationship('has_detail.has_user')
+        // ->leftJoinRelationship('has_detail')
+        // ->leftJoinRelationship('has_detail.has_user')
         ->leftJoinRelationship('has_customer')
         ->leftJoinRelationship('has_jenis')
+        ->leftJoinRelationship('has_lokasi')
         ->whereNotNull(Transaksi::field_report())
         ->where(Transaksi::field_status(), TransactionType::KOTOR)
         ->where(Transaksi::field_pending(), '>=', 1)
@@ -83,7 +90,7 @@ class ReportDetailPendingKotorController extends ReportController
         $model = $this->data->first();
 
         return moduleView(modulePathPrint(), $this->share([
-            'data' => $this->data->groupBy('jenis_nama'),
+            'data' => $this->data,
             'customer' => $customer,
             'model' => $model
         ]));
