@@ -6,7 +6,7 @@
             @bind($model)
 
                 <x-form-select col="6" default="{{ request('customer') ?? null }}" name="customer_code" id="customer" label="Customer" :options="$customer" />
-                <x-form-select col="6" id="jenis" name="jenis_id" label="Jenis" :options="$jenis" />
+                <x-form-select col="6" id="jenis" class="search" name="register_id_jenis" label="Jenis" :options="$jenis" />
 
                 <x-form-input col="6" type="date" label="Tanggal Awal" name="start_date" />
                 <x-form-input col="6" type="date" label="Tanggal Akhir" name="end_date" />

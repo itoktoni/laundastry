@@ -24,6 +24,7 @@ class Register extends SystemModel implements \OwenIt\Auditing\Contracts\Auditab
         'start_date',
         'end_date',
         'customer_code',
+        'register_id_jenis',
     ];
 
     protected $auditInclude = [

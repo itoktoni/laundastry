@@ -20,16 +20,22 @@ class ReportDetailSelisihRejectController extends ReportController
         $customer = Query::getCustomerByUser();
         $jenis = [];
 
+        $lokasi = [];
+
         if(request()->has('customer_code'))
         {
             $jenis = Query::getJenisByCustomerCode(request()->get('customer_code'));
+            $lokasi = Query::getLokasiByCustomerCode(request()->get('customer_code'));
         }
-        else{
+        else
+        {
             $jenis = Query::getJenisByCustomerCode($customer->keys());
+            $lokasi = Query::getLokasiByCustomerCode($customer->keys());
         }
 
         $view = [
             'jenis' => $jenis,
+            'lokasi' => $lokasi,
             'model' => $this->model,
             'customer' => $customer,
         ];

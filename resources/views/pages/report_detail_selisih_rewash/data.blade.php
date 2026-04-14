@@ -66,6 +66,13 @@
 			@empty
 			@endforelse
 
+			<tr>
+				<td colspan="6" class="text-right"><b>Total</b></td>
+				<td class="text-center"><b>{{ $data->sum('field_scan') }}</b></td>
+				<td class="text-center"><b>{{ $data->sum('field_qc') }}</b></td>
+				<td class="text-center"><b>{{ $data->sum('field_qc') - $data->sum('field_scan') }}</b></td>
+			</tr>
+
 		</tbody>
 	</table>
 </div>

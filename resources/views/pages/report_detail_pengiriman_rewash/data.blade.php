@@ -60,6 +60,11 @@
 			@empty
 			@endforelse
 
+			<tr>
+				<td colspan="5" class="text-right"><b>Total</b></td>
+				<td class="text-center"><b>{{ $data->sum('field_bersih') }}</b></td>
+			</tr>
+
 		</tbody>
 	</table>
 </div>

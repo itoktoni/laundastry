@@ -47,6 +47,7 @@ class ReportDetailRegisterController extends ReportController
         ->leftJoinRelationship('has_customer')
         ->leftJoinRelationship('has_jenis')
         ->leftJoinRelationship('has_user')
+        ->where('register_qty', '>', 0)
         ->orderBy(Customer::field_name(), 'ASC')
         ->orderBy(Jenis::field_name(), 'ASC')
         ->filter()

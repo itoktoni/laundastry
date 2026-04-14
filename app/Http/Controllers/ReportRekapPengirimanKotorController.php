@@ -20,7 +20,7 @@ class ReportRekapPengirimanKotorController extends ReportController
         $customer = Query::getCustomerByUser();
         $jenis = [];
 
-         $lokasi = [];
+        $lokasi = [];
 
         if(request()->has('customer_code'))
         {

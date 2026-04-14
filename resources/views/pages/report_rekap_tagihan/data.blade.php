@@ -78,7 +78,7 @@
 				<td class="text-right">{{ $berat }}</td>
 				<td class="text-right">{{ $volume }}</td>
 				<td class="text-right">{{ $harga }}</td>
-				<td class="text-right">{{ $total_harga }}</td>
+				<td class="text-right">{{ number_format($total_harga, 2, '.', '') }}</td>
 
 			</tr>
 			@empty
@@ -97,7 +97,7 @@
 				<td class="text-right">VOLUME</td>
 				<td class="text-right">{{ $total_volume }}</td>
 				<td class="text-right">TOTAL</td>
-				<td class="text-right">{{ $total }}</td>
+				<td class="text-right">{{ number_format($total, 2, '.', '') }}</td>
 			</tr>
 
 		</tbody>

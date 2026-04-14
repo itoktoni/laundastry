@@ -39,6 +39,7 @@ class ReportRekapTagihanController extends ReportController
     {
         $query = Finance::query()
         ->where(Transaksi::field_bersih(), '>=', 1)
+        ->orderBy('jenis_type', 'ASC')
         ->orderBy(Customer::field_name(), 'ASC')
         ->orderBy(Jenis::field_name(), 'ASC')
         ->filter()
@@ -54,7 +55,7 @@ class ReportRekapTagihanController extends ReportController
         $model = $this->data->first();
 
         $tanggal = CarbonPeriod::create(request('start_date'), request('end_date'));
-        $jenis = $this->data->sortBy('jenis_nama')->pluck(Jenis::field_name(), Jenis::field_primary());
+        $jenis = $this->data->sortBy('jenis_nama')->sortBy('jenis_type')->pluck(Jenis::field_name(), Jenis::field_primary());
         $customer = Customer::find($request->get('customer_code'));
 
         return moduleView(modulePathPrint(), $this->share([

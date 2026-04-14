@@ -78,7 +78,7 @@ class ReportDetailPendingRewashController extends ReportController
             $query = $query->where('transaksi_report', '<=', $end_date);
         }
 
-        return $query->get();
+        return $query->filter()->get();
     }
 
     public function getPrint(Request $request)

@@ -25,6 +25,8 @@ class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Audita
         'filter',
         'start_date',
         'end_date',
+        'transaksi_id_lokasi',
+        'transaksi_id_jenis',
     ];
 
     protected $dates = [

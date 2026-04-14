@@ -55,9 +55,9 @@ class ReportDetailPendingKotorController extends ReportController
         ])
         // ->leftJoinRelationship('has_detail')
         // ->leftJoinRelationship('has_detail.has_user')
-        ->leftJoinRelationship('has_customer')
-        ->leftJoinRelationship('has_jenis')
-        ->leftJoinRelationship('has_lokasi')
+        ->joinRelationship('has_customer')
+        ->joinRelationship('has_jenis')
+        ->joinRelationship('has_lokasi')
         ->whereNotNull(Transaksi::field_report())
         ->where(Transaksi::field_status(), TransactionType::KOTOR)
         ->where(Transaksi::field_pending(), '>=', 1)
@@ -79,7 +79,7 @@ class ReportDetailPendingKotorController extends ReportController
             $query = $query->where('transaksi_report', '<=', $end_date);
         }
 
-        return $query->get();
+        return $query->filter()->get();
     }
 
     public function getPrint(Request $request)

@@ -46,7 +46,7 @@ class ReportDetailPenerimaanRewashController extends ReportController
     {
         $query = Detail::query()
             ->where(Transaksi::field_status(), TransactionType::REWASH)
-            // ->where(Transaksi::field_scan(), '>', 0)
+            ->where(Transaksi::field_scan(), '>', 0)
             ->orderBy(Customer::field_name(), 'ASC')
             ->orderBy(Jenis::field_name(), 'ASC')
             ->filter()

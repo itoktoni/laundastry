@@ -58,6 +58,11 @@
 			@empty
 			@endforelse
 
+			<tr></tr>
+				<td colspan="4" class="text-right"><b>Total</b></td>
+				<td class="text-center"><b>{{ $data->sum('transaksi_scan') }}</b></td>
+			</tr>
+
 		</tbody>
 	</table>
 </div>
