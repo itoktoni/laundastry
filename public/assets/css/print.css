@@ -257,7 +257,9 @@ th {
   }
 
   .footer p {
-    margin-top: 30px;
+    margin-top: 20px;
     text-align: center;
+    font-size: 8px;
+    font-family: Arial, sans-serif;
   }
 }
