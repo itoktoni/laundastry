@@ -89,13 +89,15 @@
                                             {{ $table->field_primary }}
                                         </td>
                                         <td data-label="Customer">
-                                            <b>
+                                            <div class="action-list">
+                                                <strong>
                                                 {{ $table->lokasi_nama }}
-                                            </b>
-                                            <br>
-                                            {{ $table->customer_nama }}
-                                            <br>
-                                            Tanggal : {{ formatDate($table->field_tanggal) }}
+                                                </strong>
+                                                <br>
+                                                {{ $table->customer_nama }}
+                                                <br>
+                                                Tanggal : {{ formatDate($table->field_tanggal) }}
+                                            </div>
                                         </td>
                                         <td class="text-center" data-label="Category">
                                             <span class="btn btn-block" style="color:white;background-color: {{ $table->category_warna ?? '' }}">{{ $table->category_nama ?? '' }}</span>

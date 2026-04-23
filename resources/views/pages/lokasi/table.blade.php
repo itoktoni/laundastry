@@ -39,7 +39,7 @@
                                         </td>
 
 										<td  data-label="Code">{{ $table->lokasi_id }}</td>
-										<td  data-label="Nama Customer">{{ $table->customer_nama ?? '-' }}</td>
+										<td  data-label="Customer">{{ $table->customer_nama ?? '-' }}</td>
 										<td  data-label="Lokasi Nama">{{ $table->lokasi_nama }}</td>
 
                                     </tr>

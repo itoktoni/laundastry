@@ -61,11 +61,13 @@
 
 										<td data-label="Code">{{ $table->transaksi_code_scan }}</td>
 										<td data-label="Customer">
-                                            <b>
+                                            <div class="action-list">
+                                                <strong>
                                                 {{ $table->lokasi_nama }}
-                                            </b>
-                                            <br>
-                                            {{ $table->customer_nama }}
+                                                </strong>
+                                                <br>
+                                                {{ $table->customer_nama }}
+                                            </div>
                                         </td>
                                         <td data-label="Jenis Linen">
                                             {{ $table->jenis_nama }}
