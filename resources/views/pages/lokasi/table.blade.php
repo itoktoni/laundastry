@@ -34,13 +34,13 @@
                                             <input type="checkbox" class="checkbox" name="code[]"
                                                 value="{{ $table->field_primary }}">
                                         </td>
-                                        <td class="col-md-2 text-center column-action">
+                                        <td  data-label="Action" class="col-md-2 text-center column-action">
                                             <x-crud :model="$table" />
                                         </td>
 
-										<td >{{ $table->lokasi_id }}</td>
-										<td >{{ $table->customer_nama ?? '-' }}</td>
-										<td >{{ $table->lokasi_nama }}</td>
+										<td  data-label="Code">{{ $table->lokasi_id }}</td>
+										<td  data-label="Nama Customer">{{ $table->customer_nama ?? '-' }}</td>
+										<td  data-label="Lokasi Nama">{{ $table->lokasi_nama }}</td>
 
                                     </tr>
                                 @empty
