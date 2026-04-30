@@ -38,6 +38,7 @@ class GroupsController extends MasterController
         $menu = SystemMenu::getOptions();
 
         $view = [
+            'model' => $this->model,
             'menu' => $menu,
         ];
 

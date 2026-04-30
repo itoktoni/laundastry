@@ -43,7 +43,6 @@ class RolesController extends MasterController
 
     public function postUpdate($code, RoleRequest $request, UpdateRoleService $service)
     {
-        dd($request);
         $data = $service->update($this->model, $request, $code);
 
         return Response::redirectBack($data);

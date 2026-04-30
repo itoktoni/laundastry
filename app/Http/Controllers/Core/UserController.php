@@ -43,7 +43,10 @@ class UserController extends MasterController
     public function postCreate(UserRequest $request, CreateService $service)
     {
         $data = $service->save($this->model, $request);
-        $data['data']->has_customer()->sync($request->get('customer'));
+        if(!empty($request->get('customer')))
+        {
+            $data['data']->has_customer()->sync($request->get('customer'));
+        }
 
         return Response::redirectBack($data);
     }
