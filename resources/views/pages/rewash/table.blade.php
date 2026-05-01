@@ -67,6 +67,8 @@
                                                 <x-button module="getPrintKotor" key="{{ $table->field_primary }}"
                                                     color="dark" icon="printer" />
 
+                                                @if(auth()->user()->role != 'driver')
+
                                                 @if (empty($table->field_code_bersih))
                                                     <x-button module="getQc" key="{{ $table->field_primary }}"
                                                         color="warning" label="QC" icon="list" />
@@ -78,6 +80,8 @@
 
                                                 <x-button module="getPrintBersih" key="{{ $table->field_primary }}"
                                                     color="success" label="Print DO" />
+                                                @endif
+
                                                 @endif
 
                                             </div>
