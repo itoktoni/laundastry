@@ -9,11 +9,12 @@
                 <div class="container-fluid filter-container mb-2">
                     <div class="row">
 
-                        <x-form-input type="date" col="2" label="Start Date" name="start_date" />
-                        <x-form-input type="date" col="2" label="End Date" name="end_date" />
-                        <x-form-select col="2" name="category_code" label="Category" :options="$category" />
                         <x-form-select col="3" id="customer" default="{{ request()->get('customer') ?? request()->get('customer_code') }}" name="customer" label="Customer" :options="$customer" />
                         <x-form-select col="3" name="lokasi" label="Lokasi" :options="$lokasi" />
+
+                         <x-form-input type="date" col="2" label="Start Date" name="start_date" />
+                        <x-form-input type="date" col="2" label="End Date" name="end_date" />
+                        <x-form-select col="2" name="category_code" label="Category" :options="$category" />
 
                     </div>
                 </div>
