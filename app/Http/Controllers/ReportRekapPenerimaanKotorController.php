@@ -63,6 +63,8 @@ class ReportRekapPenerimaanKotorController extends ReportController
             $query->whereIn('transaksi_id_lokasi', $lokasi);
         }
 
+        // dd($query->showSql());
+
         return $query->get();
     }
 
