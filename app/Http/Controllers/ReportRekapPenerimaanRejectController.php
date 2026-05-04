@@ -62,6 +62,21 @@ class ReportRekapPenerimaanRejectController extends ReportController
             $query->whereIn('transaksi_id_lokasi', $lokasi);
         }
 
+        if($customer = request('customer_code'))
+        {
+            $query = $query->where('transaksi_code_customer', $customer);
+        }
+
+        if($start_date = request()->get('start_date'))
+        {
+            $query = $query->where('transaksi_tanggal', '>=', $start_date);
+        }
+
+        if($end_date = request()->get('end_date'))
+        {
+            $query = $query->where('transaksi_tanggal', '<=', $end_date);
+        }
+
         return $query->get();
     }
 

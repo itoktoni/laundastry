@@ -28,7 +28,6 @@ class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Audita
         'transaksi_id_lokasi',
         'transaksi_id_jenis',
         'customer',
-        'customer_code',
     ];
 
     protected $dates = [
@@ -106,17 +105,6 @@ class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Audita
 
         if ($customer) {
             $query = $query->where('transaksi_code_customer', '=', $customer);
-        }
-
-        return $query;
-    }
-
-    public function customer_code($query)
-    {
-        $customer_code = request()->get('customer_code');
-
-        if ($customer_code) {
-            $query = $query->where('transaksi_code_customer', '=', $customer_code);
         }
 
         return $query;
