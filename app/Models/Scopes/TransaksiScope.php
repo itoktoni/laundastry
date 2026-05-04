@@ -15,7 +15,6 @@ class TransaksiScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        dd(true);
         $filter = Query::getCustomerByRole();
         if($filter)
         {
