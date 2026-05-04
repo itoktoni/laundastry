@@ -15,10 +15,15 @@ class TransaksiScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
+        dd(true);
         $filter = Query::getCustomerByRole();
         if($filter)
         {
             $builder->whereIn(Transaksi::field_customer_code(), $filter);
+        }
+
+        if (request()->has('customer_code')) {
+            $builder->where('transaksi_code_customer', request()->get('customer_code'));
         }
     }
 }

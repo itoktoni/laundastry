@@ -59,10 +59,29 @@ class ReportDetailSelisihRejectController extends ReportController
         ->where(Transaksi::field_scan(), '>', 0)
         ->orderBy(Customer::field_name(), 'ASC')
         ->orderBy(Jenis::field_name(), 'ASC')
-        ->filter()
-        ->get();
+        ->filter();
 
-        return $query;
+        if($lokasi = request('lokasi'))
+        {
+            $query->whereIn('transaksi_id_lokasi', $lokasi);
+        }
+
+        if($customer = request('customer_code'))
+        {
+            $query = $query->where('transaksi_code_customer', $customer);
+        }
+
+        if($start_date = request('start_date'))
+        {
+            $query = $query->where('transaksi_tanggal', '>=', $start_date);
+        }
+
+        if($end_date = request('end_date'))
+        {
+            $query = $query->where('transaksi_tanggal', '<=', $end_date);
+        }
+
+        return $query->get();
     }
 
     public function getPrint(Request $request)

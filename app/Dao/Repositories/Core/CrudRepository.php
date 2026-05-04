@@ -9,7 +9,7 @@ trait CrudRepository
 {
     public function dataRepository($selected = [], $relation = [])
     {
-        $query = $this->select($this->getTable().'.*');
+        $query = static::query()->select($this->getTable().'.*');
 
         if($selected)
         {

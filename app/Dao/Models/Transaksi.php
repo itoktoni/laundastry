@@ -9,8 +9,10 @@ use App\Models\Scopes\TransaksiScope;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use OwenIt\Auditing\Auditable;
 use Wildside\Userstamps\Userstamps;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
-#[ScopedBy(TransaksiScope::class)]
+// #[ScopedBy(TransaksiScope::class)]
 class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Auditable
 {
     use TransaksiEntity, Userstamps, Auditable;
@@ -165,5 +167,10 @@ class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Audita
     public function has_qc()
     {
         return $this->hasOne(User::class, 'id', 'transaksi_qc_by');
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new TransaksiScope());
     }
 }

@@ -58,7 +58,7 @@ class ReportRekapPenerimaanKotorController extends ReportController
         ->orderBy(Jenis::field_name(), 'ASC')
         ->filter();
 
-        if($lokasi = request()->get('lokasi'))
+        if($lokasi = request('lokasi'))
         {
             $query->whereIn('transaksi_id_lokasi', $lokasi);
         }
@@ -68,12 +68,12 @@ class ReportRekapPenerimaanKotorController extends ReportController
             $query = $query->where('transaksi_code_customer', $customer);
         }
 
-        if($start_date = request()->get('start_date'))
+        if($start_date = request('start_date'))
         {
             $query = $query->where('transaksi_tanggal', '>=', $start_date);
         }
 
-        if($end_date = request()->get('end_date'))
+        if($end_date = request('end_date'))
         {
             $query = $query->where('transaksi_tanggal', '<=', $end_date);
         }
@@ -86,7 +86,7 @@ class ReportRekapPenerimaanKotorController extends ReportController
     public function getPrint(ReportRequest $request)
     {
         set_time_limit(0);
-        $this->data = $this->getData($request);
+        $this->data = $this->getData();
         $model = $this->data->first();
 
         $tanggal = CarbonPeriod::create(request('start_date'), request('end_date'));
