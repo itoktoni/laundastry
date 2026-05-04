@@ -36,7 +36,8 @@
                                 <th style="width: 60px" class="checkbox-column">No.</th>
                                 <th>Jenis Linen</th>
                                 <th style="width: 100px" class="text-center">Kotor</th>
-                                <th style="width: 200px" class="text-center">Packing</th>
+                                <th style="width: 150px" class="text-center">Packing</th>
+                                <th style="width: 200px" class="text-center">Input</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,7 +49,7 @@
                             $transaksi = $detail->firstWhere('transaksi_id_jenis', $item->jenis_id);
                             $qty_scan = $transaksi ? $transaksi->transaksi_scan : 0;
                             $qty_qc = $transaksi ? $transaksi->transaksi_qc : 0;
-                            $qty_bersih = $transaksi ? $transaksi->qty_bersih : 0;
+                            $qty_bersih = $transaksi ? $transaksi->transaksi_bersih : 0;
                             $key = $item->jenis_id;
                             $value = $item->jenis_nama;
 
@@ -73,8 +74,12 @@
                                         {{ $qty_qc }}
                                     </td>
 
-                                    <livewire:update-qty :kotorId="$transaksi_id" :id="$key"/>
+                                    <td class="text-center">
+                                        <a class="btn btn-primary" href="{{ moduleRoute('getPrintPacking', ['code' => $transaksi_id]) }}">{{ $qty_bersih }}</a>
+                                        <a class="btn btn-danger" href="{{ moduleRoute('getDeletePackingDetail', ['code' => $transaksi_id]) }}">x</a>
+                                    </td>
 
+                                    <livewire:update-qty :kotorId="$transaksi_id" :id="$key"/>
                                 </tr>
                                 @endif
                             @endforeach
@@ -84,7 +89,7 @@
                             $transaksi = $detail->firstWhere('transaksi_id_jenis', $item->jenis_id);
                             $qty_scan = $transaksi ? $transaksi->transaksi_scan : 0;
                             $qty_qc = $transaksi ? $transaksi->transaksi_qc : 0;
-                            $qty_bersih = $transaksi ? $transaksi->qty_bersih : 0;
+                            $qty_bersih = $transaksi ? $transaksi->transaksi_bersih : 0;
                             $key = $item->jenis_id;
                             $value = $item->jenis_nama;
 
@@ -109,7 +114,12 @@
                                         {{ $qty_qc }}
                                     </td>
 
-                                    <livewire:update-qty :kotorId="$transaksi_id" :id="$key"/>
+                                    <td class="text-center">
+                                        <a class="btn btn-primary">{{ $qty_bersih }}</a>
+                                        <a class="btn btn-danger">x</a>
+                                    </td>
+
+                                    <livewire:update-qty :kotorId="$transaksi_id" :id="$key" :module="'test'"/>
 
                                 </tr>
                                 @endif

@@ -6,6 +6,7 @@ use App\Dao\Enums\TransactionType;
 use App\Dao\Models\Category;
 use App\Dao\Models\Customer;
 use App\Dao\Models\Kotor;
+use App\Dao\Models\Packing;
 use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\MasterController;
 use App\Http\Function\CreateFunction;
@@ -198,6 +199,45 @@ class TransaksiController extends MasterController
             'type' => $this->type
         ]));
     }
+
+    public function getPrintPackingDetail($code)
+    {
+        $model = Packing::where('packing_code', $code)->first();
+        $id = $model->packing_id_transaksi ?? null;
+        $header = Transaksi::with(['has_customer', 'has_jenis', 'has_lokasi'])->find($id);
+        $transaksi = Packing::where('packing_id_transaksi', $id)->get();
+
+        $customer = $header->has_customer ?? false;
+        $jenis = $header->has_jenis ?? false;
+        $lokasi = $header->has_lokasi ?? false;
+
+        return moduleView(modulePathForm('print_packing_detail', 'transaksi'), $this->share([
+            'jenis' => $jenis,
+            'customer' => $customer,
+            'lokasi' => $lokasi,
+            'model' => $model,
+            'transaksi' => $transaksi,
+            'print' => true,
+            'type' => $this->type
+        ]));
+    }
+
+     public function getDeletePackingDetail($code)
+     {
+        Transaksi::find($code)->update([
+            'transaksi_bersih' => 0,
+            'transaksi_code_packing' => null,
+            'transaksi_pending' => 0,
+            'transaksi_bersih_at' => null,
+            'transaksi_bersih_by' => null,
+        ]);
+
+        Packing::where('packing_id_transaksi', $code)->delete();
+
+        Alert::delete("delete transaksi packing success");
+
+        return Response::redirectBack(true);
+     }
 
     public function getPrintPacking($code)
     {
