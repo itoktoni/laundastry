@@ -41,9 +41,17 @@
 				<th>{{ env('LOCATION_LABEL', 'Ruangan') }}</th>
 				<th>TANGGAL KOTOR</th>
 				<th>OPERATOR</th>
+				<th>TGL KOTOR</th>
 				<th>KOTOR</th>
+				<th>TANGGAL QC</th>
 				<th>HASIL QC</th>
 				<th>SELISIH SORTIR</th>
+				<th>TANGGAL PACKING</th>
+				<th>BERSIH</th>
+				<th>TANGGAL BERSIH</th>
+				<th>PENDING</th>
+				<th>BAYAR</th>
+				<th>LUNAS</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -59,18 +67,33 @@
 				<td>{{ $table->lokasi_nama }}</td>
 				<td>{{ formatDate($table->field_tanggal) }}</td>
 				<td>{{ $table->name }}</td>
+				<td class="text-center">{{ $table->transaksi_created_at }}</td>
 				<td class="text-center">{{ $table->field_scan }}</td>
+				<td class="text-center">{{ $table->transaksi_qc_at }}</td>
 				<td class="text-center">{{ $table->field_qc }}</td>
 				<td class="text-center">{{ $table->field_qc - $table->field_scan }}</td>
+				<td class="text-center">{{ $table->transaksi_bersih_at }}</td>
+				<td class="text-center">{{ $table->transaksi_bersih }}</td>
+				<td class="text-center">{{ $table->transaksi_report }}</td>
+				<td class="text-center">{{ $table->transaksi_pending }}</td>
+				<td class="text-center">{{ $table->transaksi_bayar ?? 0 }}</td>
+				<td class="text-center">{{ $table->transaksi_pending - ($table->transaksi_bayar ?? 0) }}</td>
 			</tr>
 			@empty
 			@endforelse
 
 			<tr>
-				<td colspan="6" class="text-right"><b>Total</b></td>
+				<td colspan="7" class="text-right"><b>Total</b></td>
 				<td class="text-center"><b>{{ $data->sum('field_scan') }}</b></td>
+				<td class="text-center"></b></td>
 				<td class="text-center"><b>{{ $data->sum('field_qc') }}</b></td>
 				<td class="text-center"><b>{{ $data->sum('field_qc') - $data->sum('field_scan') }}</b></td>
+				<td class="text-center"></b></td>
+				<td class="text-center"><b>{{ $data->sum('transaksi_bersih') }}</b></td>
+				<td class="text-center"></b></td>
+				<td class="text-center"><b>{{ $data->sum('transaksi_pending') }}</b></td>
+				<td class="text-center"><b>{{ $data->sum('transaksi_bayar') }}</b></td>
+				<td class="text-center"><b>{{ $data->sum('transaksi_pending') - $data->sum('transaksi_bayar') }}</b></td>
 			</tr>
 
 		</tbody>
