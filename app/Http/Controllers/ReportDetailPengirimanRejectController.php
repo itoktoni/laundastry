@@ -9,6 +9,7 @@ use App\Dao\Models\Jenis;
 use App\Dao\Models\Lokasi;
 use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\ReportController;
+use App\Http\Requests\Core\ReportRequest;
 use Illuminate\Http\Request;
 use Plugins\Query;
 
@@ -86,7 +87,7 @@ class ReportDetailPengirimanRejectController extends ReportController
         return $query->get();
     }
 
-    public function getPrint(Request $request)
+    public function getPrint(ReportRequest $request)
     {
         set_time_limit(0);
         $this->data = $this->getData($request);

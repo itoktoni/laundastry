@@ -9,8 +9,8 @@
                 <x-form-select col="4" name="transaksi_id_lokasi" label="Lokasi" :options="$lokasi" />
                 <x-form-select col="4" id="jenis" class="search" name="transaksi_id_jenis" label="Jenis" :options="$jenis" />
 
-                <x-form-input col="6" type="date" label="Tanggal Awal" name="start_date" />
-                <x-form-input col="6" type="date" label="Tanggal Akhir" name="end_date" />
+                <x-form-input col="6" type="date" label="Tanggal Awal" name="start_report" />
+                <x-form-input col="6" type="date" label="Tanggal Akhir" name="end_report" />
 
             @endbind
 

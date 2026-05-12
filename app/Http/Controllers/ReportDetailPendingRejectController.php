@@ -68,16 +68,6 @@ class ReportDetailPendingRejectController extends ReportController
             $query = $query->where('transaksi_code_customer', $customer);
         }
 
-        if($start_date = request('start_date'))
-        {
-            $query = $query->where('transaksi_report', '>=', $start_date);
-        }
-
-        if($end_date = request('end_date'))
-        {
-            $query = $query->where('transaksi_report', '<=', $end_date);
-        }
-
         return $query->filter()->get();
     }
 

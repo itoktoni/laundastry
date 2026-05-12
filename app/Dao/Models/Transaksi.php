@@ -27,6 +27,8 @@ class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Audita
         'filter',
         'start_date',
         'end_date',
+        'start_report',
+        'end_report',
         'transaksi_id_lokasi',
         'transaksi_id_jenis',
         'customer',
@@ -96,6 +98,27 @@ class Transaksi extends SystemModel implements \OwenIt\Auditing\Contracts\Audita
 
         if ($date) {
             $query = $query->whereDate($this->field_tanggal(), '<=', $date);
+        }
+
+        return $query;
+    }
+
+    public function start_report($query)
+    {
+        $date = request()->get('start_report');
+        if ($date) {
+            $query = $query->whereDate($this->field_report(), '>=', $date);
+        }
+
+        return $query;
+    }
+
+    public function end_report($query)
+    {
+        $date = request()->get('end_report');
+
+        if ($date) {
+            $query = $query->whereDate($this->field_report(), '<=', $date);
         }
 
         return $query;

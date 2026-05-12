@@ -9,6 +9,7 @@ use App\Dao\Models\Jenis;
 use App\Dao\Models\Lokasi;
 use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\ReportController;
+use App\Http\Requests\Core\ReportRequest;
 use Illuminate\Http\Request;
 use Plugins\Query;
 
@@ -73,26 +74,15 @@ class ReportDetailPengirimanKotorController extends ReportController
             $query = $query->where('transaksi_code_customer', $customer);
         }
 
-        if($start_date = request('start_date'))
-        {
-            $query = $query->where('transaksi_report', '>=', $start_date);
-        }
-
-        if($end_date = request('end_date'))
-        {
-            $query = $query->where('transaksi_report', '<=', $end_date);
-        }
-
         return $query->get();
     }
 
-    public function getPrint(Request $request)
+    public function getPrint(ReportRequest $request)
     {
         set_time_limit(0);
         $this->data = $this->getData($request);
         $model = $this->data->first();
         $customer = Customer::find($request->get('customer_code'));
-
 
         return moduleView(modulePathPrint(), $this->share([
             'data' => $this->data,

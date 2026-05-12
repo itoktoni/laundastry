@@ -7,9 +7,9 @@ use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
 use App\Dao\Models\Transaksi;
 use App\Http\Controllers\Core\ReportController;
-use App\Http\Requests\Core\ReportRequest;
 use Plugins\Query;
 use Carbon\CarbonPeriod;
+use Illuminate\Http\Request;
 
 class ReportRekapPendingRejectController extends ReportController
 {
@@ -58,20 +58,10 @@ class ReportRekapPendingRejectController extends ReportController
             $query = $query->where('transaksi_code_customer', $customer);
         }
 
-        if($start_date = request()->get('start_date'))
-        {
-            $query = $query->where('transaksi_report', '>=', $start_date);
-        }
-
-        if($end_date = request()->get('end_date'))
-        {
-            $query = $query->where('transaksi_report', '<=', $end_date);
-        }
-
         return $query->filter()->get();
     }
 
-    public function getPrint(ReportRequest $request)
+    public function getPrint(Request $request)
     {
         set_time_limit(0);
         $this->data = $this->getData($request);

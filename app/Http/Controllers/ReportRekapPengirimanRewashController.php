@@ -10,6 +10,7 @@ use App\Http\Controllers\Core\ReportController;
 use App\Http\Requests\Core\ReportRequest;
 use Plugins\Query;
 use Carbon\CarbonPeriod;
+use Illuminate\Http\Request;
 
 class ReportRekapPengirimanRewashController extends ReportController
 {
@@ -69,18 +70,6 @@ class ReportRekapPengirimanRewashController extends ReportController
             $query = $query->where('transaksi_code_customer', $customer);
         }
 
-        if($start_date = request('start_date'))
-        {
-            $query = $query->where('transaksi_report', '>=', $start_date);
-        }
-
-        if($end_date = request('end_date'))
-        {
-            $query = $query->where('transaksi_report', '<=', $end_date);
-        }
-
-        return $query->get();
-
         return $query->get();
     }
 
@@ -90,7 +79,7 @@ class ReportRekapPengirimanRewashController extends ReportController
         $this->data = $this->getData($request);
         $model = $this->data->first();
 
-        $tanggal = CarbonPeriod::create(request('start_date'), request('end_date'));
+        $tanggal = CarbonPeriod::create(request('start_report'), request('end_report'));
         $jenis = $this->data->sortBy('jenis_nama')->pluck(Jenis::field_name(), Jenis::field_primary());
         $customer = Customer::find(request()->get('customer_code'));
         $lokasi = Query::getLokasiByCustomerCode(request()->get('customer_code'), request()->get('lokasi'));

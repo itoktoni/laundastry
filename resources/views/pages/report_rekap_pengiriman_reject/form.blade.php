@@ -8,8 +8,8 @@
                 <x-form-select col="6" default="{{ request('customer') ?? null }}" name="customer_code" id="customer" label="Customer" :options="$customer" />
                 <x-form-select col="6" name="jenis_id" label="Jenis" :options="$jenis" />
 
-                <x-form-input col="6" type="date" label="Tanggal Awal" name="start_date" />
-                <x-form-input col="6" type="date" label="Tanggal Akhir" name="end_date" />
+                <x-form-input col="6" type="date" label="Tanggal Awal" name="start_report" />
+                <x-form-input col="6" type="date" label="Tanggal Akhir" name="end_report" />
 
                 <x-form-select col="12" class="search" multiple name="lokasi[]" label="Lokasi" :options="$lokasi" />
 

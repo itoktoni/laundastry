@@ -24,7 +24,7 @@
 		<td></td>
 		<td colspan="10">
 			<h3>
-				Tanggal : {{ formatDate(request()->get('start_date')) }} - {{ formatDate(request()->get('end_date')) }}
+				Tanggal : {{ formatDate(request()->get('start_report')) }} - {{ formatDate(request()->get('end_report')) }}
 			</h3>
 		</td>
 	</tr>

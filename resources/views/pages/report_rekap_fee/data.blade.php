@@ -36,7 +36,7 @@
 		<thead>
 			<tr>
 				<th width="1">No. </th>
-				<th style="width: 200px">JENIS LINEN</th>
+				<th style="width: 300px">JENIS LINEN</th>
 				@foreach ($tanggal as $tgl)
 				<th>{{ $tgl->format('d') }}</th>
 				@endforeach

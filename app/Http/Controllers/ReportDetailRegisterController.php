@@ -7,7 +7,7 @@ use App\Dao\Models\Customer;
 use App\Dao\Models\Jenis;
 use App\Dao\Models\Register;
 use App\Http\Controllers\Core\ReportController;
-use App\Http\Requests\Core\ReportRequest;
+use Illuminate\Http\Request;
 use Plugins\Query;
 
 class ReportDetailRegisterController extends ReportController
@@ -56,7 +56,7 @@ class ReportDetailRegisterController extends ReportController
         return $query;
     }
 
-    public function getPrint(ReportRequest $request)
+    public function getPrint(Request $request)
     {
         set_time_limit(0);
         $this->data = $this->getData($request);
