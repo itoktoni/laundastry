@@ -45,7 +45,8 @@ class UserController extends MasterController
         $data = $service->save($this->model, $request);
         if(!empty($request->get('customer')))
         {
-            $data['data']->has_customer()->sync($request->get('customer'));
+            $save = User::where('username',$request->username)->firstOrFail();
+            $save->has_customer()->sync($request->get('customer'));
         }
 
         return Response::redirectBack($data);
