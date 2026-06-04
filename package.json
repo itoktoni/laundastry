@@ -13,11 +13,7 @@
         "axios": "^1.9.0",
         "bootstrap": "^5.3.3",
         "cross-env": "^5.2.1",
-        "jquery": "^3.7.1",
         "laravel-echo": "^1.16.1",
-        "laravel-mix": "^4.0.7",
-        "laravel-mix-purgecss": "^6.0.0",
-        "laravel-vite-plugin": "^1.0.5",
         "lodash": "^4.17.13",
         "notyf": "^3.10.0",
         "postcss": "^8.5.4",
@@ -25,10 +21,7 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
-        "tom-select": "^2.4.3",
-        "vite": "^6.3.5",
-        "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.11"
+        "tom-select": "^2.4.3"
     },
     "dependencies": {
         "@ably/laravel-echo": "^1.0.6",
@@ -41,9 +34,11 @@
         "dotenv": "^16.4.5",
         "gridjs-vue": "^5.0.4",
         "i": "^0.3.7",
+        "laravel-vite-plugin": "^3.1.0",
         "npm": "^11.5.2",
         "nprogress": "^0.2.0",
         "slim-select": "^2.12.1",
-        "sweetalert2": "^11.12.4"
+        "sweetalert2": "^11.12.4",
+        "vite": "^8.0.12"
     }
 }

@@ -1,8 +1,16 @@
 {
   "resources/auth/css/style.scss": {
-    "file": "assets/style-b0w8b1bZ.css",
+    "file": "assets/style-B0r0elV6.css",
+    "name": "style",
+    "names": [
+      "style.css"
+    ],
     "src": "resources/auth/css/style.scss",
-    "isEntry": true
+    "isEntry": true,
+    "assets": [
+      "assets/bg-registration-form-9-Cl5P6dPl.jpg",
+      "assets/bg-inner-CLiQPVWY.png"
+    ]
   },
   "resources/auth/images/bg-inner.png": {
     "file": "assets/bg-inner-CLiQPVWY.png",
@@ -13,16 +21,20 @@
     "src": "resources/auth/images/bg-registration-form-9.jpg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-Dr7gRM6Y.js",
+    "file": "assets/app-sL-uQT1n.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-BwggHkmO.css"
+      "assets/app-jQLZx48C.css"
     ]
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-1PF2-T6Y.css",
+    "file": "assets/app-CAO2TOj3.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
     "src": "resources/sass/app.scss",
     "isEntry": true
   }

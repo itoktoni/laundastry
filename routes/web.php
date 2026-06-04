@@ -34,7 +34,7 @@ Route::get('/home', 'App\Http\Controllers\Core\HomeController@index')->middlewar
 Route::get('/cms', 'App\Http\Controllers\Core\HomeController@cms')->middleware(['access'])->name('cms');
 Route::get('/delete/{code}', 'App\Http\Controllers\Core\HomeController@delete')->middleware(['access'])->name('delete_url');
 Route::get('/doc', 'App\Http\Controllers\Core\HomeController@doc')->middleware(['access'])->name('doc');
-
+Route::post('/upload', 'App\Http\Controllers\Core\HomeController@upload')->middleware(['access'])->name('upload.transaksi');
 Route::match(['POST', 'GET'], 'change-password', 'App\Http\Controllers\Core\UserController@changePassword', ['name' => 'change-password'])->middleware('auth');
 Route::get('profile', 'App\Http\Controllers\Core\UserController@getProfile')->middleware('auth')->name('getProfile');
 Route::post('profile', 'App\Http\Controllers\Core\UserController@updateProfile')->middleware('auth')->name('updateProfile');

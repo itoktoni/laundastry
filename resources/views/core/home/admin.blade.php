@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-         <div class="col-lg-2 col-md-3 col-sm-12">
+        <div class="col-lg-2 col-md-3 col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-         <div class="col-lg-2 col-md-3 col-sm-12">
+        <div class="col-lg-2 col-md-3 col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -67,8 +67,8 @@
 
     </div>
 
-     <div class="row mb-2">
-         <div class="col-lg-3 col-md-3 col-sm-12">
+    <div class="row mb-2">
+        <div class="col-lg-3 col-md-3 col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -104,7 +104,7 @@
                 </div>
             </div>
         </div>
-         <div class="col-lg-2 col-md-3 col-sm-12">
+        <div class="col-lg-2 col-md-3 col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -116,7 +116,7 @@
                 </div>
             </div>
         </div>
-         <div class="col-lg-2 col-md-3 col-sm-12">
+        <div class="col-lg-2 col-md-3 col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -131,6 +131,28 @@
 
     </div>
 
+    <x-card label="Upload Transaksi">
+        <form method="post" action="{{ route('upload.transaksi') }}" enctype="multipart/form-data" id="form">
+            @csrf
+
+            <div class="row">
+                <x-form-select col="3" name="customer" label="Customer" :options="$customer" />
+                <x-form-input col="3" type="date" name="tanggal" label="Tanggal" />
+                <x-form-select col="3" name="type" label="Type" :options="$type" />
+                <x-form-upload col="3" name="upload" label="Upload File" />
+
+                <div class="form-group">
+                    <h5 class="text-right">
+                        <a href="/upload.xlsx" class="btn btn-success mt-2">Download Template</a>
+                        <button type="submit" class="form-control btn btn-primary mt-2">Upload</button>
+                    </h5>
+                </div>
+
+            </div>
+        </form>
+    </x-card>
+
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -143,9 +165,9 @@
     </div>
 
     <style>
-        .small{
-            font-size: 0.8rem;
-        }
+    .small {
+        font-size: 0.8rem;
+    }
     </style>
 
     @push('footer')
