@@ -31,7 +31,6 @@
                             <x-form-input col="6" name="name" />
                             <x-form-input col="6" name="username" />
                             <x-form-input col="6" name="phone" />
-                            <x-form-input col="6" type="date" name="birthday" />
                             <x-form-input col="6" name="email" />
                             <x-form-input col="6" name="password" type="password" />
                         @endbind
