@@ -19,7 +19,7 @@ class PendingKotorController extends PendingController
         $query = Pending::query()
             ->where(Transaksi::field_status(), $this->type)
             ->where($this->model->field_pending(),'>=', 1)
-            ->whereColumn('transaksi_pending', '>', 'transaksi_bayar')
+            // ->whereColumn('transaksi_pending', '>', 'transaksi_bayar')
             ->filter();
 
         $per_page = env('PAGINATION_NUMBER', 10);

@@ -77,7 +77,7 @@
                                             <div class="col-md-12">
                                                 {{ formatDate($table->transaksi_bersih_at) }}
                                                 <br>
-                                                Qty : <b>{{ $table->field_pending }}</b>
+                                                Qty : <b>{{ $table->transaksi_pending }}</b>
                                             </div>
                                         </td>
 										<td class="text-right" data-label="Pembayaran">

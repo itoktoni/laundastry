@@ -1,5 +1,16 @@
 <x-layout>
 
+    <style>
+        .miring{
+             writing-mode: vertical-lr;
+             transform: rotate(180deg);
+             height: 120px;
+             width: 60px;
+             vertical-align: middle;
+             border: 1px solid lightgray !important;
+        }
+    </style>
+
     <x-card class="table-container">
 
         <div class="col-md-12">
@@ -39,13 +50,13 @@
                                     <th class="text-center column-action">{{ __('Action') }}</th>
                                     <th class="text-center" style="width: 120px">Kode</th>
                                     <th>Customer</th>
-                                    <th class="text-center" style="width: 120px">Category</th>
-                                    <th class="col-qty text-center" style="width:80px;">Kotor</th>
-                                    <th class="col-qty text-center" style="width:60px;">QC</th>
-                                    <th class="col-qty text-center" style="width:90px;">Packing</th>
-                                    <th class="col-qty text-center" style="width:90px;">Pending</th>
-                                    <th class="col-qty text-center" style="width:90px;">Bayar</th>
-                                    <th class="col-qty text-center" style="width:90px;">Sisa</th>
+                                    <th class="text-center" style="width: 80px">Flag</th>
+                                    <th class="col-qty text-center miring">Kotor</th>
+                                    <th class="col-qty text-center miring">QC</th>
+                                    <th class="col-qty text-center miring">Packing</th>
+                                    <th class="col-qty text-center miring">Pending</th>
+                                    <th class="col-qty text-center miring">Bayar</th>
+                                    <th class="col-qty text-center miring">Sisa</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -103,18 +114,18 @@
                                                 <br>
                                                 {{ $table->customer_nama }}
                                                 <br>
-                                                Tanggal : {{ formatDate($table->field_tanggal) }}
+                                                {{ formatDate($table->field_tanggal) }}
                                             </div>
                                         </td>
                                         <td class="text-center" data-label="Category">
-                                            <span class="btn btn-block" style="color:white;background-color: {{ $table->category_warna ?? '' }}">{{ $table->category_nama ?? '' }}</span>
+                                            <span class="badge" style="font-size:10px !important;color:white;background-color: {{ $table->category_warna ?? '' }}">{{ $table->category_nama ?? '' }}</span>
                                         </td>
                                         <td class="text-center" data-label="Kotor">{{ $table->field_scan }}</td>
                                         <td class="text-center" data-label="QC">{{ $table->field_qc }}</td>
                                         <td class="text-center" data-label="Packing">{{ $table->field_bersih }}</td>
                                         <td class="text-center" data-label="Pending">{{ $table->field_pending ?? 0 }}</td>
-                                        <td class="text-center" data-label="Pending">{{ $table->field_bayar ?? 0 }}</td>
-                                        <td class="text-center" data-label="Pending">{{ $table->field_sisa ?? 0 }}</td>
+                                        <td class="text-center" data-label="Pending">{{ $table->transaksi_bayar ?? 0 }}</td>
+                                        <td class="text-center" data-label="Pending">{{ $table->field_pending - $table->transaksi_bayar ?? 0 }}</td>
 
                                     </tr>
                                 @empty

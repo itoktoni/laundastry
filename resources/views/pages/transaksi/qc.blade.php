@@ -42,7 +42,7 @@
                             $transaksi_id = $transaksi ? $transaksi->transaksi_id : null;
 
                             @endphp
-
+                                @if($qty_scan)
                                 <tr>
                                     <input type="hidden" name="qty[{{ $key }}][jenis_id]"
                                         value="{{ $key ?? null }}" />
@@ -61,6 +61,37 @@
                                             name="qty[{{ $key }}][qc]" />
                                     </td>
                                 </tr>
+                                @endif
+                            @endforeach
+
+                            @foreach ($jenis as $key => $value)
+                            @php
+                            $transaksi = $detail->firstWhere('transaksi_id_jenis', $key);
+                            $qty_scan = $transaksi ? $transaksi->transaksi_scan : 0;
+                            $qty_qc = $transaksi ? $transaksi->transaksi_qc : 0;
+                            $transaksi_id = $transaksi ? $transaksi->transaksi_id : null;
+
+                            @endphp
+                                @if($qty_scan == 0)
+                                <tr>
+                                    <input type="hidden" name="qty[{{ $key }}][jenis_id]"
+                                        value="{{ $key ?? null }}" />
+
+                                    <td data-label="No." class="text-center">{{ $loop->iteration }}</td>
+                                    <td data-label="Linen">{{ $value }}</td>
+                                    <td class="text-center" data-label="Kotor">
+                                        <input type="hidden" name="qty[{{ $key }}][scan]"
+                                        value="{{ $qty_scan ?? null }}" />
+
+                                        {{ $qty_scan }}
+                                    </td>
+
+                                    <td data-label="Qty">
+                                        <input class="form-control text-center" type="number" min="0" value="{{ $qty_qc == 0 ? $qty_scan : $qty_qc }}"
+                                            name="qty[{{ $key }}][qc]" />
+                                    </td>
+                                </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>
