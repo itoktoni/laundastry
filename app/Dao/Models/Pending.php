@@ -29,6 +29,21 @@ class Pending extends SystemModel
         ];
     }
 
+    public static function field_name()
+    {
+        return 'transaksi_code_scan';
+    }
+
+    public function getFieldNameAttribute()
+    {
+        return $this->{$this->field_name()};
+    }
+
+    public function fieldSearching()
+    {
+        return 'transaksi_code_scan';
+    }
+
     public function start_date($query)
     {
         $date = request()->get('start_date');
