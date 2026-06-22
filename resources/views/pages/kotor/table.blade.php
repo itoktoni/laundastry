@@ -44,6 +44,8 @@
                                     <th class="col-qty text-center" style="width:60px;">QC</th>
                                     <th class="col-qty text-center" style="width:90px;">Packing</th>
                                     <th class="col-qty text-center" style="width:90px;">Pending</th>
+                                    <th class="col-qty text-center" style="width:90px;">Bayar</th>
+                                    <th class="col-qty text-center" style="width:90px;">Sisa</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -111,6 +113,8 @@
                                         <td class="text-center" data-label="QC">{{ $table->field_qc }}</td>
                                         <td class="text-center" data-label="Packing">{{ $table->field_bersih }}</td>
                                         <td class="text-center" data-label="Pending">{{ $table->field_pending ?? 0 }}</td>
+                                        <td class="text-center" data-label="Pending">{{ $table->field_bayar ?? 0 }}</td>
+                                        <td class="text-center" data-label="Pending">{{ $table->field_sisa ?? 0 }}</td>
 
                                     </tr>
                                 @empty
