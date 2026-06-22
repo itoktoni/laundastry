@@ -15,7 +15,7 @@
         @if ($customer)
         <x-header :customer="$customer"/>
 		@endif
-        <h1> DELIVERY BERSIH</h1>
+        <h1 style="background-color: {{ empty(request('tanggal')) && !empty($model->transaksi_report) ? 'red' : '' }};"> DELIVERY BERSIH</h1>
     </div>
 
     <!-- CUSTOMER INFO -->

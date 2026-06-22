@@ -304,7 +304,18 @@ class TransaksiController extends MasterController
             $report_date = Carbon::now()->addDay(1);
         }
 
-        $update =  Transaksi::query()
+        if(!empty(request('tanggal')))
+        {
+            $tanggal  = request('tanggal');
+            $update =  Transaksi::query()
+            ->where('transaksi_code_scan', $code)
+            ->update([
+                'transaksi_report' => $tanggal
+            ]);
+        }
+        else
+        {
+            $update =  Transaksi::query()
             ->where('transaksi_code_scan', $code)
             ->whereNull('transaksi_code_bersih')
 
@@ -312,6 +323,7 @@ class TransaksiController extends MasterController
                 'transaksi_code_bersih' => $unic,
                 'transaksi_report' => $report_date->format('Y-m-d')
             ]);
+        }
 
         $model = Transaksi::where('transaksi_code_scan', $code)->first();
         $lokasi = $model->has_lokasi ?? false;
