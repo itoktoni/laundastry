@@ -11,7 +11,9 @@
 
             <x-form method="POST" action="{{ moduleRoute('getTable') }}">
 
-                <x-action />
+                <x-action :form="'blank'">
+                    <x-button :module="ACTION_CREATE" color="success" label="Buat" />
+                </x-action>
 
                 <div class="container-fluid" id="table">
                     <div class="table-responsive">
@@ -39,7 +41,9 @@
                                                 value="{{ $table->field_primary }}">
                                         </td>
                                         <td data-label="Action" class="col-md-2 text-center column-action">
-                                            <x-crud :model="$table" />
+                                            <x-crud :model="$table" :action="[]">
+                                                <x-button module="getUpdate" key="{{ $table->field_primary }}" color="primary" icon="pencil-square" />
+                                            </x-crud>
                                         </td>
 
 										<td data-label="Kode">{{ $table->customer_code }}</td>
