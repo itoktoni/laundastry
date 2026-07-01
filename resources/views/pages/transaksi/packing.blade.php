@@ -4,6 +4,7 @@
             <x-action form="blank">
                 <span>Back Date : </span>
                 <input type="date" name="tanggal" class="tanggal" style="padding: 5px 10px;border-radius:5px">
+                <x-button type="submit" color="primary" label="Save" />
                 <x-button :href="moduleRoute('getPrintBersih', ['code' => $model->transaksi_code])" color="success" label="Print Delivery" onclick="var tanggal = document.querySelector('.tanggal').value; window.location.href = this.getAttribute('href') + '?tanggal=' + tanggal; return false;" />
             </x-action>
 
