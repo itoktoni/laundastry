@@ -8,7 +8,7 @@ class PublicController extends Controller
 {
     public function index()
     {
-        if(env('APP_AUTH', true))
+        if(!env('APP_AUTH', true))
         {
             return redirect()->to('/login');
         }
