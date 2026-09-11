@@ -85,14 +85,21 @@ class UpdateQty extends Component
             ]);
 
             $total = Packing::where('packing_id_transaksi', $this->prefilledKotorId)->sum('packing_qty');
-
-            $result = Transaksi::where('transaksi_id', $this->kotorId)->update([
+            $trans = [
                 'transaksi_code_packing' => $this->packingCode,
                 'transaksi_bersih' => $total,
-                'transaksi_pending' => $this->qtyQc - $total,
-                'transaksi_bersih_at' => now(),
-                'transaksi_bersih_by' => auth()->user()->id,
-            ]);
+            ];
+
+            if($total > 0)
+            {
+                $trans = array_merge($trans, [
+                    'transaksi_bersih_at' => now(),
+                    'transaksi_bersih_by' => auth()->user()->id,
+                    'transaksi_pending' => $this->qtyQc - $total,
+                ]);
+            }
+
+            $result = Transaksi::where('transaksi_id', $this->kotorId)->update($trans);
 
             //========================
 
